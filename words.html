@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>try{var t=localStorage.getItem('slo_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<title>slovenščina · word bank</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#E11D2C" media="(prefers-color-scheme:light)"><meta name="theme-color" content="#1b1714" media="(prefers-color-scheme:dark)">
+<link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Slovenščina"><meta name="mobile-web-app-capable" content="yes">
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))</script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF6EE;--card:#fff;--ink:#2B2724;--mut:#8A8178;--line:#ECE3D6;--accent:#E11D2C;--accent-soft:#fdecea;--ok:#4F9A6A;--mono:'Space Mono',monospace}
+:root[data-theme="dark"]{--bg:#1b1714;--card:#272018;--ink:#efe6d8;--mut:#a89e90;--line:#3a322a;--accent:#ff5b4b;--accent-soft:#3a1c19;--ok:#5fb07e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1714;--card:#272018;--ink:#efe6d8;--mut:#a89e90;--line:#3a322a;--accent:#ff5b4b;--accent-soft:#3a1c19;--ok:#5fb07e}}
+*{box-sizing:border-box}body{margin:0 auto;max-width:660px;background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;padding:30px 18px 90px}
+a.back{color:var(--accent);font-weight:800;text-decoration:none;font-size:14px}
+.eyebrow{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent);margin-top:6px}
+h1{text-transform:lowercase;letter-spacing:-.02em;font-size:38px;margin:2px 0}
+.sub{color:var(--mut);font-weight:700;margin-bottom:14px}
+#q{width:100%;font-family:inherit;font-size:16px;font-weight:700;border:1.5px solid var(--line);border-radius:12px;padding:12px 15px;background:var(--card);color:var(--ink);position:sticky;top:8px;z-index:5}
+#q:focus{outline:3px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+.count{color:var(--mut);font-weight:700;font-size:13px;margin:10px 2px}
+.w{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:11px 15px;margin-top:9px;text-decoration:none;color:inherit;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.w:hover{transform:translateY(-1px)}.w .e{font-size:22px;min-width:26px;text-align:center}
+.w .t{flex:1;min-width:0}.w .sl{font-weight:800;font-size:17px}.w .en{color:var(--mut);font-weight:700;font-size:14px}
+.w .src{font-family:var(--mono);font-size:11px;color:var(--mut)}
+.w .say{flex:none;background:var(--bg);border:1px solid var(--line);border-radius:999px;width:32px;height:32px;font-size:14px;cursor:pointer;padding:0}
+.w .say:hover{border-color:var(--accent)}
+.empty{color:var(--mut);font-weight:700;text-align:center;padding:30px}
+</style>
+</head>
+<body>
+<a class="back" href="index.html">‹ all lessons</a>
+<div class="eyebrow">slovenščina · word bank</div>
+<h1>word bank</h1>
+<div class="sub">every word taught across the course — search Slovene or English, tap 🔊, jump to the lesson.</div>
+<input id="q" type="search" placeholder="search a word… (e.g. kruh, bread, hvala)" aria-label="Search words">
+<div class="count" id="count"></div>
+<div id="list"></div>
+<script src="course.js"></script>
+<script>
+var WORDS=[], list=document.getElementById('list'), count=document.getElementById('count'), q=document.getElementById('q');
+function fold(s){return (s||'').toLowerCase().replace(/č/g,'c').replace(/š/g,'s').replace(/ž/g,'z');}
+function row(w){
+  return '<a class="w" href="'+w.id+'.html">'+
+    '<span class="e">'+(w.emoji||'•')+'</span>'+
+    '<span class="t"><span class="sl" lang="sl">'+w.sl+'</span>'+(w.en?' <span class="en">'+w.en+'</span>':'')+
+    '<br><span class="src">'+(w.topic||w.title)+'</span></span>'+
+    '<button class="say" title="listen" aria-label="Listen" onclick="event.preventDefault();window.Course&&Course.say(\''+w.sl.replace(/'/g,"")+'\')">🔊</button></a>';
+}
+function render(items){
+  count.textContent=items.length+' / '+WORDS.length+' words';
+  if(!items.length){list.innerHTML='<div class="empty">no match — clear the search to see them all.</div>';return;}
+  list.innerHTML=items.slice(0,400).map(row).join('')+(items.length>400?'<div class="empty">+'+(items.length-400)+' more — refine your search.</div>':'');
+}
+fetch('words.json',{cache:'no-store'}).then(r=>r.json()).then(function(d){
+  WORDS=d; render(WORDS);
+  q.addEventListener('input',function(){
+    var t=fold(q.value.trim());
+    render(t?WORDS.filter(function(w){return fold(w.sl).indexOf(t)>-1||fold(w.en).indexOf(t)>-1;}):WORDS);
+  });
+}).catch(function(){list.innerHTML='<div class="empty">could not load the word list.</div>';});
+</script>
+</body>
+</html>

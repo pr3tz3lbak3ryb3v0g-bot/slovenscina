@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>try{var t=localStorage.getItem('slo_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<title>slovenščina · city or village?</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#E11D2C">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Slovenščina">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="mobile-web-app-capable" content="yes">
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF6EE; --card:#FFFFFF; --ink:#2B2724; --ink2:#4f4843; --mut:#8A8178; --line:#ECE3D6;
+  --m:#3A6EA5; --f:#E5736A; --n:#5C8A72; --accent:#E11D2C; --gold:#E0A53B; --ok:#4F9A6A;
+  --m-soft:#eaf0f7; --f-soft:#fdecea; --n-soft:#ecf3ee;
+  --sans:'Nunito',system-ui,sans-serif; --mono:'Space Mono',ui-monospace,monospace;
+}
+/* dark theme — auto (OS) unless forced light, or manual via data-theme="dark" */
+:root[data-theme="dark"], html[data-theme="dark"]{
+  --bg:#1b1714; --card:#272018; --ink:#efe6d8; --ink2:#cabfb0; --mut:#a89e90; --line:#3a322a;
+  --m:#7aa7da; --f:#ef968d; --n:#8fc09d; --accent:#ff5b4b; --gold:#e8b85c; --ok:#5fb07e;
+  --m-soft:#1f2a37; --f-soft:#362320; --n-soft:#1f2d25;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#1b1714; --card:#272018; --ink:#efe6d8; --ink2:#cabfb0; --mut:#a89e90; --line:#3a322a;
+  --m:#7aa7da; --f:#ef968d; --n:#8fc09d; --accent:#ff5b4b; --gold:#e8b85c; --ok:#5fb07e;
+  --m-soft:#1f2a37; --f-soft:#362320; --n-soft:#1f2d25;
+} }
+*{box-sizing:border-box} html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-weight:800;text-transform:lowercase;letter-spacing:-.02em;line-height:1.1}
+.wrap{max-width:720px;margin:0 auto;padding:0 18px 90px}
+.eyebrow{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent)}
+
+.bar{position:sticky;top:0;z-index:20;background:var(--bg);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);padding:9px 18px;display:flex;align-items:center;gap:10px;overflow-x:auto}
+.bar .brand{font-weight:800;font-size:14px;white-space:nowrap}.bar .brand .dot{color:var(--accent)}
+.bar .nav{display:flex;gap:5px;margin-left:auto}
+.bar .nav a{font-weight:800;font-size:12px;text-transform:lowercase;color:var(--mut);text-decoration:none;
+  padding:5px 11px;border-radius:999px;white-space:nowrap}
+.bar .nav a:hover{background:var(--card);color:var(--ink)}
+/* accessibility + navigation */
+.skip{position:absolute;left:-999px;top:0;z-index:60;background:var(--accent);color:#fff;padding:9px 14px;border-radius:0 0 10px 0;font-weight:800;text-decoration:none}
+.skip:focus{left:0}
+.bar .back{font-weight:800;font-size:13px;color:var(--accent);text-decoration:none;padding:5px 12px;border:1.5px solid var(--line);border-radius:999px;white-space:nowrap;background:var(--card)}
+.bar .back:hover,.bar .back:focus-visible{border-color:var(--accent);background:var(--bg)}
+.bar .themebtn{margin-left:6px;background:var(--card);border:1.5px solid var(--line);border-radius:999px;width:34px;height:34px;font-size:15px;cursor:pointer;line-height:1;padding:0;flex:none;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.bar .themebtn:hover,.bar .themebtn:focus-visible{border-color:var(--accent)}
+a:focus-visible,button:focus-visible,.flip:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.opt.right::after{content:" ✓"}.opt.wrong::after{content:" ✗"}
+.wbtfb.ok::after,.wbtile.ok::after{content:" ✓"}.wbtfb.no::after,.wbtile.no::after{content:" ✗"}
+.wo .line.ok::after{content:"✓";color:var(--ok);font-weight:800;margin-left:6px}
+.lnav{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:30px;flex-wrap:wrap}
+.lnav a{font-weight:800;font-size:13px;color:var(--ink);text-decoration:none;background:var(--card);border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;box-shadow:0 2px 0 rgba(0,0,0,.05);max-width:46%}
+.lnav a:hover,.lnav a:focus-visible{border-color:var(--accent)}.lnav a.up{color:var(--mut)}
+@media (prefers-reduced-motion: reduce){.flip .inner{transition:none}.done-card.show{animation:none}html{scroll-behavior:auto}}
+
+.hero{padding:26px 0 6px}
+.hero h1{font-size:clamp(32px,6.5vw,46px)}
+.hero .sub{font-size:18px;color:var(--mut);font-weight:700;margin-top:6px}
+.hero p{max-width:58ch;color:var(--ink2);margin:12px 0 0}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{font-size:12px;font-weight:800;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px;box-shadow:0 2px 0 rgba(0,0,0,.04)}
+
+.sec{margin-top:34px;scroll-margin-top:60px}
+.sechead{display:flex;align-items:baseline;gap:10px;margin-bottom:14px}
+.sechead .step{font-family:var(--mono);font-weight:700;color:var(--accent);font-size:14px}
+.sechead h2{font-size:24px} .sechead .sl{color:var(--mut);font-weight:700}
+
+/* grammar */
+.gram{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:16px;
+  padding:20px;box-shadow:0 3px 0 rgba(0,0,0,.05)}
+.gram .gh{display:flex;align-items:center;gap:10px}.gram .gh .e{font-size:26px}.gram .gh h3{font-size:22px}.gram .gh .sl{color:var(--mut);font-weight:700;font-size:15px}
+.gram .hook{color:var(--accent);font-weight:800;font-size:13.5px;margin:8px 0 0}
+.gram .body{color:var(--ink2);font-size:15.5px;margin-top:8px}.gram .body b{color:var(--ink)}.gram .body i{color:var(--accent);font-style:normal;font-weight:700}
+.demo{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.demo .d{display:flex;align-items:center;gap:12px;background:var(--bg);border-radius:10px;padding:10px 12px;border-left:3px solid var(--g)}
+.demo .d.gm{--g:var(--m)}.demo .d.gf{--g:var(--f)}.demo .d.gn{--g:var(--n)}.demo .d.gv{--g:var(--gold)}.demo .d.ga{--g:var(--accent)}
+.demo .d .sl{font-size:16px}.demo .d .sl b{color:var(--g)}.demo .d .en{color:var(--mut);font-size:13px}
+.demo .d .note{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--g);font-weight:700;white-space:nowrap}
+
+/* practice + quick */
+.score{font-family:var(--mono);font-size:13px;color:var(--mut);margin-left:auto}.score b{color:var(--ok)}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;box-shadow:0 3px 0 rgba(0,0,0,.05);margin-top:12px}
+.q .qp{font-size:18px;font-weight:700}.q .qp .qe{margin-right:6px}.q .qp .cue{color:var(--mut);font-weight:700;font-size:14px;font-family:var(--mono)}
+.q .qen{color:var(--mut);font-size:13px;margin-top:1px}
+.opts{display:flex;gap:9px;flex-wrap:wrap;margin-top:11px}
+.opt{font-family:var(--mono);font-size:15px;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink);
+  padding:9px 16px;border-radius:11px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.opt:hover:not(:disabled){border-color:var(--accent)} .opt:disabled{cursor:default;opacity:.85}
+.opt.right{background:var(--ok);border-color:var(--ok);color:#fff} .opt.wrong{background:var(--f);border-color:var(--f);color:#fff}
+.fb{display:none;margin-top:10px;font-size:13.5px;color:var(--ok);font-weight:700}.fb.show{display:block}.fb .x{color:var(--f)}
+.quick .q .qp{font-size:20px}.quick .qe{font-size:24px;vertical-align:middle;margin-right:8px}
+
+/* flashcards */
+.deck{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:560px){.deck{grid-template-columns:1fr}}
+.flip{perspective:1000px;height:200px;cursor:pointer}
+.flip .inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.flipped .inner{transform:rotateY(180deg)}
+.flip .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;border:1px solid var(--line);
+  background:var(--card);box-shadow:0 3px 0 rgba(0,0,0,.05);padding:15px;display:flex;flex-direction:column}
+.flip .face.front{border-top:4px solid var(--g,#cbb);align-items:center;justify-content:center;text-align:center;gap:5px}
+.flip .face.back{transform:rotateY(180deg);background:var(--soft,#f6f1e9)}
+.flip.gm{--g:var(--m);--soft:var(--m-soft)}.flip.gf{--g:var(--f);--soft:var(--f-soft)}.flip.gn{--g:var(--n);--soft:var(--n-soft)}.flip.gx{--g:#b9b0a4;--soft:#f3eee5}.flip.gv{--g:var(--gold);--soft:#fbf3de}.flip.ga{--g:var(--accent);--soft:#fde8e7}
+.flip .front .em{font-size:50px}.flip .front .w{font-size:27px;font-weight:800;color:var(--g)}.flip .front .pr{font-family:var(--mono);font-size:12px;color:var(--mut)}
+.flip .back .mean{font-weight:800;font-size:19px;color:var(--g)}.flip .back .mn{font-size:12.5px;color:var(--ink2);margin-top:6px}.flip .back .mn b{color:var(--g)}
+.flip .back .acc{font-family:var(--mono);font-size:12px;color:var(--ink2);margin-top:auto;background:var(--card);border:1px solid var(--line);border-radius:7px;padding:4px 8px;align-self:flex-start}
+.flip .back .acc b{color:var(--accent)}
+.flip .face.front{position:relative}
+.say{position:absolute;top:8px;right:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;width:30px;height:30px;font-size:14px;cursor:pointer;line-height:1;box-shadow:0 2px 0 rgba(0,0,0,.05);z-index:2;padding:0}
+.say:hover{border-color:var(--accent)}.say.sm{position:static;width:24px;height:24px;font-size:11px;vertical-align:middle;margin-left:2px;box-shadow:none}
+.done-card{display:none;text-align:center;background:var(--ink);color:var(--bg);border-radius:18px;padding:26px 20px;margin-top:34px;box-shadow:0 6px 0 rgba(0,0,0,.12)}
+.done-card.show{display:block;animation:pop .4s ease}
+.done-card .dh{font-weight:800;font-size:20px}.done-card .dx{font-family:var(--mono);font-size:42px;font-weight:800;margin-top:6px;color:var(--gold)}
+.done-card .dl{font-size:12px;opacity:.7;text-transform:uppercase;letter-spacing:.12em}.done-card .ds{margin-top:14px;font-weight:700;font-size:15px}
+@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.hint{color:var(--mut);font-size:13px;font-weight:600;margin:-2px 0 12px}
+.hintbtn{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--mut);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px 10px;cursor:pointer;margin-left:6px;vertical-align:middle;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.hintbtn:hover{border-color:var(--gold);color:var(--gold)}
+.hintans{display:none;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--gold);margin-left:6px}
+.hintans.show{display:inline}
+.foot{color:var(--mut);font-size:12px;text-align:center;margin-top:44px;font-family:var(--mono)}
+/* coursebook unit — highlighted-ending grammar table */
+.gtable{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:15px}
+.gtable caption{caption-side:top;text-align:left;font-weight:800;color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.gtable th,.gtable td{border:1px solid var(--line);padding:7px 11px;text-align:left}
+.gtable th{background:var(--card2,var(--card));font-size:12px;color:var(--mut);font-weight:800}
+.gtable td.rh{font-weight:800;color:var(--mut);font-family:var(--mono);font-size:13px}
+.gtable td[lang],.gtable td{font-weight:700}
+.gtable u,.ghint u{color:var(--accent);text-decoration:none;font-weight:800;background:var(--accent-soft);border-radius:5px;padding:0 3px}
+.ghint{color:var(--mut);font-size:12px;font-weight:700;margin-top:4px}
+/* coursebook unit — guided writing · speak · can-do */
+.frames{display:flex;flex-direction:column;gap:9px;margin:10px 0 4px}
+.frame{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.frame .fstart{font-weight:800;font-size:16px}
+.frame .fin{flex:1;min-width:140px;font-family:inherit;font-size:15px;font-weight:700;border:none;border-bottom:2px dashed var(--line);background:transparent;color:var(--ink);padding:4px 2px}
+.frame .fin:focus{outline:none;border-bottom-color:var(--accent)}
+.spk{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 16px;margin-top:10px;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.spk .sprompt{font-weight:800;font-size:16px;margin-bottom:6px}
+/* recall mode — type the answer instead of tapping */
+#recallbtn.active{background:var(--accent);border-color:var(--accent)}
+.recall{display:flex;gap:9px;margin-top:11px;flex-wrap:wrap}
+.recall-in{flex:1;min-width:160px;font-family:var(--mono);font-size:16px;font-weight:700;border:1.5px solid var(--line);border-radius:11px;padding:9px 13px;background:var(--card);color:var(--ink)}
+.recall-in:focus{outline:none;border-color:var(--accent)}
+.recall-in.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.recall-in.no{border-color:var(--f);background:color-mix(in srgb,var(--f) 14%,transparent)}
+.recall-chk{font-family:var(--mono);font-size:14px;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:11px;padding:9px 16px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.recall-chk:hover:not(:disabled){border-color:var(--accent)}
+.candos{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.cando{display:flex;align-items:flex-start;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 15px;font-weight:700;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.cando input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--ok);cursor:pointer}
+.cando:has(input:checked){border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.cando:has(input:checked) span{text-decoration:line-through;color:var(--mut)}
+/* v13 content types — dialogue · reading · word-order */
+.dlg{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.dline{display:flex;gap:8px;align-items:flex-start;max-width:90%}
+.dline.r{align-self:flex-end;flex-direction:row-reverse}
+.dline .who{flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:5px}
+.dline.r .who{background:var(--m)}
+.dline .bub{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:9px 13px;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.dline.r .bub{background:var(--m-soft)}
+.dline .bub .sl{font-weight:700;font-size:16px;display:block}.dline .bub .en{color:var(--mut);font-size:13px;display:block;margin-top:2px}
+.passage{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--m);border-radius:14px;padding:16px 18px;box-shadow:0 3px 0 rgba(0,0,0,.05);font-size:17px;line-height:1.6}
+details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--mut)}details.tr .trbody{color:var(--ink2);font-size:15px;margin-top:8px}
+.wo{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 3px 0 rgba(0,0,0,.05);margin-top:12px}
+.wo .wen{color:var(--mut);font-size:14px;font-weight:700;margin-bottom:8px}
+.wo .line{min-height:42px;border-bottom:2px dashed var(--line);display:flex;flex-wrap:wrap;gap:6px;padding:4px 0 8px;margin-bottom:10px}
+.wo .line.ok{border-color:var(--ok)}.wo .line.no{border-color:var(--f)}
+.wo .bank{display:flex;flex-wrap:wrap;gap:8px}
+.wo .chip{font-family:var(--sans);font-weight:700;font-size:16px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:7px 13px;border-radius:10px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.wo .chip:hover:not(:disabled){border-color:var(--accent)}.wo .chip:disabled{opacity:.7;cursor:default}
+.wo .line .chip{background:var(--bg)}
+/* v15 workbook (delovni list) */
+.wbex{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;box-shadow:0 3px 0 rgba(0,0,0,.05);margin-top:12px}
+.wbinstr{font-weight:800;font-size:15px;margin-bottom:10px}.wbinstr .wbi-en{color:var(--mut);font-weight:600;font-size:13px;margin-left:4px}
+.wbtable{border-collapse:collapse;width:100%;font-size:15px}
+.wbtable th,.wbtable td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+.wbtable thead th{background:var(--bg);font-family:var(--mono);font-size:12px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.wbtable tbody th{background:var(--bg);font-weight:700;font-size:13px}
+.wbcell{white-space:nowrap}
+.wbin{font-family:var(--sans);font-weight:700;font-size:15px;border:1.5px solid var(--line);border-radius:8px;padding:6px 9px;width:9em;max-width:46vw;background:var(--card);color:var(--ink)}
+.wbin:focus{outline:none;border-color:var(--accent)}
+.wbin.ok{background:var(--ok);border-color:var(--ok);color:#fff}.wbin.no{background:var(--f);border-color:var(--f);color:#fff}
+.wbcheck{font-size:13px;border:1.5px solid var(--line);background:var(--card);border-radius:8px;padding:5px 9px;cursor:pointer;margin-left:5px;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.wbcheck:hover:not(:disabled){border-color:var(--ok)}.wbcheck:disabled{opacity:.5;cursor:default}
+.wbrow{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}.wbex .wbrow:first-of-type{border-top:none;padding-top:0;margin-top:0}
+.wbrow .wbprompt{font-size:17px;font-weight:700}.wbrow .wbprompt .cue{color:var(--mut);font-weight:700;font-size:14px;font-family:var(--mono)}
+.wbrow .wben{display:block;color:var(--mut);font-size:13px;margin:1px 0 7px}
+.wbinwrap{display:inline-flex;align-items:center;gap:0;margin-top:6px}
+.wbfb{display:none;margin-left:8px;font-size:13.5px;color:var(--ok);font-weight:700}.wbfb.show{display:inline}.wbfb.no{color:var(--f)}
+.wbmatch{display:flex;gap:18px}.wbcol{display:flex;flex-direction:column;gap:8px;flex:1}
+.wbtile{font-family:var(--sans);font-weight:700;font-size:15px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 12px;border-radius:10px;cursor:pointer;text-align:left;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.wbtile:hover:not(:disabled){border-color:var(--accent)}.wbtile.sel{border-color:var(--accent);background:var(--bg)}
+.wbtile.ok{background:var(--ok);border-color:var(--ok);color:#fff}.wbtile.no{background:var(--f);border-color:var(--f);color:#fff}.wbtile.hint{border-color:var(--ok);border-style:dashed}.wbtile:disabled{cursor:default}
+.wbtf{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}.wbex .wbtf:first-of-type{border-top:none;padding-top:0;margin-top:0}
+.wbtf .wbprompt{font-size:16px;font-weight:700;flex:1;min-width:60%}
+.wbtfb{font-family:var(--mono);font-weight:700;font-size:14px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:7px 13px;border-radius:10px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.wbtfb:hover:not(:disabled){border-color:var(--accent)}.wbtfb.ok{background:var(--ok);border-color:var(--ok);color:#fff}.wbtfb.no{background:var(--f);border-color:var(--f);color:#fff}.wbtfb:disabled{cursor:default}
+.wbwrite .wbprompt{font-size:16px;font-weight:700;margin-bottom:8px}
+.wbta{width:100%;font-family:var(--sans);font-size:15px;border:1.5px solid var(--line);border-radius:10px;padding:10px;background:var(--card);color:var(--ink);resize:vertical}.wbta:focus{outline:none;border-color:var(--accent)}
+.solutions{display:none}
+@media print{
+  .bar,.say,.hintbtn,.hintans,.wbcheck,.score,.done-card,.foot,.meta,details.tr,.lnav,.skip{display:none!important}
+  body{font-size:13px}.wrap{max-width:none;padding:0}
+  .wbin{border:none;border-bottom:1.5px solid #999;border-radius:0;width:8em;background:none;color:transparent}
+  .wo .line{min-height:30px}.wbex,.gram,.q{box-shadow:none;break-inside:avoid}
+  .solutions{display:block;margin-top:24px;border-top:2px solid #000;padding-top:10px;break-before:page}
+  .solutions ol{font-size:12px;columns:2;gap:24px}.solutions li{margin-bottom:3px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">skip to content</a>
+<div class="bar">
+  <a class="back" href="index.html" aria-label="Back to the course index">← course</a>
+  <div class="brand">slovenščina<span class="dot">·</span>course</div>
+  <nav class="nav" aria-label="Jump to section">
+    <a href="#grammar">grammar</a><a href="#practice">practice</a><a href="#quick">quick</a><a href="#cards">cards</a>
+  </nav>
+  <button id="recallbtn" class="themebtn" type="button" title="Recall mode — type the answer instead of tapping" aria-label="Toggle recall (typing) mode">✍️</button>
+  <button id="themebtn" class="themebtn" type="button" aria-label="Toggle dark mode">🌙</button>
+</div>
+
+<main class="wrap" id="main" tabindex="-1" data-lesson="lesson-203">
+  <div class="hero">
+    <div class="eyebrow">lesson 203 · grammar + 5 cards</div>
+    <h1>city or village? <span style="color:var(--mut);-webkit-text-fill-color:var(--mut)">· razprava</span></h1>
+    <div class="sub">a friendly debate</div>
+    <p>Two people argue the city-versus-village question — the language of agreeing, conceding and disagreeing politely. Read, listen, fill the gap, answer. About six minutes.</p>
+    <div class="meta"><span class="chip">⏱️ ≈6 min</span><span class="chip">🎯 grammar → 📝 practice → ⚡ quick → 🃏 cards</span></div>
+  </div>
+
+  
+
+  
+  <!-- DIALOGUE -->
+  <section class="sec" id="grammar">
+    <div class="sechead"><span class="step">01</span><span class="e">💬</span><h2>conversation</h2><span class="sl">· I see your point, but…</span></div>
+    <div class="dlg">
+      
+      <div class="dline l">
+        <div class="who">A</div>
+        <div class="bub"><span class="sl" lang="sl">Po mojem mnenju je življenje v mestu boljše.</span><span class="en">In my opinion, life in the city is better.</span>
+          <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say(this.parentNode.querySelector('.sl').textContent)">🔊</button></div>
+      </div>
+      
+      <div class="dline r">
+        <div class="who">B</div>
+        <div class="bub"><span class="sl" lang="sl">Se ne strinjam povsem. Mesto je hrupno in drago.</span><span class="en">I don't entirely agree. The city is noisy and expensive.</span>
+          <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say(this.parentNode.querySelector('.sl').textContent)">🔊</button></div>
+      </div>
+      
+      <div class="dline l">
+        <div class="who">A</div>
+        <div class="bub"><span class="sl" lang="sl">Drži, a ponuja več priložnosti in zabave.</span><span class="en">True, but it offers more opportunities and entertainment.</span>
+          <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say(this.parentNode.querySelector('.sl').textContent)">🔊</button></div>
+      </div>
+      
+      <div class="dline r">
+        <div class="who">B</div>
+        <div class="bub"><span class="sl" lang="sl">Na vasi je mirno, zrak je čist, ljudje se poznajo.</span><span class="en">In the village it's quiet, the air is clean, people know each other.</span>
+          <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say(this.parentNode.querySelector('.sl').textContent)">🔊</button></div>
+      </div>
+      
+      <div class="dline l">
+        <div class="who">A</div>
+        <div class="bub"><span class="sl" lang="sl">Po eni strani imaš prav, a meni je hitro dolgčas.</span><span class="en">On the one hand you're right, but I get bored quickly.</span>
+          <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say(this.parentNode.querySelector('.sl').textContent)">🔊</button></div>
+      </div>
+      
+      <div class="dline r">
+        <div class="who">B</div>
+        <div class="bub"><span class="sl" lang="sl">Vsak ima svoj okus. Pomembno je, da si srečen.</span><span class="en">Everyone has their own taste. What matters is being happy.</span>
+          <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say(this.parentNode.querySelector('.sl').textContent)">🔊</button></div>
+      </div>
+      
+    </div>
+  </section>
+  
+
+  
+
+  
+  <!-- 2 · PRACTICE -->
+  <section class="sec" id="practice">
+    <div class="sechead"><span class="step">02</span><h2>practice</h2><span class="sl">· answer about the conversation</span><span class="score" aria-live="polite" id="scP">0 ✓</span></div>
+    
+    <div class="q" data-done="0" data-sec="P" data-word="mesto je boljše">
+      <div class="qp"><span class="qe">🏙️</span>Kaj misli oseba A? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('mesto je boljše')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 mesto je boljše</span></div>
+      <div class="qen">What does person A think?</div>
+      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">mesto je boljše</button><button class="opt" onclick="pick(this)">vas je boljša</button><button class="opt" onclick="pick(this)">vseeno je</button></div>
+      <div class="fb">✓ <b>mesto je boljše</b> — “… življenje v mestu boljše.”</div>
+    </div>
+    
+    <div class="q" data-done="0" data-sec="P" data-word="hrupno in drago">
+      <div class="qp"><span class="qe">🔊</span>Zakaj B ni navdušen nad mestom? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('hrupno in drago')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 hrupno in drago</span></div>
+      <div class="qen">Why isn't B keen on the city?</div>
+      <div class="opts"><button class="opt" onclick="pick(this)">premajhno</button><button class="opt" data-c="1" onclick="pick(this)">hrupno in drago</button><button class="opt" onclick="pick(this)">predaleč</button></div>
+      <div class="fb">✓ <b>hrupno in drago</b> — “… hrupno in drago.”</div>
+    </div>
+    
+    <div class="q" data-done="0" data-sec="P" data-word="mir in čist zrak">
+      <div class="qp"><span class="qe">🌳</span>Kaj je dobro na vasi? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('mir in čist zrak')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 mir in čist zrak</span></div>
+      <div class="qen">What's good about the village?</div>
+      <div class="opts"><button class="opt" onclick="pick(this)">več trgovin</button><button class="opt" onclick="pick(this)">boljši internet</button><button class="opt" data-c="1" onclick="pick(this)">mir in čist zrak</button></div>
+      <div class="fb">✓ <b>mir in čist zrak</b> — “… mirno, zrak je čist …”</div>
+    </div>
+    
+    <div class="q" data-done="0" data-sec="P" data-word="A">
+      <div class="qp"><span class="qe">💬</span>Po mojem ___ je življenje v mestu boljše. <span class="cue">(A)</span> <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('mnenju')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 mnenju</span></div>
+      <div class="qen">In my opinion, life in the city is better.</div>
+      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">mnenju</button><button class="opt" onclick="pick(this)">mnenje</button><button class="opt" onclick="pick(this)">mnenja</button></div>
+      <div class="fb">✓ <b>mnenju</b> — po mojem mnenju (locative)</div>
+    </div>
+    
+  </section>
+  
+
+  
+  <!-- 3 · QUICK PRACTICE -->
+  <section class="sec quick" id="quick">
+    <div class="sechead"><span class="step">03</span><h2>quick practice</h2><span class="sl">· fast recall</span><span class="score" aria-live="polite" id="scQ">0 ✓</span></div>
+    <div class="hint">fast recall — tap the match.</div>
+    
+    <div class="q" data-done="0" data-sec="Q" data-word="Po mojem mnenju">
+      <div class="qp"><span class="qe">💭</span>Po mojem mnenju <span class="cue">→ English?</span> <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('in my opinion')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 in my opinion</span></div>
+      <div class="opts"><button class="opt" onclick="pick(this)">I don't entirely agree</button><button class="opt" data-c="1" onclick="pick(this)">in my opinion</button><button class="opt" onclick="pick(this)">true, but…</button></div>
+      <div class="fb">✓ <b>in my opinion</b></div>
+    </div>
+    
+    <div class="q" data-done="0" data-sec="Q" data-word="Se ne strinjam povsem">
+      <div class="qp"><span class="qe">🤔</span>Se ne strinjam povsem <span class="cue">→ English?</span> <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('I don't entirely agree')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 I don't entirely agree</span></div>
+      <div class="opts"><button class="opt" onclick="pick(this)">in my opinion</button><button class="opt" onclick="pick(this)">true, but…</button><button class="opt" data-c="1" onclick="pick(this)">I don't entirely agree</button></div>
+      <div class="fb">✓ <b>I don't entirely agree</b></div>
+    </div>
+    
+    <div class="q" data-done="0" data-sec="Q" data-word="Drži, a…">
+      <div class="qp"><span class="qe">⚖️</span>Drži, a… <span class="cue">→ English?</span> <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('true, but…')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 true, but…</span></div>
+      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">true, but…</button><button class="opt" onclick="pick(this)">in my opinion</button><button class="opt" onclick="pick(this)">I don't entirely agree</button></div>
+      <div class="fb">✓ <b>true, but…</b></div>
+    </div>
+    
+    <div class="q" data-done="0" data-sec="Q" data-word="Po eni strani">
+      <div class="qp"><span class="qe">🤲</span>Po eni strani <span class="cue">→ English?</span> <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('on the one hand')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 on the one hand</span></div>
+      <div class="opts"><button class="opt" onclick="pick(this)">in my opinion</button><button class="opt" data-c="1" onclick="pick(this)">on the one hand</button><button class="opt" onclick="pick(this)">I don't entirely agree</button></div>
+      <div class="fb">✓ <b>on the one hand</b></div>
+    </div>
+    
+    <div class="q" data-done="0" data-sec="Q" data-word="Vsak ima svoj okus">
+      <div class="qp"><span class="qe">😌</span>Vsak ima svoj okus <span class="cue">→ English?</span> <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('everyone to their own taste')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 everyone to their own taste</span></div>
+      <div class="opts"><button class="opt" onclick="pick(this)">in my opinion</button><button class="opt" onclick="pick(this)">I don't entirely agree</button><button class="opt" data-c="1" onclick="pick(this)">everyone to their own taste</button></div>
+      <div class="fb">✓ <b>everyone to their own taste</b></div>
+    </div>
+    
+  </section>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 4 · CARDS -->
+  <section class="sec" id="cards">
+    <div class="sechead"><span class="step">04</span><h2>cards</h2><span class="sl">· drill the words</span></div>
+    <div class="hint">tap a card to flip · 5 cards</div>
+    <div class="deck">
+      
+      <div class="flip ga" role="button" tabindex="0" aria-label="Flip card: Po mojem mnenju" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+        <div class="inner">
+          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('Po mojem mnenju')">🔊</button><div class="em">💭</div><div class="w" lang="sl">Po mojem mnenju</div><div class="pr"></div></div>
+          <div class="face back">
+            <div class="mean">in my opinion</div>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="flip ga" role="button" tabindex="0" aria-label="Flip card: Se ne strinjam povsem" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+        <div class="inner">
+          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('Se ne strinjam povsem')">🔊</button><div class="em">🤔</div><div class="w" lang="sl">Se ne strinjam povsem</div><div class="pr"></div></div>
+          <div class="face back">
+            <div class="mean">I don't entirely agree</div>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="flip ga" role="button" tabindex="0" aria-label="Flip card: Drži, a…" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+        <div class="inner">
+          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('Drži, a…')">🔊</button><div class="em">⚖️</div><div class="w" lang="sl">Drži, a…</div><div class="pr"></div></div>
+          <div class="face back">
+            <div class="mean">true, but…</div>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="flip ga" role="button" tabindex="0" aria-label="Flip card: Po eni strani" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+        <div class="inner">
+          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('Po eni strani')">🔊</button><div class="em">🤲</div><div class="w" lang="sl">Po eni strani</div><div class="pr"></div></div>
+          <div class="face back">
+            <div class="mean">on the one hand</div>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="flip ga" role="button" tabindex="0" aria-label="Flip card: Vsak ima svoj okus" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+        <div class="inner">
+          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('Vsak ima svoj okus')">🔊</button><div class="em">😌</div><div class="w" lang="sl">Vsak ima svoj okus</div><div class="pr"></div></div>
+          <div class="face back">
+            <div class="mean">everyone to their own taste</div>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+  
+
+  
+
+  <div class="done-card" id="done" role="status" aria-live="polite"><div class="dh">lesson complete! 🎉</div><div class="dx">0 / 0</div><div class="dl">correct</div><div class="ds"></div></div>
+  
+  <nav class="lnav" aria-label="Lesson navigation">
+    <a class="prev" href="lesson-202.html" rel="prev" aria-label="Previous lesson: health & diet">← health & diet</a>
+    <a class="up" href="index.html">all lessons</a>
+    <a class="next" href="lesson-204.html" rel="next" aria-label="Next lesson: a business meeting">a business meeting →</a>
+  </nav>
+  
+  <div class="foot">slovenian-kb · lesson generated by 10_build_lesson.py</div>
+</main>
+
+<script src="course.js"></script>
+<script>
+const LESSON_ID="lesson-203";
+const right={P:0,Q:0,W:0,WB:0};
+const TOTAL=document.querySelectorAll('.q,.wo,.wbq').length; let answered=0, correct=0, finished=false;
+function tally(ok){ if(ok)correct++; answered++;
+  if(window.Course&&Course.progress)Course.progress(LESSON_ID,answered,correct,TOTAL);
+  if(answered>=TOTAL && !finished){ finished=true; finish(); } }
+function showHint(b){ const s=b.nextElementSibling; if(s)s.classList.add('show'); b.style.display='none'; }
+// ── workbook (delovni list) handlers ──
+function wbNorm(s){ s=(s||'').toLowerCase().trim().replace(/\s+/g,' ').replace(/^[("'»]+/,'').replace(/[.?!,;:)"»«]+$/,'');
+  return s.replace(/č/g,'c').replace(/š/g,'s').replace(/ž/g,'z'); }   // diacritic-tolerant compare
+function wbScore(){ right.WB++; const s=document.getElementById('scWB'); if(s)s.innerHTML='<b>'+right.WB+'</b> ✓'; }
+function wbType(input){
+  const host=input.closest('.wbq'); if(!host||host.dataset.done==='1')return; host.dataset.done='1';
+  const ans=host.dataset.answer||'', acc=host.dataset.accept?host.dataset.accept.split('|'):[];
+  const ok=[ans].concat(acc).map(wbNorm).includes(wbNorm(input.value));
+  input.disabled=true; input.classList.add(ok?'ok':'no');
+  const btn=input.nextElementSibling; if(btn&&btn.classList.contains('wbcheck'))btn.disabled=true;
+  const fb=host.querySelector('.wbfb');
+  if(fb){ if(!ok){ fb.innerHTML='✓ <b>'+ans+'</b>'+(host.dataset.note?' — '+host.dataset.note:''); fb.classList.add('show','no'); }
+          else { fb.textContent='✓'; fb.classList.add('show'); } }
+  if(ok)wbScore();
+  if(window.Course)Course.answer((ans.split(' ')[0]||ans), ok, {p:(host.querySelector('.wbprompt')||{textContent:''}).textContent, a:ans, o:[ans]});
+  tally(ok);
+}
+let wbSel=null;
+function wbMatch(b){
+  if(b.disabled)return;
+  if(b.parentNode.classList.contains('wbleft')){ if(wbSel)wbSel.classList.remove('sel'); wbSel=b; b.classList.add('sel'); return; }
+  if(!wbSel)return;                                   // a right tile, but nothing picked on the left
+  const left=wbSel; wbSel=null; left.classList.remove('sel'); left.dataset.done='1'; left.disabled=true;
+  const ok=left.dataset.k===b.dataset.k;
+  if(ok){ b.disabled=true; left.classList.add('ok'); b.classList.add('ok'); wbScore(); }
+  else { left.classList.add('no');
+    const cor=[...document.querySelectorAll('.wbright .wbtile')].find(x=>x.dataset.k===left.dataset.k);
+    if(cor)cor.classList.add('hint'); }
+  if(window.Course)Course.answer(left.textContent, ok, {p:left.textContent, a:'', o:[]});
+  tally(ok);
+}
+function wbTF(b){
+  const host=b.closest('.wbtf'); if(host.dataset.done==='1')return; host.dataset.done='1';
+  const ok=b.dataset.v===host.dataset.answer;
+  host.querySelectorAll('.wbtfb').forEach(x=>x.disabled=true); b.classList.add(ok?'ok':'no');
+  if(!ok){ const cor=host.querySelector('.wbtfb[data-v="'+host.dataset.answer+'"]'); if(cor)cor.classList.add('ok'); }
+  const fb=host.querySelector('.wbfb'); if(fb)fb.classList.add('show');
+  if(ok)wbScore();
+  if(window.Course){ const p=host.querySelector('.wbprompt').textContent;
+    Course.answer(p.split(' ')[0], ok, {p:p, a:(host.dataset.answer==='1'?'drži':'ne drži'), o:['drži','ne drži']}); }
+  tally(ok);
+}
+function pick(b){
+  const q=b.closest('.q'); if(q.dataset.done==='1')return; q.dataset.done='1';
+  const ok=b.dataset.c==='1', cor=q.querySelector('.opt[data-c="1"]');
+  b.classList.add(ok?'right':'wrong');
+  if(!ok) cor.classList.add('right');
+  q.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+  q.querySelector('.fb').classList.add('show');
+  if(ok){ const s=q.dataset.sec; if(s){right[s]++; document.getElementById('sc'+s).innerHTML='<b>'+right[s]+'</b> ✓';} }
+  if(window.Course){ const opts=[...q.querySelectorAll('.opt')].map(o=>o.textContent);
+    Course.answer(q.dataset.word, ok, {p:q.querySelector('.qp').textContent.replace(/🔊/g,'').trim(), a:cor.textContent, o:opts}); }
+  tally(ok);
+}
+// recall mode: convert multiple-choice into a typed answer (recognition → production)
+function recallOn(){ try{return localStorage.getItem('slo_recall')==='1';}catch(e){return false;} }
+function rfold(s){ return (s||'').toLowerCase().trim().replace(/\s+/g,' ').replace(/[.?!,;:]+$/,'')
+  .replace(/č/g,'c').replace(/š/g,'s').replace(/ž/g,'z'); }   // diacritic-tolerant compare
+function recallType(q,inp){
+  if(q.dataset.done==='1')return; q.dataset.done='1';
+  const ans=q.dataset.answer||'', ok=rfold(inp.value)===rfold(ans);
+  inp.disabled=true; inp.classList.add(ok?'ok':'no');
+  const btn=inp.nextElementSibling; if(btn&&btn.classList.contains('recall-chk'))btn.disabled=true;
+  q.querySelector('.fb').classList.add('show');
+  if(ok){ const s=q.dataset.sec; if(s){right[s]++; const sc=document.getElementById('sc'+s); if(sc)sc.innerHTML='<b>'+right[s]+'</b> ✓';} }
+  if(window.Course)Course.answer(q.dataset.word, ok, {p:q.querySelector('.qp').textContent.replace(/🔊/g,'').trim(), a:ans, o:[ans]});
+  tally(ok);
+}
+function applyRecall(){
+  if(!recallOn())return;
+  document.querySelectorAll('.q').forEach(function(q){
+    const opts=q.querySelector('.opts'), cor=q.querySelector('.opt[data-c="1"]');
+    if(!opts||!cor)return;
+    q.dataset.answer=cor.textContent; opts.style.display='none';
+    const wrap=document.createElement('div'); wrap.className='recall';
+    wrap.innerHTML='<input class="recall-in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type the answer…" aria-label="Type the answer"><button class="recall-chk" type="button">check</button>';
+    opts.parentNode.insertBefore(wrap,opts);
+    const inp=wrap.querySelector('.recall-in'), btn=wrap.querySelector('.recall-chk');
+    btn.addEventListener('click',function(){recallType(q,inp);});
+    inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();recallType(q,inp);}});
+  });
+}
+// word-order: tap a chip → it moves to the line; tap a placed word → it returns; when the
+// line is full, the order is checked against the target sentence.
+function woTap(b){
+  const wo=b.closest('.wo'); if(wo.dataset.done==='1')return;
+  const line=wo.querySelector('.line');
+  if(b.parentNode===line){ b.remove(); woBank(wo).appendChild(b); b.className='chip'; }   // tap a placed word → back to bank
+  else { line.appendChild(b); }
+  const tokens=[...wo.querySelectorAll('.bank .chip')];
+  if(!tokens.length) woCheck(wo);                                                          // bank empty → all placed
+}
+function woBank(wo){ return wo.querySelector('.bank'); }
+function woNorm(s){ return s.toLowerCase().replace(/\s+/g,' ').replace(/[.?!,]+$/,'').trim(); }
+function woCheck(wo){
+  wo.dataset.done='1';
+  const built=[...wo.querySelector('.line').children].map(c=>c.textContent).join(' ');
+  const target=wo.dataset.answer.trim();
+  // accept the canonical order OR any valid alternative the sentence declares (order is free in Slovene)
+  const accepted=[target].concat(wo.dataset.accept?wo.dataset.accept.split('|'):[]).map(woNorm);
+  const ok=accepted.includes(woNorm(built));
+  wo.querySelector('.line').classList.add(ok?'ok':'no');
+  if(ok){ right.W++; const s=document.getElementById('scW'); if(s)s.innerHTML='<b>'+right.W+'</b> ✓'; }
+  else wo.querySelector('.fb').classList.add('show');
+  wo.querySelectorAll('.chip').forEach(c=>c.disabled=true);
+  if(window.Course) Course.answer(target.split(' ')[0], ok, {p:wo.querySelector('.wen').textContent, a:target, o:[target]});
+  tally(ok);
+}
+function finish(){
+  if(!window.Course) return;
+  const r=Course.finishLesson(LESSON_ID, correct, TOTAL), el=document.getElementById('done');
+  el.querySelector('.dx').textContent=correct+' / '+TOTAL;
+  el.querySelector('.ds').innerHTML='🔥 '+r.streak+' day streak &nbsp;·&nbsp; ⭐ level '+r.level+' &nbsp;·&nbsp; +'+(correct*10)+' XP';
+  el.classList.add('show'); el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+// keyboard: press 1-4 to answer the next unanswered multiple-choice question
+document.addEventListener('keydown', function(e){
+  if(e.altKey||e.ctrlKey||e.metaKey) return;
+  if(recallOn()) return;                       // recall mode answers by typing, not 1-4
+  if(e.target.closest('input,textarea,button,a,summary,[tabindex]')) return;
+  if(e.key>='1'&&e.key<='4'){
+    var q=document.querySelector('.q[data-done="0"]');
+    if(q){ var o=q.querySelectorAll('.opt'), i=+e.key-1;
+      if(o[i]){ e.preventDefault(); o[i].click(); o[i].scrollIntoView({block:'center',behavior:'smooth'}); } }
+  }
+});
+// dark-mode toggle (☀️/🌙), persisted; respects the OS preference until overridden
+(function(){ var d=document.documentElement, b=document.getElementById('themebtn');
+  function eff(){ return d.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'); }
+  function paint(){ if(b) b.textContent = eff()==='dark' ? '☀️' : '🌙'; }
+  if(b) b.addEventListener('click', function(){ var n=eff()==='dark'?'light':'dark';
+    d.setAttribute('data-theme',n); try{localStorage.setItem('slo_theme',n);}catch(e){} paint(); });
+  paint();
+})();
+// recall-mode toggle (✍️) — persisted; reload applies it cleanly across the page
+(function(){ var rb=document.getElementById('recallbtn');
+  if(rb){ rb.textContent=recallOn()?'🔤':'✍️'; rb.classList.toggle('active',recallOn());
+    rb.addEventListener('click',function(){ try{localStorage.setItem('slo_recall',recallOn()?'0':'1');}catch(e){} location.reload(); }); }
+  applyRecall();
+})();
+</script>
+</body>
+</html>

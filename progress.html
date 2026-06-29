@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>try{var t=localStorage.getItem('slo_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<title>slovenščina · my progress</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#E11D2C" media="(prefers-color-scheme:light)"><meta name="theme-color" content="#1b1714" media="(prefers-color-scheme:dark)">
+<link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Slovenščina"><meta name="mobile-web-app-capable" content="yes">
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))</script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF6EE;--card:#fff;--ink:#2B2724;--mut:#8A8178;--line:#ECE3D6;--accent:#E11D2C;--accent-soft:#fdecea;--ok:#4F9A6A;--warn:#E6951F;--mono:'Space Mono',monospace}
+:root[data-theme="dark"]{--bg:#1b1714;--card:#272018;--ink:#efe6d8;--mut:#a89e90;--line:#3a322a;--accent:#ff5b4b;--accent-soft:#3a1c19;--ok:#5fb07e;--warn:#e0a23c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1714;--card:#272018;--ink:#efe6d8;--mut:#a89e90;--line:#3a322a;--accent:#ff5b4b;--accent-soft:#3a1c19;--ok:#5fb07e;--warn:#e0a23c}}
+*{box-sizing:border-box}body{margin:0 auto;max-width:660px;background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;padding:30px 18px 90px}
+a.back{color:var(--accent);font-weight:800;text-decoration:none;font-size:14px}
+.eyebrow{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent);margin-top:6px}
+h1{text-transform:lowercase;letter-spacing:-.02em;font-size:38px;margin:2px 0}
+h2{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:26px 0 10px}
+.tiles{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.tile{flex:1;min-width:96px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;text-align:center;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.tile .v{font-weight:800;font-size:24px}.tile .k{font-size:11px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.xpbar{height:9px;background:var(--line);border-radius:999px;overflow:hidden;margin-top:14px}.xpbar>span{display:block;height:100%;background:var(--accent);border-radius:999px}
+.xplbl{font-size:12px;color:var(--mut);font-weight:700;margin-top:5px}
+.levels{display:flex;gap:12px;flex-wrap:wrap}
+.lvl{flex:1;min-width:120px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.donut{width:84px;height:84px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;position:relative}
+.donut::after{content:"";position:absolute;width:58px;height:58px;border-radius:50%;background:var(--card)}
+.donut .n{position:relative;z-index:1;font-weight:800;font-size:16px}
+.lvl .lt{font-weight:800;font-size:14px}.lvl .ls{font-size:11px;color:var(--mut);font-weight:700}
+.heat{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:6px}
+.heat .c{aspect-ratio:1;border-radius:3px;background:var(--line)}
+.heatlbl{font-size:12px;color:var(--mut);font-weight:700;margin-top:8px}
+.ach{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.badge{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;text-align:center;box-shadow:0 2px 0 rgba(0,0,0,.05);opacity:.45;filter:grayscale(1)}
+.badge.on{opacity:1;filter:none;border-color:var(--ok)}
+.badge .em{font-size:28px}.badge .bt{font-weight:800;font-size:13px;margin-top:4px}.badge .bd{font-size:11px;color:var(--mut);font-weight:700}
+.note{color:var(--mut);font-weight:700;font-size:13px;margin-top:8px}
+</style>
+</head>
+<body>
+<a class="back" href="index.html">‹ all lessons</a>
+<div class="eyebrow">slovenščina · my progress</div>
+<h1>my progress</h1>
+<div class="tiles" id="tiles"></div>
+<div class="xpbar"><span id="xpfill" style="width:0"></span></div>
+<div class="xplbl" id="xplbl"></div>
+
+<h2>per level</h2>
+<div class="levels" id="levels"></div>
+
+<h2>activity — last 12 weeks</h2>
+<div class="heat" id="heat"></div>
+<div class="heatlbl" id="heatlbl"></div>
+
+<h2>achievements</h2>
+<div class="ach" id="ach"></div>
+
+<script src="course.js"></script>
+<script>
+(function(){
+  if(!window.Course){return;}
+  var st=Course.stats();
+  // top tiles
+  var tiles=[['🔥',st.streak||0,'day streak'],['⭐','lvl '+st.level,st.xp+' XP'],
+             ['📚',st.learned,'words learnt'],['✅',st.lessonsDone,'lessons passed'],['🔁',st.due,'due now']];
+  document.getElementById('tiles').innerHTML=tiles.map(function(t){
+    return '<div class="tile"><div class="v">'+t[0]+' '+t[1]+'</div><div class="k">'+t[2]+'</div></div>';}).join('');
+  // xp bar within current level (200 XP per level)
+  var into=st.xp%200, pct=Math.round(into/200*100);
+  document.getElementById('xpfill').style.width=pct+'%';
+  document.getElementById('xplbl').textContent=into+' / 200 XP to level '+(st.level+1);
+
+  // per-level donuts (green/orange/red from levels.json + Course.state)
+  fetch('levels.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(levels){
+    var html=levels.map(function(L){
+      var g=0,o=0,red=0;
+      L.ids.forEach(function(id){var s=Course.state(id); if(s==='green')g++; else if(s==='orange')o++; else red++;});
+      var tot=L.ids.length||1, gd=Math.round(g/tot*360), od=Math.round((g+o)/tot*360);
+      var ring='conic-gradient(var(--ok) 0 '+gd+'deg,var(--warn) '+gd+'deg '+od+'deg,var(--line) '+od+'deg 360deg)';
+      return '<div class="lvl"><div class="donut" style="background:'+ring+'"><span class="n">'+g+'/'+tot+'</span></div>'+
+        '<div class="lt">'+L.emoji+' '+L.title+'</div><div class="ls">'+g+' passed · '+o+' started</div></div>';
+    }).join('');
+    document.getElementById('levels').innerHTML=html;
+    paintAch(levels);
+  }).catch(function(){document.getElementById('levels').innerHTML='<div class="note">level data unavailable offline until the next build.</div>';paintAch([]);});
+
+  // activity heatmap — last 84 days
+  var days=Course.history(), today=Course.today(), cells='', total=0;
+  for(var d=today-83; d<=today; d++){
+    var n=days[d]||0; total+=n;
+    var bg=n===0?'var(--line)':(n<5?'#bfe0cd':(n<15?'#7cc59a':'var(--ok)'));
+    cells+='<div class="c" style="background:'+bg+'" title="'+n+' answers"></div>';
+  }
+  document.getElementById('heat').innerHTML=cells;
+  document.getElementById('heatlbl').textContent=total+' answers in the last 12 weeks · darker = busier';
+
+  function paintAch(levels){
+    var fullLevels=levels.filter(function(L){return L.ids.length && L.ids.every(function(id){return Course.state(id)==='green';});}).length;
+    var A=[
+      ['🌱','First steps','finish 1 lesson', st.lessonsDone>=1],
+      ['🚶','Getting going','pass 10 lessons', st.lessonsDone>=10],
+      ['🏃','Half-century','pass 50 lessons', st.lessonsDone>=50],
+      ['🏆','Centurion','pass 100 lessons', st.lessonsDone>=100],
+      ['📖','Word collector','learn 100 words', st.learned>=100],
+      ['📚','Lexicon','learn 500 words', st.learned>=500],
+      ['🔥','On fire','7-day streak', (st.streak||0)>=7],
+      ['⚡','Unstoppable','30-day streak', (st.streak||0)>=30],
+      ['⭐','Rising','reach level 5', st.level>=5],
+      ['🌟','Veteran','reach level 10', st.level>=10],
+      ['🎓','Level master','100% a whole level', fullLevels>=1]
+    ];
+    document.getElementById('ach').innerHTML=A.map(function(a){
+      return '<div class="badge'+(a[3]?' on':'')+'"><div class="em">'+a[0]+'</div><div class="bt">'+a[1]+'</div><div class="bd">'+a[2]+'</div></div>';}).join('');
+  }
+})();
+</script>
+</body>
+</html>

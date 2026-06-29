@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>try{var t=localStorage.getItem('slo_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<title>slovenščina · course</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#E11D2C" media="(prefers-color-scheme:light)"><meta name="theme-color" content="#1b1714" media="(prefers-color-scheme:dark)">
+<link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Slovenščina">
+<meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="mobile-web-app-capable" content="yes">
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))</script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{ --bg:#FBF6EE; --card:#fff; --ink:#2B2724; --mut:#8A8178; --line:#ECE3D6; --accent:#E11D2C; --accent-soft:#fdecea; --ok:#4F9A6A; --warn:#E6951F; }
+:root[data-theme="dark"]{ --bg:#1b1714; --card:#272018; --ink:#efe6d8; --mut:#a89e90; --line:#3a322a; --accent:#ff5b4b; --accent-soft:#3a1c19; --ok:#5fb07e; --warn:#e0a23c; }
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){ --bg:#1b1714; --card:#272018; --ink:#efe6d8; --mut:#a89e90; --line:#3a322a; --accent:#ff5b4b; --accent-soft:#3a1c19; --ok:#5fb07e; --warn:#e0a23c; } }
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);max-width:660px;margin:0 auto;padding:34px 20px 80px}
+h1{text-transform:lowercase;letter-spacing:-.02em;font-size:40px;margin:0}
+.eyebrow{font-weight:800;font-size:12px;letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
+.sub{color:var(--mut);font-weight:700;margin-bottom:8px}
+/* progress header (injected by course.js) */
+.statbar{display:flex;gap:10px;flex-wrap:wrap;align-items:stretch;margin:18px 0 4px}
+.statbar .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 14px;text-align:center;min-width:76px;text-decoration:none;color:inherit;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.statbar .stat.due{border-color:var(--accent);background:var(--accent-soft)}
+.statbar .stat .v{font-weight:800;font-size:18px}.statbar .stat .k{font-size:10.5px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.statbar .goal{flex:1;min-width:140px;display:flex;flex-direction:column;justify-content:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 14px;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.statbar .goalbar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin-bottom:5px}.statbar .goalbar span{display:block;height:100%;background:var(--ok);border-radius:999px}
+.statbar .goal .k{font-size:11px;color:var(--mut);font-weight:700}
+/* continue button + per-branch progress (injected by course.js) */
+.continue{display:flex;align-items:center;gap:12px;background:var(--accent);color:#fff;border-radius:14px;padding:13px 18px;margin-top:10px;text-decoration:none;box-shadow:0 3px 0 rgba(0,0,0,.12)}
+.continue:hover{transform:translateY(-1px)}.continue:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.continue .ci{font-size:20px}.continue .ct{display:flex;flex-direction:column;line-height:1.2}
+.continue .ck{font-weight:800;font-size:15px}.continue .cl{font-size:13px;opacity:.85;text-transform:lowercase}
+.bprog{display:inline-flex;align-items:center}
+.bprog .bpbar{width:48px;height:7px;background:var(--line);border-radius:999px;overflow:hidden}
+.bprog .bpbar>span{display:block;height:100%;background:var(--ok);border-radius:999px}
+/* toolbar */
+.toolbar{display:flex;gap:8px;margin:18px 0 4px;flex-wrap:wrap}
+#q{flex:1;min-width:180px;font-family:inherit;font-size:15px;font-weight:700;border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--card);color:var(--ink)}
+#q:focus{outline:3px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+.xpand{font-weight:800;font-size:13px;border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:8px 14px;cursor:pointer;color:var(--ink);box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.xpand:hover,.xpand:focus-visible{border-color:var(--accent)}
+.navrow{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 2px}
+.navlink{flex:1;min-width:120px;text-align:center;text-decoration:none;font-weight:800;font-size:14px;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.navlink:hover,.navlink:focus-visible{border-color:var(--accent);transform:translateY(-1px)}
+/* branching tree */
+details.branch{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-top:10px;box-shadow:0 3px 0 rgba(0,0,0,.05)}
+details.branch>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 18px;font-weight:800}
+details.branch>summary::-webkit-details-marker{display:none}
+details.branch>summary::after{content:"▸";margin-left:auto;color:var(--mut);font-size:14px;transition:transform .15s}
+details.branch[open]>summary::after{transform:rotate(90deg)}
+.branch>summary .bemoji{font-size:24px}.branch>summary .btitle{font-size:18px;text-transform:lowercase}
+.branch>summary .bsub{color:var(--mut);font-weight:700;font-size:13px}
+.branch>summary .bcount{font-family:monospace;font-weight:800;color:var(--accent);font-size:13px;background:var(--accent-soft);border-radius:999px;padding:2px 9px}
+.binner{padding:0 16px 12px}
+details.unit{border-top:1px solid var(--line)}
+details.unit>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 4px;font-weight:800;font-size:15px;text-transform:lowercase}
+details.unit>summary::-webkit-details-marker{display:none}
+details.unit>summary::after{content:"▸";margin-left:auto;color:var(--mut);font-size:12px;transition:transform .15s}
+details.unit[open]>summary::after{transform:rotate(90deg)}
+.unit>summary .ucount{font-family:monospace;font-weight:800;color:var(--mut);font-size:12px}
+.cards{padding-bottom:6px}
+.lcard{position:relative;display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:14px;padding:13px 18px;margin-top:10px;text-decoration:none;color:inherit;box-shadow:0 3px 0 rgba(0,0,0,.05)}
+.lcard:hover{transform:translateY(-1px)}.lcard:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.num{font-family:monospace;font-weight:800;font-size:19px;color:var(--accent);min-width:30px}.e{font-size:23px}
+.t{display:flex;flex-direction:column;line-height:1.2}.lt{font-weight:800;font-size:18px;text-transform:lowercase}
+.lg{color:var(--mut);font-weight:700;font-size:13px}
+.lcard .done{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--ok);color:#fff;font-weight:800;font-size:12px;border-radius:999px;padding:3px 9px}
+/* traffic-light status: red (default accent) = untouched · orange = started · green = passed */
+.lcard[data-state="orange"]{border-left-color:var(--warn)}
+.lcard[data-state="green"]{border-left-color:var(--ok)}
+.lcard .badge{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-weight:800;font-size:12px;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.lcard .badge.green{background:var(--ok);color:#fff}
+.lcard .badge.orange{background:var(--warn);color:#fff}
+.lcard .badge.red{background:transparent;color:var(--mut);border:1px solid var(--line);font-weight:700}
+.lcard .here{position:absolute;left:-5px;top:-9px;background:var(--accent);color:#fff;font-weight:800;font-size:10px;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 8px;box-shadow:0 2px 0 rgba(0,0,0,.12)}
+.lcard:has(.here){box-shadow:0 0 0 2px var(--accent),0 3px 0 rgba(0,0,0,.05)}
+.lcard.hidden,details.hidden{display:none}
+.empty{color:var(--mut);font-weight:700;padding:14px 4px;font-size:14px}
+.foot-note{color:var(--mut);margin-top:28px;font-size:14px}
+</style>
+</head>
+<body>
+
+<div class="eyebrow">slovenščina · course</div>
+<h1>lessons</h1>
+<div class="sub">a free Slovenian course · <b>A1 → C2</b> · 255 lessons + 10 exams · works offline, no sign-up</div>
+<div id="progress"></div>
+<div class="toolbar">
+  <input id="q" type="search" placeholder="filter lessons…" aria-label="Filter lessons by name">
+  <button id="shuffle" class="xpand" type="button" title="open a random lesson" aria-label="Open a random lesson">🎲</button>
+  <button id="themebtn" class="xpand" type="button" aria-label="Toggle dark mode">🌙</button>
+  <button id="xpand" class="xpand" type="button">expand all</button>
+</div>
+<div class="navrow">
+  <a class="navlink" href="progress.html">📊 my progress</a>
+  <a class="navlink" href="words.html">📔 word bank</a>
+  <a class="navlink" href="review.html">🔁 review</a>
+</div>
+<button id="install" class="xpand" type="button" style="display:none;margin-top:8px">⬇ install this app</button>
+<p id="ioshint" class="foot-note" style="display:none">📲 to install: tap the <b>Share</b> button, then <b>Add to Home Screen</b>.</p>
+<div class="tree">
+
+  <details class="branch" data-id="b:Exams">
+    <summary><span class="bemoji">📊</span><span class="btitle">Exams</span><span class="bsub">the official A1 / A2 / B1 tests</span><span class="bcount">10</span></summary>
+    <div class="binner">
+    
+      <div class="cards"><a class="lcard" href="exam-guide.html"><span class="num">📋</span><span class="e">🎓</span><span class="t"><span class="lt">the official exams</span><span class="lg" lang="sl">· izpiti iz znanja slovenščine</span></span></a><a class="lcard" href="exam-a1-1.html"><span class="num">A1</span><span class="e">📝</span><span class="t"><span class="lt">mock exam · A1 paper 1</span><span class="lg" lang="sl">· vstopna raven</span></span></a><a class="lcard" href="exam-a1-2.html"><span class="num">A1</span><span class="e">📝</span><span class="t"><span class="lt">mock exam · A1 paper 2</span><span class="lg" lang="sl">· vstopna raven</span></span></a><a class="lcard" href="exam-a2-1.html"><span class="num">A2</span><span class="e">🎯</span><span class="t"><span class="lt">mock exam · A2 paper 1</span><span class="lg" lang="sl">· osnovna raven</span></span></a><a class="lcard" href="exam-a2-2.html"><span class="num">A2</span><span class="e">🎯</span><span class="t"><span class="lt">mock exam · A2 paper 2</span><span class="lg" lang="sl">· osnovna raven</span></span></a><a class="lcard" href="exam-b1-1.html"><span class="num">B1</span><span class="e">🎓</span><span class="t"><span class="lt">mock exam · B1 paper 1</span><span class="lg" lang="sl">· osnovna raven (B1)</span></span></a><a class="lcard" href="exam-b1-2.html"><span class="num">B1</span><span class="e">🎓</span><span class="t"><span class="lt">mock exam · B1 paper 2</span><span class="lg" lang="sl">· osnovna raven (B1)</span></span></a><a class="lcard" href="exam-b2-1.html"><span class="num">B2</span><span class="e">🎓</span><span class="t"><span class="lt">mock exam · B2 paper</span><span class="lg" lang="sl">· višja raven (B2)</span></span></a><a class="lcard" href="exam-c1-1.html"><span class="num">C1</span><span class="e">🏔️</span><span class="t"><span class="lt">mock exam · C1 paper</span><span class="lg" lang="sl">· raven odličnosti (C1)</span></span></a><a class="lcard" href="exam-c2-1.html"><span class="num">C2</span><span class="e">🏔️</span><span class="t"><span class="lt">mastery self-test · C2</span><span class="lg" lang="sl">· raven popolnosti (C2)</span></span></a></div>
+    
+    </div>
+  </details>
+
+  <details class="branch" data-id="b:Coursebook">
+    <summary><span class="bemoji">📖</span><span class="btitle">Coursebook</span><span class="bsub">themed units — vocab, grammar, reading & speaking</span><span class="bcount">9</span></summary>
+    <div class="binner">
+    
+      
+      <details class="unit" data-id="u:Coursebook/A1">
+        <summary><span class="utitle">A1</span><span class="ucount">5</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-301.html"><span class="num">E1</span><span class="e">🇸🇮</span><span class="t"><span class="lt">I'm learning Slovenian</span><span class="lg" lang="sl">· enota · učim se slovenščino</span></span></a><a class="lcard" href="lesson-302.html"><span class="num">E2</span><span class="e">🌍</span><span class="t"><span class="lt">My class</span><span class="lg" lang="sl">· enota · moj razred</span></span></a><a class="lcard" href="lesson-303.html"><span class="num">E3</span><span class="e">🗓️</span><span class="t"><span class="lt">My timetable</span><span class="lg" lang="sl">· enota · moj urnik</span></span></a><a class="lcard" href="lesson-304.html"><span class="num">E4</span><span class="e">🎮</span><span class="t"><span class="lt">My free time</span><span class="lg" lang="sl">· enota · moj prosti čas</span></span></a><a class="lcard" href="lesson-305.html"><span class="num">E5</span><span class="e">🎒</span><span class="t"><span class="lt">Off on a trip</span><span class="lg" lang="sl">· enota · gremo na ekskurzijo</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:Coursebook/B1">
+        <summary><span class="utitle">B1</span><span class="ucount">1</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-306.html"><span class="num">B1</span><span class="e">💼</span><span class="t"><span class="lt">The world of work</span><span class="lg" lang="sl">· enota · svet dela</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:Coursebook/B2">
+        <summary><span class="utitle">B2</span><span class="ucount">1</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-307.html"><span class="num">B2</span><span class="e">🌍</span><span class="t"><span class="lt">Our environment</span><span class="lg" lang="sl">· enota · naše okolje</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:Coursebook/C1">
+        <summary><span class="utitle">C1</span><span class="ucount">1</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-308.html"><span class="num">C1</span><span class="e">🎭</span><span class="t"><span class="lt">Culture & heritage</span><span class="lg" lang="sl">· enota · kultura in dediščina</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:Coursebook/C2">
+        <summary><span class="utitle">C2</span><span class="ucount">1</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-309.html"><span class="num">C2</span><span class="e">🎤</span><span class="t"><span class="lt">The art of persuasion</span><span class="lg" lang="sl">· enota · umetnost prepričevanja</span></span></a></div>
+      </details>
+      
+    
+    </div>
+  </details>
+
+  <details class="branch" data-id="b:A1 · beginner">
+    <summary><span class="bemoji">📗</span><span class="btitle">A1 · beginner</span><span class="bsub">the foundations</span><span class="bcount">27</span></summary>
+    <div class="binner">
+    
+      
+      <details class="unit" data-id="u:A1 · beginner/Cases">
+        <summary><span class="utitle">Cases</span><span class="ucount">6</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-01.html"><span class="num">01</span><span class="e">🎯</span><span class="t"><span class="lt">the object case</span><span class="lg" lang="sl">· tožilnik</span></span></a><a class="lcard" href="lesson-02.html"><span class="num">02</span><span class="e">🚫</span><span class="t"><span class="lt">the 'of' case</span><span class="lg" lang="sl">· rodilnik</span></span></a><a class="lcard" href="lesson-03.html"><span class="num">03</span><span class="e">🎁</span><span class="t"><span class="lt">the 'to' case</span><span class="lg" lang="sl">· dajalnik</span></span></a><a class="lcard" href="lesson-04.html"><span class="num">04</span><span class="e">📍</span><span class="t"><span class="lt">the 'where' case</span><span class="lg" lang="sl">· mestnik</span></span></a><a class="lcard" href="lesson-05.html"><span class="num">05</span><span class="e">🔧</span><span class="t"><span class="lt">the 'with' case</span><span class="lg" lang="sl">· orodnik</span></span></a><a class="lcard" href="lesson-24.html"><span class="num">24</span><span class="e">🧭</span><span class="t"><span class="lt">where things are</span><span class="lg" lang="sl">· predlogi za kraj</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:A1 · beginner/Number & the dual">
+        <summary><span class="utitle">Number & the dual</span><span class="ucount">1</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-06.html"><span class="num">06</span><span class="e">✌️</span><span class="t"><span class="lt">the dual</span><span class="lg" lang="sl">· dvojina</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:A1 · beginner/Verbs & tenses">
+        <summary><span class="utitle">Verbs & tenses</span><span class="ucount">4</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-07.html"><span class="num">07</span><span class="e">🗣️</span><span class="t"><span class="lt">verbs in the present</span><span class="lg" lang="sl">· sedanjik</span></span></a><a class="lcard" href="lesson-08.html"><span class="num">08</span><span class="e">⏪</span><span class="t"><span class="lt">the past tense</span><span class="lg" lang="sl">· preteklik</span></span></a><a class="lcard" href="lesson-15.html"><span class="num">15</span><span class="e">⏩</span><span class="t"><span class="lt">the future</span><span class="lg" lang="sl">· prihodnjik</span></span></a><a class="lcard" href="lesson-16.html"><span class="num">16</span><span class="e">💪</span><span class="t"><span class="lt">must, can, want</span><span class="lg" lang="sl">· modalni glagoli</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:A1 · beginner/Essentials">
+        <summary><span class="utitle">Essentials</span><span class="ucount">7</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-09.html"><span class="num">09</span><span class="e">❓</span><span class="t"><span class="lt">asking questions</span><span class="lg" lang="sl">· vprašalnice</span></span></a><a class="lcard" href="lesson-10.html"><span class="num">10</span><span class="e">👋</span><span class="t"><span class="lt">first words</span><span class="lg" lang="sl">· pozdravi</span></span></a><a class="lcard" href="lesson-11.html"><span class="num">11</span><span class="e">🔢</span><span class="t"><span class="lt">one to ten</span><span class="lg" lang="sl">· števila</span></span></a><a class="lcard" href="lesson-12.html"><span class="num">12</span><span class="e">📅</span><span class="t"><span class="lt">days of the week</span><span class="lg" lang="sl">· dnevi</span></span></a><a class="lcard" href="lesson-13.html"><span class="num">13</span><span class="e">🎨</span><span class="t"><span class="lt">colours</span><span class="lg" lang="sl">· barve</span></span></a><a class="lcard" href="lesson-14.html"><span class="num">14</span><span class="e">🚫</span><span class="t"><span class="lt">saying no</span><span class="lg" lang="sl">· nikalnica</span></span></a><a class="lcard" href="lesson-23.html"><span class="num">23</span><span class="e">🔢</span><span class="t"><span class="lt">eleven to twenty</span><span class="lg" lang="sl">· števila 11–20</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:A1 · beginner/Vocabulary">
+        <summary><span class="utitle">Vocabulary</span><span class="ucount">8</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-17.html"><span class="num">17</span><span class="e">👨‍👩‍👧‍👦</span><span class="t"><span class="lt">family</span><span class="lg" lang="sl">· družina</span></span></a><a class="lcard" href="lesson-18.html"><span class="num">18</span><span class="e">🍽️</span><span class="t"><span class="lt">food & drink</span><span class="lg" lang="sl">· hrana in pijača</span></span></a><a class="lcard" href="lesson-19.html"><span class="num">19</span><span class="e">🧍</span><span class="t"><span class="lt">the body</span><span class="lg" lang="sl">· telo</span></span></a><a class="lcard" href="lesson-20.html"><span class="num">20</span><span class="e">⏰</span><span class="t"><span class="lt">time words</span><span class="lg" lang="sl">· čas</span></span></a><a class="lcard" href="lesson-21.html"><span class="num">21</span><span class="e">🌤️</span><span class="t"><span class="lt">weather & feelings</span><span class="lg" lang="sl">· vreme in počutje</span></span></a><a class="lcard" href="lesson-25.html"><span class="num">25</span><span class="e">🐾</span><span class="t"><span class="lt">animals</span><span class="lg" lang="sl">· živali</span></span></a><a class="lcard" href="lesson-26.html"><span class="num">26</span><span class="e">🏠</span><span class="t"><span class="lt">house & home</span><span class="lg" lang="sl">· dom</span></span></a><a class="lcard" href="lesson-27.html"><span class="num">27</span><span class="e">👕</span><span class="t"><span class="lt">clothes</span><span class="lg" lang="sl">· oblačila</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:A1 · beginner/Review">
+        <summary><span class="utitle">Review</span><span class="ucount">1</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-22.html"><span class="num">22</span><span class="e">🔀</span><span class="t"><span class="lt">mixed review</span><span class="lg" lang="sl">· ponovitev</span></span></a></div>
+      </details>
+      
+    
+    </div>
+  </details>
+
+  <details class="branch" data-id="b:A2 · elementary">
+    <summary><span class="bemoji">📘</span><span class="btitle">A2 · elementary</span><span class="bsub">building it up</span><span class="bcount">23</span></summary>
+    <div class="binner">
+    
+      
+      <details class="unit" data-id="u:A2 · elementary/More grammar">
+        <summary><span class="utitle">More grammar</span><span class="ucount">5</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-28.html"><span class="num">28</span><span class="e">🔢</span><span class="t"><span class="lt">the plural</span><span class="lg" lang="sl">· množina</span></span></a><a class="lcard" href="lesson-29.html"><span class="num">29</span><span class="e">🖐️</span><span class="t"><span class="lt">five and more</span><span class="lg" lang="sl">· rodilnik množine</span></span></a><a class="lcard" href="lesson-30.html"><span class="num">30</span><span class="e">🎨</span><span class="t"><span class="lt">adjectives agree</span><span class="lg" lang="sl">· pridevniki</span></span></a><a class="lcard" href="lesson-31.html"><span class="num">31</span><span class="e">📈</span><span class="t"><span class="lt">bigger, biggest</span><span class="lg" lang="sl">· stopnjevanje</span></span></a><a class="lcard" href="lesson-32.html"><span class="num">32</span><span class="e">🥇</span><span class="t"><span class="lt">first, second, third</span><span class="lg" lang="sl">· vrstilni števniki</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:A2 · elementary/More verbs">
+        <summary><span class="utitle">More verbs</span><span class="ucount">5</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-33.html"><span class="num">33</span><span class="e">⏱️</span><span class="t"><span class="lt">started vs finished</span><span class="lg" lang="sl">· glagolski vid</span></span></a><a class="lcard" href="lesson-34.html"><span class="num">34</span><span class="e">🫵</span><span class="t"><span class="lt">commands</span><span class="lg" lang="sl">· velelnik</span></span></a><a class="lcard" href="lesson-35.html"><span class="num">35</span><span class="e">💭</span><span class="t"><span class="lt">would & would like</span><span class="lg" lang="sl">· pogojnik</span></span></a><a class="lcard" href="lesson-36.html"><span class="num">36</span><span class="e">🔁</span><span class="t"><span class="lt">verbs with 'se'</span><span class="lg" lang="sl">· povratni glagoli</span></span></a><a class="lcard" href="lesson-37.html"><span class="num">37</span><span class="e">👥</span><span class="t"><span class="lt">we, you all, they</span><span class="lg" lang="sl">· sedanjik množine</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:A2 · elementary/Situations">
+        <summary><span class="utitle">Situations</span><span class="ucount">12</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-38.html"><span class="num">38</span><span class="e">🕐</span><span class="t"><span class="lt">telling the time</span><span class="lg" lang="sl">· ura</span></span></a><a class="lcard" href="lesson-39.html"><span class="num">39</span><span class="e">📅</span><span class="t"><span class="lt">months</span><span class="lg" lang="sl">· meseci</span></span></a><a class="lcard" href="lesson-40.html"><span class="num">40</span><span class="e">🍽️</span><span class="t"><span class="lt">at the restaurant</span><span class="lg" lang="sl">· v restavraciji</span></span></a><a class="lcard" href="lesson-41.html"><span class="num">41</span><span class="e">🛒</span><span class="t"><span class="lt">shopping</span><span class="lg" lang="sl">· nakupovanje</span></span></a><a class="lcard" href="lesson-42.html"><span class="num">42</span><span class="e">🧭</span><span class="t"><span class="lt">directions</span><span class="lg" lang="sl">· smeri</span></span></a><a class="lcard" href="lesson-43.html"><span class="num">43</span><span class="e">🩺</span><span class="t"><span class="lt">at the doctor</span><span class="lg" lang="sl">· pri zdravniku</span></span></a><a class="lcard" href="lesson-44.html"><span class="num">44</span><span class="e">💼</span><span class="t"><span class="lt">jobs</span><span class="lg" lang="sl">· poklici</span></span></a><a class="lcard" href="lesson-45.html"><span class="num">45</span><span class="e">🎨</span><span class="t"><span class="lt">free time</span><span class="lg" lang="sl">· prosti čas</span></span></a><a class="lcard" href="lesson-46.html"><span class="num">46</span><span class="e">✈️</span><span class="t"><span class="lt">travel</span><span class="lg" lang="sl">· potovanje</span></span></a><a class="lcard" href="lesson-47.html"><span class="num">47</span><span class="e">🌍</span><span class="t"><span class="lt">countries & languages</span><span class="lg" lang="sl">· države in jeziki</span></span></a><a class="lcard" href="lesson-48.html"><span class="num">48</span><span class="e">🧑</span><span class="t"><span class="lt">describing people</span><span class="lg" lang="sl">· opis osebe</span></span></a><a class="lcard" href="lesson-49.html"><span class="num">49</span><span class="e">🌅</span><span class="t"><span class="lt">a day in the life</span><span class="lg" lang="sl">· dnevna rutina</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:A2 · elementary/Review">
+        <summary><span class="utitle">Review</span><span class="ucount">1</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-50.html"><span class="num">50</span><span class="e">🎯</span><span class="t"><span class="lt">A2 review</span><span class="lg" lang="sl">· A2 ponovitev</span></span></a></div>
+      </details>
+      
+    
+    </div>
+  </details>
+
+  <details class="branch" data-id="b:B1 · intermediate">
+    <summary><span class="bemoji">📙</span><span class="btitle">B1 · intermediate</span><span class="bsub">real-world Slovene</span><span class="bcount">38</span></summary>
+    <div class="binner">
+    
+      
+      <details class="unit" data-id="u:B1 · intermediate/Advanced grammar">
+        <summary><span class="utitle">Advanced grammar</span><span class="ucount">12</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-111.html"><span class="num">111</span><span class="e">🔗</span><span class="t"><span class="lt">the joining word ki</span><span class="lg" lang="sl">· oziralniki – ki</span></span></a><a class="lcard" href="lesson-112.html"><span class="num">112</span><span class="e">🔀</span><span class="t"><span class="lt">the declined kateri</span><span class="lg" lang="sl">· oziralniki – kateri</span></span></a><a class="lcard" href="lesson-113.html"><span class="num">113</span><span class="e">🔮</span><span class="t"><span class="lt">if and would</span><span class="lg" lang="sl">· pogojni stavki</span></span></a><a class="lcard" href="lesson-114.html"><span class="num">114</span><span class="e">🏗️</span><span class="t"><span class="lt">things being done</span><span class="lg" lang="sl">· trpnik</span></span></a><a class="lcard" href="lesson-115.html"><span class="num">115</span><span class="e">🌫️</span><span class="t"><span class="lt">no one in particular</span><span class="lg" lang="sl">· brezosebni stavki</span></span></a><a class="lcard" href="lesson-116.html"><span class="num">116</span><span class="e">💬</span><span class="t"><span class="lt">he said that…</span><span class="lg" lang="sl">· odvisni govor</span></span></a><a class="lcard" href="lesson-117.html"><span class="num">117</span><span class="e">🪢</span><span class="t"><span class="lt">joining ideas</span><span class="lg" lang="sl">· vezniki</span></span></a><a class="lcard" href="lesson-118.html"><span class="num">118</span><span class="e">🔁</span><span class="t"><span class="lt">verbs as nouns</span><span class="lg" lang="sl">· glagolnik</span></span></a><a class="lcard" href="lesson-119.html"><span class="num">119</span><span class="e">🏷️</span><span class="t"><span class="lt">verbs as describers</span><span class="lg" lang="sl">· deležniki</span></span></a><a class="lcard" href="lesson-120.html"><span class="num">120</span><span class="e">📅</span><span class="t"><span class="lt">dates & numbers</span><span class="lg" lang="sl">· števniki in datumi</span></span></a><a class="lcard" href="lesson-121.html"><span class="num">121</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence XI</span><span class="lg" lang="sl">· besedni red B1</span></span></a><a class="lcard" href="lesson-122.html"><span class="num">122</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence XII</span><span class="lg" lang="sl">· besedni red B1 II</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:B1 · intermediate/Advanced verbs">
+        <summary><span class="utitle">Advanced verbs</span><span class="ucount">8</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-123.html"><span class="num">123</span><span class="e">⏳</span><span class="t"><span class="lt">doing vs done</span><span class="lg" lang="sl">· vid v rabi</span></span></a><a class="lcard" href="lesson-124.html"><span class="num">124</span><span class="e">👯</span><span class="t"><span class="lt">the aspect twins</span><span class="lg" lang="sl">· vidski pari</span></span></a><a class="lcard" href="lesson-125.html"><span class="num">125</span><span class="e">🚉</span><span class="t"><span class="lt">coming & going</span><span class="lg" lang="sl">· glagoli premikanja</span></span></a><a class="lcard" href="lesson-126.html"><span class="num">126</span><span class="e">🚦</span><span class="t"><span class="lt">must, can, may, want</span><span class="lg" lang="sl">· modalnost</span></span></a><a class="lcard" href="lesson-127.html"><span class="num">127</span><span class="e">⏭️</span><span class="t"><span class="lt">two futures</span><span class="lg" lang="sl">· prihodnost in vid</span></span></a><a class="lcard" href="lesson-128.html"><span class="num">128</span><span class="e">🪞</span><span class="t"><span class="lt">self & each other</span><span class="lg" lang="sl">· povratnost in si</span></span></a><a class="lcard" href="lesson-129.html"><span class="num">129</span><span class="e">📢</span><span class="t"><span class="lt">giving orders</span><span class="lg" lang="sl">· velelnik in vljudnost</span></span></a><a class="lcard" href="lesson-130.html"><span class="num">130</span><span class="e">🙏</span><span class="t"><span class="lt">the polite would</span><span class="lg" lang="sl">· pogojnik za vljudnost</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:B1 · intermediate/Situations">
+        <summary><span class="utitle">Situations</span><span class="ucount">14</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-131.html"><span class="num">131</span><span class="e">💼</span><span class="t"><span class="lt">the job interview</span><span class="lg" lang="sl">· razgovor za službo</span></span></a><a class="lcard" href="lesson-132.html"><span class="num">132</span><span class="e">🏘️</span><span class="t"><span class="lt">renting a flat</span><span class="lg" lang="sl">· najem stanovanja</span></span></a><a class="lcard" href="lesson-133.html"><span class="num">133</span><span class="e">🏦</span><span class="t"><span class="lt">opening an account</span><span class="lg" lang="sl">· na banki</span></span></a><a class="lcard" href="lesson-134.html"><span class="num">134</span><span class="e">🩺</span><span class="t"><span class="lt">at the doctor again</span><span class="lg" lang="sl">· pri zdravniku II</span></span></a><a class="lcard" href="lesson-135.html"><span class="num">135</span><span class="e">📦</span><span class="t"><span class="lt">a complaint</span><span class="lg" lang="sl">· reklamacija</span></span></a><a class="lcard" href="lesson-136.html"><span class="num">136</span><span class="e">🏛️</span><span class="t"><span class="lt">the admin office</span><span class="lg" lang="sl">· na upravni enoti</span></span></a><a class="lcard" href="lesson-137.html"><span class="num">137</span><span class="e">📞</span><span class="t"><span class="lt">making a plan</span><span class="lg" lang="sl">· telefonski dogovor</span></span></a><a class="lcard" href="lesson-138.html"><span class="num">138</span><span class="e">🇸🇮</span><span class="t"><span class="lt">independence</span><span class="lg" lang="sl">· osamosvojitev</span></span></a><a class="lcard" href="lesson-139.html"><span class="num">139</span><span class="e">♻️</span><span class="t"><span class="lt">the environment</span><span class="lg" lang="sl">· okolje</span></span></a><a class="lcard" href="lesson-140.html"><span class="num">140</span><span class="e">🏔️</span><span class="t"><span class="lt">the regions</span><span class="lg" lang="sl">· pokrajine</span></span></a><a class="lcard" href="lesson-141.html"><span class="num">141</span><span class="e">📱</span><span class="t"><span class="lt">screens & news</span><span class="lg" lang="sl">· mediji</span></span></a><a class="lcard" href="lesson-142.html"><span class="num">142</span><span class="e">🎭</span><span class="t"><span class="lt">holidays & tradition</span><span class="lg" lang="sl">· prazniki</span></span></a><a class="lcard" href="lesson-143.html"><span class="num">143</span><span class="e">💭</span><span class="t"><span class="lt">opinions</span><span class="lg" lang="sl">· mnenja</span></span></a><a class="lcard" href="lesson-144.html"><span class="num">144</span><span class="e">❤️</span><span class="t"><span class="lt">feelings</span><span class="lg" lang="sl">· čustva in odnosi</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:B1 · intermediate/Review">
+        <summary><span class="utitle">Review</span><span class="ucount">4</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-145.html"><span class="num">145</span><span class="e">🎯</span><span class="t"><span class="lt">B1 grammar review</span><span class="lg" lang="sl">· B1 ponovitev – slovnica</span></span></a><a class="lcard" href="lesson-146.html"><span class="num">146</span><span class="e">🎯</span><span class="t"><span class="lt">B1 verbs review</span><span class="lg" lang="sl">· B1 ponovitev – glagoli</span></span></a><a class="lcard" href="lesson-147.html"><span class="num">147</span><span class="e">🎯</span><span class="t"><span class="lt">B1 situations review</span><span class="lg" lang="sl">· B1 ponovitev – situacije</span></span></a><a class="lcard" href="lesson-148.html"><span class="num">148</span><span class="e">🏆</span><span class="t"><span class="lt">B1 capstone</span><span class="lg" lang="sl">· B1 ponovitev</span></span></a></div>
+      </details>
+      
+    
+    </div>
+  </details>
+
+  <details class="branch" data-id="b:B2 · upper-intermediate">
+    <summary><span class="bemoji">📕</span><span class="btitle">B2 · upper-intermediate</span><span class="bsub">abstract topics & argument</span><span class="bcount">30</span></summary>
+    <div class="binner">
+    
+      
+      <details class="unit" data-id="u:B2 · upper-intermediate/B2 · Advanced grammar">
+        <summary><span class="utitle">B2 · Advanced grammar</span><span class="ucount">10</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-181.html"><span class="num">181</span><span class="e">🧱</span><span class="t"><span class="lt">verbs into nouns</span><span class="lg" lang="sl">· nominalizacija</span></span></a><a class="lcard" href="lesson-182.html"><span class="num">182</span><span class="e">🔗</span><span class="t"><span class="lt">two actions at once</span><span class="lg" lang="sl">· deležja</span></span></a><a class="lcard" href="lesson-183.html"><span class="num">183</span><span class="e">🪢</span><span class="t"><span class="lt">despite, instead, regardless</span><span class="lg" lang="sl">· vezniki II</span></span></a><a class="lcard" href="lesson-184.html"><span class="num">184</span><span class="e">📰</span><span class="t"><span class="lt">the formal passive</span><span class="lg" lang="sl">· trpnik II</span></span></a><a class="lcard" href="lesson-185.html"><span class="num">185</span><span class="e">🔮</span><span class="t"><span class="lt">had I known…</span><span class="lg" lang="sl">· pogojnik II</span></span></a><a class="lcard" href="lesson-186.html"><span class="num">186</span><span class="e">🎛️</span><span class="t"><span class="lt">which case does it want?</span><span class="lg" lang="sl">· skloni v rabi</span></span></a><a class="lcard" href="lesson-187.html"><span class="num">187</span><span class="e">🧩</span><span class="t"><span class="lt">building word families</span><span class="lg" lang="sl">· besedotvorje</span></span></a><a class="lcard" href="lesson-188.html"><span class="num">188</span><span class="e">🎨</span><span class="t"><span class="lt">the little flavour words</span><span class="lg" lang="sl">· členki</span></span></a><a class="lcard" href="lesson-189.html"><span class="num">189</span><span class="e">⚖️</span><span class="t"><span class="lt">as white as snow</span><span class="lg" lang="sl">· primerjave</span></span></a><a class="lcard" href="lesson-190.html"><span class="num">190</span><span class="e">🔢</span><span class="t"><span class="lt">numbers & agreement</span><span class="lg" lang="sl">· število v rabi</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:B2 · upper-intermediate/B2 · Advanced verbs">
+        <summary><span class="utitle">B2 · Advanced verbs</span><span class="ucount">7</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-191.html"><span class="num">191</span><span class="e">⏱️</span><span class="t"><span class="lt">aspect, finely</span><span class="lg" lang="sl">· vid II</span></span></a><a class="lcard" href="lesson-192.html"><span class="num">192</span><span class="e">🧩</span><span class="t"><span class="lt">prefixes that change meaning</span><span class="lg" lang="sl">· predpone II</span></span></a><a class="lcard" href="lesson-193.html"><span class="num">193</span><span class="e">🔗</span><span class="t"><span class="lt">verbs and their prepositions</span><span class="lg" lang="sl">· glagolska vezava</span></span></a><a class="lcard" href="lesson-194.html"><span class="num">194</span><span class="e">🎲</span><span class="t"><span class="lt">how sure are you?</span><span class="lg" lang="sl">· verjetnost</span></span></a><a class="lcard" href="lesson-195.html"><span class="num">195</span><span class="e">🧷</span><span class="t"><span class="lt">fixed expressions</span><span class="lg" lang="sl">· frazni glagoli</span></span></a><a class="lcard" href="lesson-196.html"><span class="num">196</span><span class="e">🪞</span><span class="t"><span class="lt">the many jobs of se</span><span class="lg" lang="sl">· povratnost II</span></span></a><a class="lcard" href="lesson-197.html"><span class="num">197</span><span class="e">⏲️</span><span class="t"><span class="lt">ordering events in time</span><span class="lg" lang="sl">· časovna razmerja</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:B2 · upper-intermediate/B2 · Texts & discussion">
+        <summary><span class="utitle">B2 · Texts & discussion</span><span class="ucount">10</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-198.html"><span class="num">198</span><span class="e">🌍</span><span class="t"><span class="lt">climate change</span><span class="lg" lang="sl">· podnebje</span></span></a><a class="lcard" href="lesson-199.html"><span class="num">199</span><span class="e">🤖</span><span class="t"><span class="lt">technology & society</span><span class="lg" lang="sl">· tehnologija in družba</span></span></a><a class="lcard" href="lesson-200.html"><span class="num">200</span><span class="e">💼</span><span class="t"><span class="lt">work & career</span><span class="lg" lang="sl">· delo in kariera</span></span></a><a class="lcard" href="lesson-201.html"><span class="num">201</span><span class="e">📜</span><span class="t"><span class="lt">a brief history</span><span class="lg" lang="sl">· zgodovina II</span></span></a><a class="lcard" href="lesson-202.html"><span class="num">202</span><span class="e">🥗</span><span class="t"><span class="lt">health & diet</span><span class="lg" lang="sl">· zdravje in prehrana</span></span></a><a class="lcard" href="lesson-203.html"><span class="num">203</span><span class="e">💬</span><span class="t"><span class="lt">city or village?</span><span class="lg" lang="sl">· razprava</span></span></a><a class="lcard" href="lesson-204.html"><span class="num">204</span><span class="e">📊</span><span class="t"><span class="lt">a business meeting</span><span class="lg" lang="sl">· poslovni sestanek</span></span></a><a class="lcard" href="lesson-205.html"><span class="num">205</span><span class="e">🗯️</span><span class="t"><span class="lt">nuanced opinions</span><span class="lg" lang="sl">· mnenja II</span></span></a><a class="lcard" href="lesson-206.html"><span class="num">206</span><span class="e">✉️</span><span class="t"><span class="lt">the formal register</span><span class="lg" lang="sl">· formalni jezik</span></span></a><a class="lcard" href="lesson-207.html"><span class="num">207</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence XIII</span><span class="lg" lang="sl">· besedni red II</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:B2 · upper-intermediate/B2 · Review">
+        <summary><span class="utitle">B2 · Review</span><span class="ucount">3</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-208.html"><span class="num">208</span><span class="e">🎯</span><span class="t"><span class="lt">B2 grammar review</span><span class="lg" lang="sl">· B2 ponovitev – slovnica</span></span></a><a class="lcard" href="lesson-209.html"><span class="num">209</span><span class="e">🎯</span><span class="t"><span class="lt">B2 verbs review</span><span class="lg" lang="sl">· B2 ponovitev – glagoli</span></span></a><a class="lcard" href="lesson-210.html"><span class="num">210</span><span class="e">🏆</span><span class="t"><span class="lt">B2 capstone</span><span class="lg" lang="sl">· B2 ponovitev</span></span></a></div>
+      </details>
+      
+    
+    </div>
+  </details>
+
+  <details class="branch" data-id="b:C1 · advanced">
+    <summary><span class="bemoji">🎓</span><span class="btitle">C1 · advanced</span><span class="bsub">register, idioms & literature</span><span class="bcount">19</span></summary>
+    <div class="binner">
+    
+      
+      <details class="unit" data-id="u:C1 · advanced/C1 · Register & style">
+        <summary><span class="utitle">C1 · Register & style</span><span class="ucount">6</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-211.html"><span class="num">211</span><span class="e">🎩</span><span class="t"><span class="lt">formal or casual?</span><span class="lg" lang="sl">· register</span></span></a><a class="lcard" href="lesson-212.html"><span class="num">212</span><span class="e">📐</span><span class="t"><span class="lt">standard vs colloquial</span><span class="lg" lang="sl">· knjižni jezik</span></span></a><a class="lcard" href="lesson-213.html"><span class="num">213</span><span class="e">📜</span><span class="t"><span class="lt">reading the classics</span><span class="lg" lang="sl">· arhaizmi</span></span></a><a class="lcard" href="lesson-214.html"><span class="num">214</span><span class="e">🏛️</span><span class="t"><span class="lt">the noun-heavy style</span><span class="lg" lang="sl">· nominalni slog</span></span></a><a class="lcard" href="lesson-215.html"><span class="num">215</span><span class="e">🧭</span><span class="t"><span class="lt">guiding the reader</span><span class="lg" lang="sl">· retorični vezniki</span></span></a><a class="lcard" href="lesson-216.html"><span class="num">216</span><span class="e">🎚️</span><span class="t"><span class="lt">the same idea, three ways</span><span class="lg" lang="sl">· slogovne različice</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:C1 · advanced/C1 · Idioms & proverbs">
+        <summary><span class="utitle">C1 · Idioms & proverbs</span><span class="ucount">5</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-217.html"><span class="num">217</span><span class="e">🦊</span><span class="t"><span class="lt">idioms I</span><span class="lg" lang="sl">· frazemi I</span></span></a><a class="lcard" href="lesson-218.html"><span class="num">218</span><span class="e">🐭</span><span class="t"><span class="lt">idioms II</span><span class="lg" lang="sl">· frazemi II</span></span></a><a class="lcard" href="lesson-219.html"><span class="num">219</span><span class="e">☁️</span><span class="t"><span class="lt">idioms III</span><span class="lg" lang="sl">· frazemi III</span></span></a><a class="lcard" href="lesson-220.html"><span class="num">220</span><span class="e">🦉</span><span class="t"><span class="lt">proverbs I</span><span class="lg" lang="sl">· pregovori I</span></span></a><a class="lcard" href="lesson-221.html"><span class="num">221</span><span class="e">🦉</span><span class="t"><span class="lt">proverbs II</span><span class="lg" lang="sl">· pregovori II</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:C1 · advanced/C1 · Texts & literature">
+        <summary><span class="utitle">C1 · Texts & literature</span><span class="ucount">6</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-222.html"><span class="num">222</span><span class="e">🇸🇮</span><span class="t"><span class="lt">the national anthem</span><span class="lg" lang="sl">· Zdravljica</span></span></a><a class="lcard" href="lesson-223.html"><span class="num">223</span><span class="e">🖋️</span><span class="t"><span class="lt">Prešeren & Romanticism</span><span class="lg" lang="sl">· Prešeren in romantika</span></span></a><a class="lcard" href="lesson-224.html"><span class="num">224</span><span class="e">⚖️</span><span class="t"><span class="lt">right & wrong</span><span class="lg" lang="sl">· filozofija in etika</span></span></a><a class="lcard" href="lesson-225.html"><span class="num">225</span><span class="e">🎨</span><span class="t"><span class="lt">why art matters</span><span class="lg" lang="sl">· umetnost</span></span></a><a class="lcard" href="lesson-226.html"><span class="num">226</span><span class="e">🔬</span><span class="t"><span class="lt">science & progress</span><span class="lg" lang="sl">· znanost in napredek</span></span></a><a class="lcard" href="lesson-227.html"><span class="num">227</span><span class="e">📰</span><span class="t"><span class="lt">media & society</span><span class="lg" lang="sl">· družba in mediji</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:C1 · advanced/C1 · Review">
+        <summary><span class="utitle">C1 · Review</span><span class="ucount">2</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-228.html"><span class="num">228</span><span class="e">🎯</span><span class="t"><span class="lt">C1 language review</span><span class="lg" lang="sl">· C1 ponovitev – jezik</span></span></a><a class="lcard" href="lesson-229.html"><span class="num">229</span><span class="e">🏔️</span><span class="t"><span class="lt">C1 capstone</span><span class="lg" lang="sl">· C1 ponovitev</span></span></a></div>
+      </details>
+      
+    
+    </div>
+  </details>
+
+  <details class="branch" data-id="b:C2 · mastery">
+    <summary><span class="bemoji">🏔️</span><span class="btitle">C2 · mastery</span><span class="bsub">nuance, style & literary analysis</span><span class="bcount">17</span></summary>
+    <div class="binner">
+    
+      
+      <details class="unit" data-id="u:C2 · mastery/C2 · Nuance & connotation">
+        <summary><span class="utitle">C2 · Nuance & connotation</span><span class="ucount">5</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-230.html"><span class="num">230</span><span class="e">🎚️</span><span class="t"><span class="lt">synonyms with a shade</span><span class="lg" lang="sl">· sopomenke</span></span></a><a class="lcard" href="lesson-231.html"><span class="num">231</span><span class="e">🔗</span><span class="t"><span class="lt">collocations</span><span class="lg" lang="sl">· kolokacije</span></span></a><a class="lcard" href="lesson-232.html"><span class="num">232</span><span class="e">🎭</span><span class="t"><span class="lt">false friends</span><span class="lg" lang="sl">· lažni prijatelji</span></span></a><a class="lcard" href="lesson-233.html"><span class="num">233</span><span class="e">🌗</span><span class="t"><span class="lt">connotation</span><span class="lg" lang="sl">· odtenki pomena</span></span></a><a class="lcard" href="lesson-234.html"><span class="num">234</span><span class="e">🌳</span><span class="t"><span class="lt">word families</span><span class="lg" lang="sl">· besedne družine</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:C2 · mastery/C2 · Stylistics & rhetoric">
+        <summary><span class="utitle">C2 · Stylistics & rhetoric</span><span class="ucount">5</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-235.html"><span class="num">235</span><span class="e">🦁</span><span class="t"><span class="lt">metaphor & simile</span><span class="lg" lang="sl">· metafora in primera</span></span></a><a class="lcard" href="lesson-236.html"><span class="num">236</span><span class="e">🙃</span><span class="t"><span class="lt">irony & understatement</span><span class="lg" lang="sl">· ironija in sarkazem</span></span></a><a class="lcard" href="lesson-237.html"><span class="num">237</span><span class="e">🎚️</span><span class="t"><span class="lt">tone & register</span><span class="lg" lang="sl">· ton in sporočilnost</span></span></a><a class="lcard" href="lesson-238.html"><span class="num">238</span><span class="e">🎙️</span><span class="t"><span class="lt">rhetorical devices</span><span class="lg" lang="sl">· retorične figure</span></span></a><a class="lcard" href="lesson-239.html"><span class="num">239</span><span class="e">🎯</span><span class="t"><span class="lt">word order & emphasis</span><span class="lg" lang="sl">· besedni red in poudarek</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:C2 · mastery/C2 · Literature & analysis">
+        <summary><span class="utitle">C2 · Literature & analysis</span><span class="ucount">5</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-240.html"><span class="num">240</span><span class="e">🖋️</span><span class="t"><span class="lt">Cankar & the Moderna</span><span class="lg" lang="sl">· Cankar in moderna</span></span></a><a class="lcard" href="lesson-241.html"><span class="num">241</span><span class="e">🪕</span><span class="t"><span class="lt">folk tradition</span><span class="lg" lang="sl">· ljudsko izročilo</span></span></a><a class="lcard" href="lesson-242.html"><span class="num">242</span><span class="e">📚</span><span class="t"><span class="lt">contemporary literature</span><span class="lg" lang="sl">· sodobna književnost</span></span></a><a class="lcard" href="lesson-243.html"><span class="num">243</span><span class="e">🗣️</span><span class="t"><span class="lt">language & identity</span><span class="lg" lang="sl">· jezik in identiteta</span></span></a><a class="lcard" href="lesson-244.html"><span class="num">244</span><span class="e">🔬</span><span class="t"><span class="lt">literary analysis</span><span class="lg" lang="sl">· literarna analiza</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:C2 · mastery/C2 · Review">
+        <summary><span class="utitle">C2 · Review</span><span class="ucount">2</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-245.html"><span class="num">245</span><span class="e">🎯</span><span class="t"><span class="lt">C2 style review</span><span class="lg" lang="sl">· C2 ponovitev – slog</span></span></a><a class="lcard" href="lesson-246.html"><span class="num">246</span><span class="e">🏔️</span><span class="t"><span class="lt">C2 capstone</span><span class="lg" lang="sl">· C2 ponovitev</span></span></a></div>
+      </details>
+      
+    
+    </div>
+  </details>
+
+  <details class="branch" data-id="b:Texts & conversation">
+    <summary><span class="bemoji">💬</span><span class="btitle">Texts & conversation</span><span class="bsub">dialogues, readings, word-order & translation</span><span class="bcount">72</span></summary>
+    <div class="binner">
+    
+      <div class="cards"><a class="lcard" href="lesson-51.html"><span class="num">51</span><span class="e">☕</span><span class="t"><span class="lt">at the café</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-52.html"><span class="num">52</span><span class="e">🤝</span><span class="t"><span class="lt">meeting someone</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-53.html"><span class="num">53</span><span class="e">📖</span><span class="t"><span class="lt">about me</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-54.html"><span class="num">54</span><span class="e">📬</span><span class="t"><span class="lt">a postcard</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-55.html"><span class="num">55</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence</span><span class="lg" lang="sl">· besedni red</span></span></a><a class="lcard" href="lesson-56.html"><span class="num">56</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence II</span><span class="lg" lang="sl">· besedni red</span></span></a><a class="lcard" href="lesson-57.html"><span class="num">57</span><span class="e">🔁</span><span class="t"><span class="lt">say it in Slovene</span><span class="lg" lang="sl">· prevod</span></span></a><a class="lcard" href="lesson-58.html"><span class="num">58</span><span class="e">🔁</span><span class="t"><span class="lt">say it in Slovene II</span><span class="lg" lang="sl">· prevod</span></span></a><a class="lcard" href="lesson-59.html"><span class="num">59</span><span class="e">🛍️</span><span class="t"><span class="lt">in the shop</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-60.html"><span class="num">60</span><span class="e">🧭</span><span class="t"><span class="lt">asking the way</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-61.html"><span class="num">61</span><span class="e">📅</span><span class="t"><span class="lt">making plans</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-62.html"><span class="num">62</span><span class="e">👨‍👩‍👧‍👦</span><span class="t"><span class="lt">my family</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-63.html"><span class="num">63</span><span class="e">🌅</span><span class="t"><span class="lt">my day</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-64.html"><span class="num">64</span><span class="e">🍂</span><span class="t"><span class="lt">the four seasons</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-65.html"><span class="num">65</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence III</span><span class="lg" lang="sl">· besedni red</span></span></a><a class="lcard" href="lesson-66.html"><span class="num">66</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence IV</span><span class="lg" lang="sl">· besedni red</span></span></a><a class="lcard" href="lesson-67.html"><span class="num">67</span><span class="e">🍽️</span><span class="t"><span class="lt">eating out</span><span class="lg" lang="sl">· prevod</span></span></a><a class="lcard" href="lesson-68.html"><span class="num">68</span><span class="e">🧳</span><span class="t"><span class="lt">getting around</span><span class="lg" lang="sl">· prevod</span></span></a><a class="lcard" href="lesson-69.html"><span class="num">69</span><span class="e">🩺</span><span class="t"><span class="lt">at the doctor's</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-70.html"><span class="num">70</span><span class="e">🏨</span><span class="t"><span class="lt">at the hotel</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-71.html"><span class="num">71</span><span class="e">📞</span><span class="t"><span class="lt">on the phone</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-72.html"><span class="num">72</span><span class="e">🥞</span><span class="t"><span class="lt">a recipe</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-73.html"><span class="num">73</span><span class="e">🏰</span><span class="t"><span class="lt">Ljubljana</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-74.html"><span class="num">74</span><span class="e">🎨</span><span class="t"><span class="lt">free time</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-75.html"><span class="num">75</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence V</span><span class="lg" lang="sl">· besedni red</span></span></a><a class="lcard" href="lesson-76.html"><span class="num">76</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence VI</span><span class="lg" lang="sl">· besedni red</span></span></a><a class="lcard" href="lesson-77.html"><span class="num">77</span><span class="e">🩺</span><span class="t"><span class="lt">at the doctor's (phrases)</span><span class="lg" lang="sl">· prevod</span></span></a><a class="lcard" href="lesson-78.html"><span class="num">78</span><span class="e">💬</span><span class="t"><span class="lt">feelings & small talk</span><span class="lg" lang="sl">· prevod</span></span></a><a class="lcard" href="lesson-79.html"><span class="num">79</span><span class="e">🍏</span><span class="t"><span class="lt">at the market</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-80.html"><span class="num">80</span><span class="e">🚉</span><span class="t"><span class="lt">at the station</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-81.html"><span class="num">81</span><span class="e">🎉</span><span class="t"><span class="lt">an invitation</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-82.html"><span class="num">82</span><span class="e">💼</span><span class="t"><span class="lt">a colleague at work</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-83.html"><span class="num">83</span><span class="e">🥟</span><span class="t"><span class="lt">Slovenian food</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-84.html"><span class="num">84</span><span class="e">✉️</span><span class="t"><span class="lt">a letter from a friend</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-85.html"><span class="num">85</span><span class="e">🌦️</span><span class="t"><span class="lt">the weather forecast</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-86.html"><span class="num">86</span><span class="e">🐕</span><span class="t"><span class="lt">my dog</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-87.html"><span class="num">87</span><span class="e">🧩</span><span class="t"><span class="lt">build a question</span><span class="lg" lang="sl">· besedni red</span></span></a><a class="lcard" href="lesson-88.html"><span class="num">88</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence VII</span><span class="lg" lang="sl">· besedni red</span></span></a><a class="lcard" href="lesson-89.html"><span class="num">89</span><span class="e">🛒</span><span class="t"><span class="lt">shopping & quantities</span><span class="lg" lang="sl">· prevod</span></span></a><a class="lcard" href="lesson-90.html"><span class="num">90</span><span class="e">🕐</span><span class="t"><span class="lt">time & dates</span><span class="lg" lang="sl">· prevod</span></span></a><a class="lcard" href="lesson-91.html"><span class="num">91</span><span class="e">🍽️</span><span class="t"><span class="lt">at the restaurant</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-92.html"><span class="num">92</span><span class="e">💊</span><span class="t"><span class="lt">at the pharmacy</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-93.html"><span class="num">93</span><span class="e">🙏</span><span class="t"><span class="lt">asking a favour</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-94.html"><span class="num">94</span><span class="e">🎶</span><span class="t"><span class="lt">at a party</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-95.html"><span class="num">95</span><span class="e">🏞️</span><span class="t"><span class="lt">Lake Bled</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-96.html"><span class="num">96</span><span class="e">🏛️</span><span class="t"><span class="lt">a famous Slovene</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-97.html"><span class="num">97</span><span class="e">🎓</span><span class="t"><span class="lt">studying at university</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-98.html"><span class="num">98</span><span class="e">🍲</span><span class="t"><span class="lt">a Slovenian Sunday</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-99.html"><span class="num">99</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence VIII</span><span class="lg" lang="sl">· besedni red</span></span></a><a class="lcard" href="lesson-100.html"><span class="num">100</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence IX</span><span class="lg" lang="sl">· besedni red</span></span></a><a class="lcard" href="lesson-101.html"><span class="num">101</span><span class="e">🏦</span><span class="t"><span class="lt">money & the bank</span><span class="lg" lang="sl">· prevod</span></span></a><a class="lcard" href="lesson-102.html"><span class="num">102</span><span class="e">🤝</span><span class="t"><span class="lt">making friends</span><span class="lg" lang="sl">· prevod</span></span></a><a class="lcard" href="lesson-103.html"><span class="num">103</span><span class="e">🚕</span><span class="t"><span class="lt">ordering a taxi</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-104.html"><span class="num">104</span><span class="e">🍽️</span><span class="t"><span class="lt">something's wrong</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-105.html"><span class="num">105</span><span class="e">📦</span><span class="t"><span class="lt">at the post office</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-106.html"><span class="num">106</span><span class="e">🕳️</span><span class="t"><span class="lt">the cave</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-107.html"><span class="num">107</span><span class="e">🚴</span><span class="t"><span class="lt">a champion</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-108.html"><span class="num">108</span><span class="e">🍞</span><span class="t"><span class="lt">breakfast</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-109.html"><span class="num">109</span><span class="e">🧩</span><span class="t"><span class="lt">build a sentence X</span><span class="lg" lang="sl">· besedni red</span></span></a><a class="lcard" href="lesson-110.html"><span class="num">110</span><span class="e">✈️</span><span class="t"><span class="lt">at the airport</span><span class="lg" lang="sl">· prevod</span></span></a><a class="lcard" href="lesson-169.html"><span class="num">169</span><span class="e">💇</span><span class="t"><span class="lt">at the hairdresser</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-170.html"><span class="num">170</span><span class="e">👕</span><span class="t"><span class="lt">buying clothes</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-171.html"><span class="num">171</span><span class="e">🏋️</span><span class="t"><span class="lt">joining the gym</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-172.html"><span class="num">172</span><span class="e">🎬</span><span class="t"><span class="lt">cinema tickets</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-173.html"><span class="num">173</span><span class="e">🧒</span><span class="t"><span class="lt">picking up from kindergarten</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-174.html"><span class="num">174</span><span class="e">🏘️</span><span class="t"><span class="lt">meeting the neighbours</span><span class="lg" lang="sl">· pogovor</span></span></a><a class="lcard" href="lesson-175.html"><span class="num">175</span><span class="e">🥧</span><span class="t"><span class="lt">Slovenian food</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-176.html"><span class="num">176</span><span class="e">🌊</span><span class="t"><span class="lt">the town of Piran</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-177.html"><span class="num">177</span><span class="e">🍂</span><span class="t"><span class="lt">the four seasons</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-178.html"><span class="num">178</span><span class="e">🚀</span><span class="t"><span class="lt">a space pioneer</span><span class="lg" lang="sl">· branje</span></span></a><a class="lcard" href="lesson-179.html"><span class="num">179</span><span class="e">📱</span><span class="t"><span class="lt">phone & tech</span><span class="lg" lang="sl">· prevod</span></span></a><a class="lcard" href="lesson-180.html"><span class="num">180</span><span class="e">⚽</span><span class="t"><span class="lt">sport & games</span><span class="lg" lang="sl">· prevod</span></span></a></div>
+    
+    </div>
+  </details>
+
+  <details class="branch" data-id="b:Workbook">
+    <summary><span class="bemoji">📝</span><span class="btitle">Workbook</span><span class="bsub">productive worksheets (delovni list)</span><span class="bcount">20</span></summary>
+    <div class="binner">
+    
+      
+      <details class="unit" data-id="u:Workbook/A1">
+        <summary><span class="utitle">A1</span><span class="ucount">8</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-149.html"><span class="num">149</span><span class="e">📝</span><span class="t"><span class="lt">nouns & gender</span><span class="lg" lang="sl">· delovni list · spol in 1. sklon</span></span></a><a class="lcard" href="lesson-150.html"><span class="num">150</span><span class="e">📝</span><span class="t"><span class="lt">the object case</span><span class="lg" lang="sl">· delovni list · tožilnik</span></span></a><a class="lcard" href="lesson-151.html"><span class="num">151</span><span class="e">📝</span><span class="t"><span class="lt">of & none</span><span class="lg" lang="sl">· delovni list · rodilnik</span></span></a><a class="lcard" href="lesson-152.html"><span class="num">152</span><span class="e">📝</span><span class="t"><span class="lt">to & at</span><span class="lg" lang="sl">· delovni list · dajalnik in mestnik</span></span></a><a class="lcard" href="lesson-153.html"><span class="num">153</span><span class="e">📝</span><span class="t"><span class="lt">exactly two</span><span class="lg" lang="sl">· delovni list · dvojina</span></span></a><a class="lcard" href="lesson-154.html"><span class="num">154</span><span class="e">📝</span><span class="t"><span class="lt">verbs in the present</span><span class="lg" lang="sl">· delovni list · glagoli</span></span></a><a class="lcard" href="lesson-155.html"><span class="num">155</span><span class="e">📝</span><span class="t"><span class="lt">numbers, days & time</span><span class="lg" lang="sl">· delovni list · števila in čas</span></span></a><a class="lcard" href="lesson-156.html"><span class="num">156</span><span class="e">📝</span><span class="t"><span class="lt">A1 review</span><span class="lg" lang="sl">· delovni list · A1 ponovitev</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:Workbook/A2">
+        <summary><span class="utitle">A2</span><span class="ucount">7</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-157.html"><span class="num">157</span><span class="e">📝</span><span class="t"><span class="lt">three and more</span><span class="lg" lang="sl">· delovni list · množina</span></span></a><a class="lcard" href="lesson-158.html"><span class="num">158</span><span class="e">📝</span><span class="t"><span class="lt">describing words</span><span class="lg" lang="sl">· delovni list · pridevniki</span></span></a><a class="lcard" href="lesson-159.html"><span class="num">159</span><span class="e">📝</span><span class="t"><span class="lt">bigger & best</span><span class="lg" lang="sl">· delovni list · stopnjevanje</span></span></a><a class="lcard" href="lesson-160.html"><span class="num">160</span><span class="e">📝</span><span class="t"><span class="lt">aspect & commands</span><span class="lg" lang="sl">· delovni list · vid in velelnik</span></span></a><a class="lcard" href="lesson-161.html"><span class="num">161</span><span class="e">📝</span><span class="t"><span class="lt">past & future</span><span class="lg" lang="sl">· delovni list · preteklik in prihodnjik</span></span></a><a class="lcard" href="lesson-162.html"><span class="num">162</span><span class="e">📝</span><span class="t"><span class="lt">prepositions & cases</span><span class="lg" lang="sl">· delovni list · predlogi</span></span></a><a class="lcard" href="lesson-163.html"><span class="num">163</span><span class="e">📝</span><span class="t"><span class="lt">A2 review</span><span class="lg" lang="sl">· delovni list · A2 ponovitev</span></span></a></div>
+      </details>
+      
+      <details class="unit" data-id="u:Workbook/B1">
+        <summary><span class="utitle">B1</span><span class="ucount">5</span></summary>
+        <div class="cards"><a class="lcard" href="lesson-164.html"><span class="num">164</span><span class="e">📝</span><span class="t"><span class="lt">joining clauses</span><span class="lg" lang="sl">· delovni list · oziralniki</span></span></a><a class="lcard" href="lesson-165.html"><span class="num">165</span><span class="e">📝</span><span class="t"><span class="lt">if & reported</span><span class="lg" lang="sl">· delovni list · pogojnik in odvisni govor</span></span></a><a class="lcard" href="lesson-166.html"><span class="num">166</span><span class="e">📝</span><span class="t"><span class="lt">things being done</span><span class="lg" lang="sl">· delovni list · trpnik</span></span></a><a class="lcard" href="lesson-167.html"><span class="num">167</span><span class="e">📝</span><span class="t"><span class="lt">coming & going</span><span class="lg" lang="sl">· delovni list · glagoli premikanja</span></span></a><a class="lcard" href="lesson-168.html"><span class="num">168</span><span class="e">📝</span><span class="t"><span class="lt">B1 review</span><span class="lg" lang="sl">· delovni list · B1 ponovitev</span></span></a></div>
+      </details>
+      
+    
+    </div>
+  </details>
+
+</div>
+<p class="empty" id="noresults" style="display:none">no lessons match — clear the filter to see them all.</p>
+<p class="foot-note">tap a branch to open it · your progress is saved only on this device · <a href="credits.html" style="color:var(--accent);font-weight:800">about &amp; credits</a></p>
+<script src="course.js"></script>
+<script>
+(function(){
+  var KEY='slo_tree_v1', open={};
+  try{ open=JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){}
+  function save(){ try{localStorage.setItem(KEY,JSON.stringify(open));}catch(e){} }
+  var allD=[].slice.call(document.querySelectorAll('details[data-id]'));
+  allD.forEach(function(d){ if(open[d.getAttribute('data-id')]) d.open=true; });
+  // persist only on a real user click of a summary (not programmatic open/close)
+  allD.forEach(function(d){
+    var s=d.querySelector(':scope>summary'); if(!s) return;
+    s.addEventListener('click', function(){
+      setTimeout(function(){ var id=d.getAttribute('data-id');
+        if(d.open) open[id]=1; else delete open[id]; save(); },0);
+    });
+  });
+  var btn=document.getElementById('xpand');
+  if(btn) btn.addEventListener('click', function(){
+    var expand=allD.some(function(d){return !d.open && !d.classList.contains('hidden');});
+    allD.forEach(function(d){ d.open=expand; var id=d.getAttribute('data-id'); if(expand)open[id]=1; else delete open[id]; });
+    save(); btn.textContent=expand?'collapse all':'expand all';
+  });
+  var q=document.getElementById('q'), none=document.getElementById('noresults');
+  if(q) q.addEventListener('input', function(){
+    var term=q.value.trim().toLowerCase();
+    var cards=document.querySelectorAll('a.lcard'), shown=0;
+    cards.forEach(function(c){ var hit=!term||c.textContent.toLowerCase().indexOf(term)>-1; c.classList.toggle('hidden',!hit); if(hit)shown++; });
+    allD.forEach(function(d){
+      if(!term){ d.classList.remove('hidden'); d.open=!!open[d.getAttribute('data-id')]; return; }
+      var has=d.querySelector('a.lcard:not(.hidden)'); d.classList.toggle('hidden',!has); d.open=!!has;
+    });
+    if(none) none.style.display=(term&&!shown)?'block':'none';
+  });
+  // 🎲 open a random lesson
+  var sh=document.getElementById('shuffle');
+  if(sh) sh.addEventListener('click', function(){
+    var ls=document.querySelectorAll('a.lcard[href^="lesson-"]');
+    if(ls.length){ window.location.href = ls[Math.floor(Math.random()*ls.length)].getAttribute('href'); }
+  });
+  // dark-mode toggle (☀️/🌙), persisted; respects the OS preference until overridden
+  var d=document.documentElement, tb=document.getElementById('themebtn');
+  function eff(){ return d.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'); }
+  function paintTheme(){ if(tb) tb.textContent = eff()==='dark' ? '☀️' : '🌙'; }
+  if(tb) tb.addEventListener('click', function(){ var n=eff()==='dark'?'light':'dark';
+    d.setAttribute('data-theme',n); try{localStorage.setItem('slo_theme',n);}catch(e){} paintTheme(); });
+  paintTheme();
+  // install: Android/desktop fire beforeinstallprompt; iOS needs the Share → Add to Home Screen hint
+  var ib=document.getElementById('install'), deferred=null;
+  window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferred=e; if(ib)ib.style.display=''; });
+  if(ib) ib.addEventListener('click', function(){ if(deferred){ deferred.prompt(); deferred=null; ib.style.display='none'; } });
+  var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent), standalone=('standalone'in navigator)&&navigator.standalone;
+  if(isIOS && !standalone){ var h=document.getElementById('ioshint'); if(h)h.style.display='block'; }
+})();
+</script>
+</body>
+</html>

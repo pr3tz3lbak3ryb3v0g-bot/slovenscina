@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>try{var t=localStorage.getItem('slo_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<title>slovenščina · mastery self-test · C2</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#E11D2C">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Slovenščina">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="mobile-web-app-capable" content="yes">
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF6EE; --card:#FFFFFF; --ink:#2B2724; --ink2:#4f4843; --mut:#8A8178; --line:#ECE3D6;
+  --accent:#E11D2C; --gold:#E0A53B; --ok:#4F9A6A; --f:#E5736A; --blue:#3A6EA5;
+  --sans:'Nunito',system-ui,sans-serif; --mono:'Space Mono',ui-monospace,monospace;
+}
+:root[data-theme="dark"]{
+  --bg:#1b1714; --card:#272018; --ink:#efe6d8; --ink2:#cabfb0; --mut:#a89e90; --line:#3a322a;
+  --accent:#ff5b4b; --gold:#e8b85c; --ok:#5fb07e; --f:#ef968d; --blue:#7aa7da;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#1b1714; --card:#272018; --ink:#efe6d8; --ink2:#cabfb0; --mut:#a89e90; --line:#3a322a;
+  --accent:#ff5b4b; --gold:#e8b85c; --ok:#5fb07e; --f:#ef968d; --blue:#7aa7da;
+} }
+*{box-sizing:border-box} html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.01em;line-height:1.15}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px 100px}
+.eyebrow{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent)}
+.bar{position:sticky;top:0;z-index:20;background:var(--bg);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);padding:9px 18px;display:flex;align-items:center;gap:10px;overflow-x:auto}
+.bar .themebtn{margin-left:6px;background:var(--card);border:1.5px solid var(--line);border-radius:999px;width:34px;height:34px;font-size:15px;cursor:pointer;line-height:1;padding:0;flex:none;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.bar .themebtn:hover,.bar .themebtn:focus-visible{border-color:var(--accent)}
+.bar .brand{font-weight:800;font-size:14px;white-space:nowrap}.bar .brand .dot{color:var(--accent)}
+.bar .nav{display:flex;gap:4px;margin-left:auto}
+.bar .nav a{font-weight:800;font-size:12px;color:var(--mut);text-decoration:none;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.skip{position:absolute;left:-999px;top:0;z-index:60;background:var(--accent);color:#fff;padding:9px 14px;border-radius:0 0 10px 0;font-weight:800;text-decoration:none}
+.skip:focus{left:0}
+.bar .back{font-weight:800;font-size:13px;color:var(--accent);text-decoration:none;padding:5px 12px;border:1.5px solid var(--line);border-radius:999px;white-space:nowrap;background:var(--card)}
+.bar .back:hover,.bar .back:focus-visible{border-color:var(--accent);background:var(--bg)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.opt.right::after{content:" ✓"}.opt.wrong::after{content:" ✗"}
+.bar .nav a:hover{background:var(--card);color:var(--ink)}
+.hero{padding:26px 0 6px}.hero h1{font-size:clamp(28px,6vw,42px);text-transform:lowercase}
+.hero .sub{font-size:18px;color:var(--mut);font-weight:700;margin-top:6px}.hero p{max-width:62ch;color:var(--ink2);margin:12px 0 0}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{font-size:12px;font-weight:800;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px;box-shadow:0 2px 0 rgba(0,0,0,.04)}
+.chip.lvl{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sec{margin-top:34px;scroll-margin-top:60px}
+.sechead{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;border-bottom:2px solid var(--line);padding-bottom:8px}
+.sechead .step{font-family:var(--mono);font-weight:700;color:var(--accent);font-size:14px}
+.sechead h2{font-size:23px;text-transform:lowercase}.sechead .sl{color:var(--mut);font-weight:700;font-size:14px}
+.instr{color:var(--ink2);font-size:15px;margin:10px 0}
+.adapt{background:var(--card);border:1px solid var(--gold);border-radius:10px;padding:9px 13px;font-size:13.5px;color:var(--ink2);margin:10px 0}
+.passage{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:14px;
+  padding:16px 18px;box-shadow:0 3px 0 rgba(0,0,0,.05);font-size:16.5px;white-space:pre-line}
+.passage.dlg{border-left-color:var(--gold)}
+.tts{font-family:var(--sans);font-weight:800;font-size:13px;border:1.5px solid var(--line);background:var(--card);border-radius:999px;
+  padding:6px 14px;cursor:pointer;margin:10px 0 0;box-shadow:0 2px 0 rgba(0,0,0,.05)}.tts:hover{border-color:var(--accent)}
+details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--mut)}
+details.tr[open] summary{color:var(--ink)}details.tr .body{color:var(--ink2);font-size:15px;margin-top:8px;white-space:pre-line}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 3px 0 rgba(0,0,0,.05);margin-top:12px}
+.q .qp{font-size:17px;font-weight:700}.q .qen{color:var(--mut);font-size:13px;margin-top:1px}
+.opts{display:flex;gap:9px;flex-wrap:wrap;margin-top:11px}
+.opt{font-family:var(--mono);font-size:15px;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink);
+  padding:9px 16px;border-radius:11px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.opt:hover:not(:disabled){border-color:var(--accent)}.opt:disabled{cursor:default;opacity:.85}
+.opt.right{background:var(--ok);border-color:var(--ok);color:#fff}.opt.wrong{background:var(--f);border-color:var(--f);color:#fff}
+.fb{display:none;margin-top:10px;font-size:13.5px;color:var(--ok);font-weight:700}.fb.show{display:block}
+.prompt{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:14px;padding:16px 18px;box-shadow:0 3px 0 rgba(0,0,0,.05)}
+.prompt .task{font-weight:800;font-size:16px}.prompt ul{margin:10px 0 0;padding-left:20px;color:var(--ink2);font-size:15px}
+textarea{width:100%;margin-top:12px;min-height:120px;border:1.5px solid var(--line);border-radius:12px;padding:12px;font-family:var(--sans);font-size:16px;resize:vertical;background:var(--card)}
+.rubric{font-family:var(--mono);font-size:12px;color:var(--ink2);background:var(--card);border:1px dashed var(--line);border-radius:9px;padding:8px 12px;margin-top:12px}
+.model{margin-top:12px}.model summary{cursor:pointer;font-weight:800;color:var(--accent)}
+.model .ans{background:var(--card);border:1px solid var(--ok);border-radius:12px;padding:13px 15px;margin-top:9px;font-size:16px;white-space:pre-line}
+.model .ans .en{color:var(--mut);font-size:14px;margin-top:8px;display:block;white-space:pre-line}
+.task2{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 3px 0 rgba(0,0,0,.05);margin-top:12px}
+.task2 .p{font-weight:700}.task2 .pen{color:var(--mut);font-size:13px;margin-top:1px}
+.result{position:sticky;bottom:0;margin-top:34px;background:var(--ink);color:var(--bg);border-radius:16px 16px 0 0;padding:16px 20px;text-align:center;box-shadow:0 -4px 20px rgba(0,0,0,.15)}
+.result .big{font-size:26px;font-weight:800;font-family:var(--mono)}.result .lbl{font-size:13px;opacity:.8}
+.result.pass{background:#2f6b48}.result.fail{background:#8a3b34}
+.info{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:0 3px 0 rgba(0,0,0,.05);margin-top:14px}
+.info h3{font-size:18px;margin-bottom:6px}.info p{color:var(--ink2);font-size:15.5px;margin:6px 0}.info b{color:var(--ink)}
+.info table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14.5px}
+.info th,.info td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.info th{color:var(--accent);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.info a{color:var(--accent);font-weight:700}
+.foot{color:var(--mut);font-size:12px;text-align:center;margin-top:44px;font-family:var(--mono)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">skip to content</a>
+<div class="bar">
+  <a class="back" href="index.html" aria-label="Back to the course index">← course</a>
+  <div class="brand">slovenščina<span class="dot">·</span>exam</div>
+  <nav class="nav" aria-label="Jump to section"><a href="#s1">reading</a><a href="#s2">listening</a><a href="#s3">style</a><a href="#s4">writing</a><a href="#s5">speaking</a></nav>
+  <button id="themebtn" class="themebtn" type="button" aria-label="Toggle dark mode">🌙</button>
+</div>
+<main class="wrap" id="main" tabindex="-1">
+  <div class="hero">
+    <div class="eyebrow">mock exam · C2</div>
+    <h1>mastery self-test · C2</h1>
+    <div class="sub">· raven popolnosti (C2)</div>
+    <p>There is no official C2 exam for Slovene — the Center za slovenščino's highest paper is C1 (raven odličnosti). This is a self-test beyond that ceiling: a dense literary text, a nuanced discussion, a stylistics check, a critical essay and abstract speaking. Graded, like the C1 paper, at 60%.</p>
+    <div class="meta">
+      <span class="chip lvl">C2</span>
+      <span class="chip">⏱️ ≈90 min</span>
+      <span class="chip">✅ pass: 60% per part (C2 self-test)</span>
+    </div>
+  </div>
+
+  
+  <section class="sec" id="s1">
+    <div class="sechead"><span class="step">01</span><h2>Reading</h2><span class="sl">· Branje</span></div>
+    
+      <div class="instr">Read the text on Ivan Cankar and the Moderna, then answer the questions.</div>
+      
+      
+        <div class="passage" id="psg1">Ivan Cankar velja za največjega slovenskega pisatelja. Z deli, kot so črtice in drame, je opisoval malega človeka in družbene krivice. Skupaj s pesniki moderne je zaznamoval prelom 19. in 20. stoletja. Njegov jezik je čustven in oster hkrati, poln simbolov in domotožja. Še danes njegova dela beremo v šolah, saj ostajajo presenetljivo aktualna.</div>
+        
+        <details class="tr"><summary>show English</summary><div class="body">Ivan Cankar is considered the greatest Slovene writer. With works such as sketches and plays, he depicted the common man and social injustice. Together with the poets of the Moderna he marked the turn of the 19th and 20th centuries. His language is emotional and sharp at once, full of symbols and longing for home. We still read his works in schools today, since they remain surprisingly relevant.</div></details>
+      
+      
+      <div class="q" data-done="0">
+        <div class="qp">Za kaj velja Cankar?</div><div class="qen">What is Cankar considered?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">za največjega pisatelja</button><button class="opt" onclick="pick(this)">za slikarja</button><button class="opt" onclick="pick(this)">za skladatelja</button></div>
+        <div class="fb">✓ <b>za največjega pisatelja</b> — “… največjega slovenskega pisatelja.”</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Koga je opisoval?</div><div class="qen">Whom did he depict?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">malega človeka</button><button class="opt" onclick="pick(this)">kralje</button><button class="opt" onclick="pick(this)">vojake</button></div>
+        <div class="fb">✓ <b>malega človeka</b> — “… malega človeka in družbene krivice.”</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Kakšen je njegov jezik?</div><div class="qen">What is his language like?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">čustven in oster</button><button class="opt" onclick="pick(this)">dolgočasen</button><button class="opt" onclick="pick(this)">preprost</button></div>
+        <div class="fb">✓ <b>čustven in oster</b> — “… čustven in oster hkrati …”</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Zakaj ga še beremo?</div><div class="qen">Why do we still read him?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">ostaja aktualen</button><button class="opt" onclick="pick(this)">je kratek</button><button class="opt" onclick="pick(this)">je lahek</button></div>
+        <div class="fb">✓ <b>ostaja aktualen</b> — “… ostajajo presenetljivo aktualna.”</div>
+      </div>
+      
+      
+    
+  </section>
+  
+  <section class="sec" id="s2">
+    <div class="sechead"><span class="step">02</span><h2>Listening</h2><span class="sl">· Poslušanje</span></div>
+    
+      
+      <div class="adapt">ℹ️ On a real paper this is audio. Here it's the transcript — tap 🔊 to hear it, then answer.</div>
+      
+        <div class="passage dlg" id="psg2">– Se ti ne zdi, da danes premalo beremo?
+– Po eni strani res, klasiko bere malokdo. Po drugi strani pa beremo ves dan — le na zaslonih.
+– Drži, a to je drugačno branje. Poglobljenost se izgublja.
+– Strinjam se. Brez zbranosti ostane le drsenje po površini.
+– Navsezadnje je vprašanje, kako beremo, ne le koliko.</div>
+        <button class="tts" onclick="say('psg2')">🔊 listen</button>
+        <details class="tr"><summary>show English</summary><div class="body">– Don't you think we read too little nowadays?
+– On the one hand, true — hardly anyone reads the classics. On the other hand, we read all day — just on screens.
+– That's right, but it's a different kind of reading. Depth is being lost.
+– I agree. Without concentration, only skimming the surface remains.
+– After all, the question is how we read, not just how much.</div></details>
+      
+      
+      <div class="q" data-done="0">
+        <div class="qp">Kdo bere klasiko?</div><div class="qen">Who reads the classics?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">malokdo</button><button class="opt" onclick="pick(this)">vsi</button><button class="opt" onclick="pick(this)">le otroci</button></div>
+        <div class="fb">✓ <b>malokdo</b> — “… klasiko bere malokdo.”</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Kaj se po njunem izgublja?</div><div class="qen">What, in their view, is being lost?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">poglobljenost</button><button class="opt" onclick="pick(this)">hitrost</button><button class="opt" onclick="pick(this)">glasnost</button></div>
+        <div class="fb">✓ <b>poglobljenost</b> — “Poglobljenost se izgublja.”</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Kaj je pravo vprašanje?</div><div class="qen">What is the real question?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">kako beremo</button><button class="opt" onclick="pick(this)">kje beremo</button><button class="opt" onclick="pick(this)">kdaj beremo</button></div>
+        <div class="fb">✓ <b>kako beremo</b> — “… kako beremo, ne le koliko.”</div>
+      </div>
+      
+      
+    
+  </section>
+  
+  <section class="sec" id="s3">
+    <div class="sechead"><span class="step">03</span><h2>Style & usage (bonus)</h2><span class="sl">· Slog in raba</span></div>
+    
+      
+      <div class="adapt">ℹ️ A bonus check of the C2 nuance, stylistics and word-order lessons.</div>
+      
+      
+      <div class="q" data-done="0">
+        <div class="qp">Strong (heavy) rain: <b>___</b> dež.</div><div class="qen">heavy rain (collocation)</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">močan</button><button class="opt" onclick="pick(this)">debel</button><button class="opt" onclick="pick(this)">velik</button></div>
+        <div class="fb">✓ <b>močan</b> — močan dež = heavy rain</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">'Aktualen' means <b>___</b>, not 'actual'.</div><div class="qen">false friend</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">current</button><button class="opt" onclick="pick(this)">real</button><button class="opt" onclick="pick(this)">factual</button></div>
+        <div class="fb">✓ <b>current</b> — aktualen = current/topical</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Slim (flattering): <b>___</b>; the unkind word is 'mršav'.</div><div class="qen">connotation</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">vitek</button><button class="opt" onclick="pick(this)">mršav</button><button class="opt" onclick="pick(this)">debel</button></div>
+        <div class="fb">✓ <b>vitek</b> — vitek = slim (positive)</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">'Zdrav kot <b>___</b>' (healthy as a fish).</div><div class="qen">fixed simile</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">riba</button><button class="opt" onclick="pick(this)">lev</button><button class="opt" onclick="pick(this)">ptica</button></div>
+        <div class="fb">✓ <b>riba</b> — zdrav kot riba</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Giving human traits to things is <b>___</b>.</div><div class="qen">name the figure</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">poosebitev</button><button class="opt" onclick="pick(this)">primera</button><button class="opt" onclick="pick(this)">rima</button></div>
+        <div class="fb">✓ <b>poosebitev</b> — poosebitev = personification</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Most formal sign-off: 'S <b>___</b>.'</div><div class="qen">formal register</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">spoštovanjem</button><button class="opt" onclick="pick(this)">pozdravom</button><button class="opt" onclick="pick(this)">ljubeznijo</button></div>
+        <div class="fb">✓ <b>spoštovanjem</b> — S spoštovanjem = Yours faithfully</div>
+      </div>
+      
+      
+    
+  </section>
+  
+  <section class="sec" id="s4">
+    <div class="sechead"><span class="step">04</span><h2>Writing — a critical essay</h2><span class="sl">· Pisanje</span><span class="sl" style="margin-left:auto;font-family:var(--mono)">/ 20</span></div>
+    
+      <div class="instr">Write a short critical essay (150–180 words): “Why does literature still matter in the age of screens?” Take a clear position and develop it with reasons and at least one concession.</div>
+      
+      
+      
+      
+        <div class="prompt"><div class="task"></div><ul><li>Open with a clear thesis.</li><li>Develop two or three distinct arguments, each in its own sentence-group.</li><li>Concede a counter-argument (kljub temu, po drugi strani …) and answer it.</li><li>Use varied connectors (namreč, zato, torej, navsezadnje) and a rhetorical figure or two.</li><li>Close with a conclusion that restates the thesis in fresh words.</li></ul></div>
+        <textarea placeholder="Write your answer here… (it isn't auto-marked — compare it with the model)"></textarea>
+        <details class="model"><summary>show a model answer</summary><div class="ans">Mnogi trdijo, da knjige v dobi zaslonov izgubljajo pomen. Sam menim nasprotno: prav zato so danes pomembnejše kot kdaj prej. Literatura namreč uči poglobljenosti — branja, ki zahteva čas in zbranost, ne le drsenja po površini. Poleg tega nam odpira tuje izkušnje in nas uči sočutja; v junaku spoznamo sebe. Res je, da imamo manj časa in da nas zasloni vsak hip zmotijo. Kljub temu prav ta nemir kaže, kako potrebujemo prostor za tišino in razmislek. Knjiga ni nasprotnica tehnologije, temveč njeno dopolnilo. Navsezadnje se ne meri, koliko beremo, temveč kako: globoko in pozorno. Zato literatura ne umira — le tiho čaka, da se ji znova posvetimo.<span class="en">Many claim that books are losing their meaning in the age of screens. I think the opposite: precisely for that reason they matter more today than ever. Literature, namely, teaches depth — a reading that demands time and concentration, not just skimming the surface. Moreover, it opens foreign experiences to us and teaches compassion; in a character we recognise ourselves. It's true that we have less time and that screens distract us at every moment. Nevertheless, this very restlessness shows how much we need a space for silence and reflection. The book is not the rival of technology but its complement. After all, what counts is not how much we read but how: deeply and attentively. That's why literature is not dying — it merely waits quietly for us to devote ourselves to it again.</span></div></details>
+        <div class="rubric">marked on: task completion 6 · vocabulary 6 · grammar 6 · structure & style 2 — max 20, pass 12</div>
+      
+    
+  </section>
+  
+  <section class="sec" id="s5">
+    <div class="sechead"><span class="step">05</span><h2>Speaking</h2><span class="sl">· Govorjenje</span></div>
+    
+      
+      
+      
+      
+      
+        
+        <div class="task2"><div class="p">1. Analyse: take a book or film you know and discuss its main theme, the narrator and the mood — as in a literary analysis.</div>
+          <details class="model"><summary>show a model answer</summary><div class="ans">Vzel bom roman, ki ga dobro poznam. Glavna tema je osamljenost posameznika v družbi. Pripovedovalec ni avtor, temveč lik, ki vidi le del resnice, zato mu ne moremo povsem zaupati. Pisatelj z mračnim, odsekanim jezikom ustvarja tesnobno razpoloženje. Prav ta razkorak med tem, kar lik vidi in kar bralec sluti, daje delu globino.<span class="en">I'll take a novel I know well. The main theme is the loneliness of the individual in society. The narrator is not the author but a character who sees only part of the truth, so we can't fully trust him. The writer creates an anxious mood with dark, clipped language. It is precisely this gap between what the character sees and what the reader senses that gives the work its depth.</span></div></details>
+        </div>
+        
+        <div class="task2"><div class="p">2. Debate: “Globalizacija ogroža male jezike.” (Globalisation threatens small languages.) Argue a position and answer the obvious objection.</div>
+          <details class="model"><summary>show a model answer</summary><div class="ans">Strinjam se, da globalizacija pritiska na male jezike, a trditev je preveč črno-bela. Po eni strani angleščina prevzema znanost in splet, kar slovenščino potiska na obrobje. Po drugi strani pa ravno tehnologija omogoča, da slovenščino digitaliziramo, učimo na daljavo in ohranjamo. Odločilna ni globalizacija sama, temveč naš odnos do jezika. Če ga negujemo, preživi; če ga zanemarimo, ga noben sistem ne reši.<span class="en">I agree that globalisation puts pressure on small languages, but the claim is too black-and-white. On the one hand, English takes over science and the web, which pushes Slovene to the margins. On the other hand, it is precisely technology that lets us digitise Slovene, teach it remotely and preserve it. What is decisive is not globalisation itself but our attitude to the language. If we nurture it, it survives; if we neglect it, no system will save it.</span></div></details>
+        </div>
+        
+        <div class="task2"><div class="p">3. Reflect: what does it mean to “master” a language — is fluency enough, or is something more required? Give your view.</div>
+          <details class="model"><summary>show a model answer</summary><div class="ans">Po mojem obvladati jezik ne pomeni le tekoče govoriti. Tekočnost je šele začetek. Pravo obvladovanje se kaže v občutku za odtenke — kdaj je beseda topla in kdaj žaljiva, kdaj je primeren šala in kdaj resnost. Pomeni razumeti ironijo, prebrati, kar ni izrečeno, in se izraziti natanko tako, kot želiš. Navsezadnje jezika nikoli povsem ne obvladamo; vse življenje se ga učimo, in prav to je lepo.<span class="en">In my view, to master a language doesn't only mean speaking fluently. Fluency is just the beginning. Real mastery shows in a feel for nuance — when a word is warm and when it wounds, when a joke fits and when seriousness does. It means understanding irony, reading what isn't said, and expressing yourself exactly as you intend. After all, we never fully master a language; we learn it all our lives, and that is precisely the beauty of it.</span></div></details>
+        </div>
+        
+        <div class="rubric">marked on: task 5 · vocabulary 5 · grammar 4 · interaction 3 · pronunciation 3 — max 20, pass 12</div>
+      
+    
+  </section>
+  
+
+  
+  <div class="result" id="result"><div class="big" id="score">0 / 13</div><div class="lbl" id="rlbl">answer the 13 marked questions · pass at 60%</div></div>
+  
+  <div class="foot">slovenian-kb · mock exam, not the official paper · built by 11_build_exam.py</div>
+</main>
+<script>
+const TOTAL=13, PASS=Math.ceil(TOTAL*0.6), PCTPASS=60;
+let right=0, done=0;
+function pick(b){
+  const q=b.closest('.q'); if(q.dataset.done==='1')return; q.dataset.done='1'; done++;
+  const ok=b.dataset.c==='1'; b.classList.add(ok?'right':'wrong');
+  if(!ok) q.querySelector('.opt[data-c="1"]').classList.add('right');
+  q.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+  q.querySelector('.fb').classList.add('show');
+  if(ok) right++;
+  if(TOTAL){
+    document.getElementById('score').textContent=right+' / '+TOTAL;
+    const r=document.getElementById('result'), pct=Math.round(right/TOTAL*100);
+    if(done>=TOTAL){ const pass=right>=PASS; r.classList.toggle('pass',pass); r.classList.toggle('fail',!pass);
+      document.getElementById('rlbl').textContent=pct+'% · '+(pass?'PASS ✓ (≥'+PCTPASS+'%)':'below '+PCTPASS+'% — try again'); }
+    else document.getElementById('rlbl').textContent=done+'/'+TOTAL+' answered · '+pct+'% so far · pass at '+PCTPASS+'%';
+  }
+}
+function say(id){
+  if(!('speechSynthesis'in window))return;
+  const t=document.getElementById(id).innerText; speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t); u.lang='sl-SI'; u.rate=0.92;
+  const v=speechSynthesis.getVoices().find(x=>/sl|sloven/i.test(x.lang+x.name)); if(v)u.voice=v;
+  speechSynthesis.speak(u);
+}
+// dark-mode toggle (☀️/🌙), persisted; respects the OS preference until overridden
+(function(){ var d=document.documentElement, b=document.getElementById('themebtn');
+  function eff(){ return d.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'); }
+  function paint(){ if(b) b.textContent = eff()==='dark' ? '☀️' : '🌙'; }
+  if(b) b.addEventListener('click', function(){ var n=eff()==='dark'?'light':'dark';
+    d.setAttribute('data-theme',n); try{localStorage.setItem('slo_theme',n);}catch(e){} paint(); });
+  paint();
+})();
+</script>
+</body>
+</html>

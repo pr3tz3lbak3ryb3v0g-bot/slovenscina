@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>try{var t=localStorage.getItem('slo_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<title>slovenščina · mock exam · B2 paper</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#E11D2C">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Slovenščina">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="mobile-web-app-capable" content="yes">
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF6EE; --card:#FFFFFF; --ink:#2B2724; --ink2:#4f4843; --mut:#8A8178; --line:#ECE3D6;
+  --accent:#E11D2C; --gold:#E0A53B; --ok:#4F9A6A; --f:#E5736A; --blue:#3A6EA5;
+  --sans:'Nunito',system-ui,sans-serif; --mono:'Space Mono',ui-monospace,monospace;
+}
+:root[data-theme="dark"]{
+  --bg:#1b1714; --card:#272018; --ink:#efe6d8; --ink2:#cabfb0; --mut:#a89e90; --line:#3a322a;
+  --accent:#ff5b4b; --gold:#e8b85c; --ok:#5fb07e; --f:#ef968d; --blue:#7aa7da;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#1b1714; --card:#272018; --ink:#efe6d8; --ink2:#cabfb0; --mut:#a89e90; --line:#3a322a;
+  --accent:#ff5b4b; --gold:#e8b85c; --ok:#5fb07e; --f:#ef968d; --blue:#7aa7da;
+} }
+*{box-sizing:border-box} html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.01em;line-height:1.15}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px 100px}
+.eyebrow{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent)}
+.bar{position:sticky;top:0;z-index:20;background:var(--bg);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);padding:9px 18px;display:flex;align-items:center;gap:10px;overflow-x:auto}
+.bar .themebtn{margin-left:6px;background:var(--card);border:1.5px solid var(--line);border-radius:999px;width:34px;height:34px;font-size:15px;cursor:pointer;line-height:1;padding:0;flex:none;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.bar .themebtn:hover,.bar .themebtn:focus-visible{border-color:var(--accent)}
+.bar .brand{font-weight:800;font-size:14px;white-space:nowrap}.bar .brand .dot{color:var(--accent)}
+.bar .nav{display:flex;gap:4px;margin-left:auto}
+.bar .nav a{font-weight:800;font-size:12px;color:var(--mut);text-decoration:none;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.skip{position:absolute;left:-999px;top:0;z-index:60;background:var(--accent);color:#fff;padding:9px 14px;border-radius:0 0 10px 0;font-weight:800;text-decoration:none}
+.skip:focus{left:0}
+.bar .back{font-weight:800;font-size:13px;color:var(--accent);text-decoration:none;padding:5px 12px;border:1.5px solid var(--line);border-radius:999px;white-space:nowrap;background:var(--card)}
+.bar .back:hover,.bar .back:focus-visible{border-color:var(--accent);background:var(--bg)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.opt.right::after{content:" ✓"}.opt.wrong::after{content:" ✗"}
+.bar .nav a:hover{background:var(--card);color:var(--ink)}
+.hero{padding:26px 0 6px}.hero h1{font-size:clamp(28px,6vw,42px);text-transform:lowercase}
+.hero .sub{font-size:18px;color:var(--mut);font-weight:700;margin-top:6px}.hero p{max-width:62ch;color:var(--ink2);margin:12px 0 0}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{font-size:12px;font-weight:800;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px;box-shadow:0 2px 0 rgba(0,0,0,.04)}
+.chip.lvl{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sec{margin-top:34px;scroll-margin-top:60px}
+.sechead{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;border-bottom:2px solid var(--line);padding-bottom:8px}
+.sechead .step{font-family:var(--mono);font-weight:700;color:var(--accent);font-size:14px}
+.sechead h2{font-size:23px;text-transform:lowercase}.sechead .sl{color:var(--mut);font-weight:700;font-size:14px}
+.instr{color:var(--ink2);font-size:15px;margin:10px 0}
+.adapt{background:var(--card);border:1px solid var(--gold);border-radius:10px;padding:9px 13px;font-size:13.5px;color:var(--ink2);margin:10px 0}
+.passage{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:14px;
+  padding:16px 18px;box-shadow:0 3px 0 rgba(0,0,0,.05);font-size:16.5px;white-space:pre-line}
+.passage.dlg{border-left-color:var(--gold)}
+.tts{font-family:var(--sans);font-weight:800;font-size:13px;border:1.5px solid var(--line);background:var(--card);border-radius:999px;
+  padding:6px 14px;cursor:pointer;margin:10px 0 0;box-shadow:0 2px 0 rgba(0,0,0,.05)}.tts:hover{border-color:var(--accent)}
+details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--mut)}
+details.tr[open] summary{color:var(--ink)}details.tr .body{color:var(--ink2);font-size:15px;margin-top:8px;white-space:pre-line}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 3px 0 rgba(0,0,0,.05);margin-top:12px}
+.q .qp{font-size:17px;font-weight:700}.q .qen{color:var(--mut);font-size:13px;margin-top:1px}
+.opts{display:flex;gap:9px;flex-wrap:wrap;margin-top:11px}
+.opt{font-family:var(--mono);font-size:15px;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink);
+  padding:9px 16px;border-radius:11px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.opt:hover:not(:disabled){border-color:var(--accent)}.opt:disabled{cursor:default;opacity:.85}
+.opt.right{background:var(--ok);border-color:var(--ok);color:#fff}.opt.wrong{background:var(--f);border-color:var(--f);color:#fff}
+.fb{display:none;margin-top:10px;font-size:13.5px;color:var(--ok);font-weight:700}.fb.show{display:block}
+.prompt{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:14px;padding:16px 18px;box-shadow:0 3px 0 rgba(0,0,0,.05)}
+.prompt .task{font-weight:800;font-size:16px}.prompt ul{margin:10px 0 0;padding-left:20px;color:var(--ink2);font-size:15px}
+textarea{width:100%;margin-top:12px;min-height:120px;border:1.5px solid var(--line);border-radius:12px;padding:12px;font-family:var(--sans);font-size:16px;resize:vertical;background:var(--card)}
+.rubric{font-family:var(--mono);font-size:12px;color:var(--ink2);background:var(--card);border:1px dashed var(--line);border-radius:9px;padding:8px 12px;margin-top:12px}
+.model{margin-top:12px}.model summary{cursor:pointer;font-weight:800;color:var(--accent)}
+.model .ans{background:var(--card);border:1px solid var(--ok);border-radius:12px;padding:13px 15px;margin-top:9px;font-size:16px;white-space:pre-line}
+.model .ans .en{color:var(--mut);font-size:14px;margin-top:8px;display:block;white-space:pre-line}
+.task2{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 3px 0 rgba(0,0,0,.05);margin-top:12px}
+.task2 .p{font-weight:700}.task2 .pen{color:var(--mut);font-size:13px;margin-top:1px}
+.result{position:sticky;bottom:0;margin-top:34px;background:var(--ink);color:var(--bg);border-radius:16px 16px 0 0;padding:16px 20px;text-align:center;box-shadow:0 -4px 20px rgba(0,0,0,.15)}
+.result .big{font-size:26px;font-weight:800;font-family:var(--mono)}.result .lbl{font-size:13px;opacity:.8}
+.result.pass{background:#2f6b48}.result.fail{background:#8a3b34}
+.info{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:0 3px 0 rgba(0,0,0,.05);margin-top:14px}
+.info h3{font-size:18px;margin-bottom:6px}.info p{color:var(--ink2);font-size:15.5px;margin:6px 0}.info b{color:var(--ink)}
+.info table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14.5px}
+.info th,.info td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.info th{color:var(--accent);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.info a{color:var(--accent);font-weight:700}
+.foot{color:var(--mut);font-size:12px;text-align:center;margin-top:44px;font-family:var(--mono)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">skip to content</a>
+<div class="bar">
+  <a class="back" href="index.html" aria-label="Back to the course index">← course</a>
+  <div class="brand">slovenščina<span class="dot">·</span>exam</div>
+  <nav class="nav" aria-label="Jump to section"><a href="#s1">reading</a><a href="#s2">listening</a><a href="#s3">bonus</a><a href="#s4">writing</a><a href="#s5">speaking</a></nav>
+  <button id="themebtn" class="themebtn" type="button" aria-label="Toggle dark mode">🌙</button>
+</div>
+<main class="wrap" id="main" tabindex="-1">
+  <div class="hero">
+    <div class="eyebrow">mock exam · B2</div>
+    <h1>mock exam · B2 paper</h1>
+    <div class="sub">· višja raven (B2)</div>
+    <p>A B2-level paper in the shape of the Center za slovenščino višja-raven exam, graded at the 60% pass line. Reading, listening, writing and speaking, plus a bonus grammar section that isn't on the real paper.</p>
+    <div class="meta">
+      <span class="chip lvl">B2</span>
+      <span class="chip">⏱️ ≈70 min</span>
+      <span class="chip">✅ pass: 60% per part (B2)</span>
+    </div>
+  </div>
+
+  
+  <section class="sec" id="s1">
+    <div class="sechead"><span class="step">01</span><h2>Reading</h2><span class="sl">· Branje</span></div>
+    
+      <div class="instr">Read this short article about remote work, then answer the questions.</div>
+      
+      
+        <div class="passage" id="psg1">Vse več podjetij omogoča delo od doma. Zaposleni cenijo prilagodljivost in prihranek časa, saj se jim ni treba voziti v službo. Po drugi strani nekateri pogrešajo stik s sodelavci in težje ločijo delo od prostega časa. Strokovnjaki menijo, da je najboljša rešitev kombinacija — nekaj dni doma, nekaj dni v pisarni. Tako ostane povezanost, hkrati pa se ohrani svoboda.</div>
+        
+        <details class="tr"><summary>show English</summary><div class="body">More and more companies allow working from home. Employees value the flexibility and the time saved, since they don't have to commute. On the other hand, some miss contact with colleagues and find it harder to separate work from free time. Experts believe the best solution is a combination — some days at home, some in the office. That way connection remains, while freedom is preserved.</div></details>
+      
+      
+      <div class="q" data-done="0">
+        <div class="qp">Kaj omogoča vse več podjetij?</div><div class="qen">What do more and more companies allow?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">delo od doma</button><button class="opt" onclick="pick(this)">krajši teden</button><button class="opt" onclick="pick(this)">višje plače</button></div>
+        <div class="fb">✓ <b>delo od doma</b> — “… omogoča delo od doma.”</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Kaj cenijo zaposleni?</div><div class="qen">What do employees value?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">prilagodljivost</button><button class="opt" onclick="pick(this)">višjo plačo</button><button class="opt" onclick="pick(this)">daljši dopust</button></div>
+        <div class="fb">✓ <b>prilagodljivost</b> — “… cenijo prilagodljivost in prihranek časa …”</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Kaj nekateri pogrešajo?</div><div class="qen">What do some people miss?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">stik s sodelavci</button><button class="opt" onclick="pick(this)">mir doma</button><button class="opt" onclick="pick(this)">krajšo pot</button></div>
+        <div class="fb">✓ <b>stik s sodelavci</b> — “… pogrešajo stik s sodelavci …”</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Katera je po mnenju strokovnjakov najboljša rešitev?</div><div class="qen">What's the best solution, per the experts?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">kombinacija</button><button class="opt" onclick="pick(this)">samo pisarna</button><button class="opt" onclick="pick(this)">samo dom</button></div>
+        <div class="fb">✓ <b>kombinacija</b> — “… najboljša rešitev kombinacija …”</div>
+      </div>
+      
+      
+    
+  </section>
+  
+  <section class="sec" id="s2">
+    <div class="sechead"><span class="step">02</span><h2>Listening</h2><span class="sl">· Poslušanje</span></div>
+    
+      
+      <div class="adapt">ℹ️ On the real exam this is audio. Here it's the transcript — tap 🔊 to hear it, then answer.</div>
+      
+        <div class="passage dlg" id="psg2">– Kako ti gre učenje slovenščine?
+– Počasi, a vztrajno. Najtežja je slovnica, posebno skloni.
+– Razumem. Meni je bila najtežja izgovorjava.
+– Kaj ti najbolj pomaga?
+– Gledam filme s podnapisi in se pogovarjam z domačini.
+– Odlična ideja, to bom poskusil tudi jaz.</div>
+        <button class="tts" onclick="say('psg2')">🔊 listen</button>
+        <details class="tr"><summary>show English</summary><div class="body">– How's your Slovenian learning going?
+– Slowly but steadily. Grammar is the hardest, especially the cases.
+– I understand. For me pronunciation was the hardest.
+– What helps you most?
+– I watch films with subtitles and talk with locals.
+– Great idea, I'll try that too.</div></details>
+      
+      
+      <div class="q" data-done="0">
+        <div class="qp">Kaj je za prvo osebo najtežje?</div><div class="qen">What's hardest for the first person?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">slovnica</button><button class="opt" onclick="pick(this)">izgovorjava</button><button class="opt" onclick="pick(this)">besede</button></div>
+        <div class="fb">✓ <b>slovnica</b> — “Najtežja je slovnica …”</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Kaj je bilo težko za drugo osebo?</div><div class="qen">What was hard for the second person?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">izgovorjava</button><button class="opt" onclick="pick(this)">skloni</button><button class="opt" onclick="pick(this)">pisanje</button></div>
+        <div class="fb">✓ <b>izgovorjava</b> — “… najtežja izgovorjava.”</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Kaj najbolj pomaga?</div><div class="qen">What helps most?</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">filmi in pogovor</button><button class="opt" onclick="pick(this)">samo knjige</button><button class="opt" onclick="pick(this)">aplikacije</button></div>
+        <div class="fb">✓ <b>filmi in pogovor</b> — “… filme s podnapisi … pogovarjam z domačini.”</div>
+      </div>
+      
+      
+    
+  </section>
+  
+  <section class="sec" id="s3">
+    <div class="sechead"><span class="step">03</span><h2>Bonus — grammar practice</h2><span class="sl">· Raba jezika</span></div>
+    
+      <div class="instr">Choose the correct form for each gap.</div>
+      <div class="adapt">ℹ️ Not part of the real exam — extra B2 practice.</div>
+      
+      
+      <div class="q" data-done="0">
+        <div class="qp">možen → <b>___</b></div><div class="qen">possible → possibility</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">možnost</button><button class="opt" onclick="pick(this)">možno</button><button class="opt" onclick="pick(this)">možen</button></div>
+        <div class="fb">✓ <b>možnost</b> — nominalisation</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp"><b>___</b> da je drago, ga kupim.</div><div class="qen">Despite it being expensive, I'll buy it.</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">Kljub temu</button><button class="opt" onclick="pick(this)">Namesto</button><button class="opt" onclick="pick(this)">Zato</button></div>
+        <div class="fb">✓ <b>Kljub temu</b> — concession</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Verjamem <b>___</b> uspeh.</div><div class="qen">I believe in success.</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">v</button><button class="opt" onclick="pick(this)">na</button><button class="opt" onclick="pick(this)">za</button></div>
+        <div class="fb">✓ <b>v</b> — verjeti v + accusative</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp"><b>___</b> bo deževalo.</div><div class="qen">It'll probably rain.</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">Najbrž</button><button class="opt" onclick="pick(this)">Gotovo</button><button class="opt" onclick="pick(this)">Komaj</button></div>
+        <div class="fb">✓ <b>Najbrž</b> — likelihood</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">pet <b>___</b></div><div class="qen">five cars</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">avtov</button><button class="opt" onclick="pick(this)">avta</button><button class="opt" onclick="pick(this)">avto</button></div>
+        <div class="fb">✓ <b>avtov</b> — 5+ → genitive plural</div>
+      </div>
+      
+      <div class="q" data-done="0">
+        <div class="qp">Tukaj <b>___</b> ne kadi.</div><div class="qen">One doesn't smoke here.</div>
+        <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">se</button><button class="opt" onclick="pick(this)">si</button><button class="opt" onclick="pick(this)">je</button></div>
+        <div class="fb">✓ <b>se</b> — impersonal se</div>
+      </div>
+      
+      
+    
+  </section>
+  
+  <section class="sec" id="s4">
+    <div class="sechead"><span class="step">04</span><h2>Writing — an opinion piece</h2><span class="sl">· Pisanje</span><span class="sl" style="margin-left:auto;font-family:var(--mono)">/ 20</span></div>
+    
+      <div class="instr">Write a short opinion piece (100–120 words): 'Is it better to live in the city or in the countryside?' Give your opinion and at least two reasons.</div>
+      
+      
+      
+      
+        <div class="prompt"><div class="task"></div><ul><li>State your opinion clearly.</li><li>Give at least two reasons or examples.</li><li>Use linking words (po eni strani, po drugi strani, zato, kljub temu).</li><li>End with a short conclusion.</li></ul></div>
+        <textarea placeholder="Write your answer here… (it isn't auto-marked — compare it with the model)"></textarea>
+        <details class="model"><summary>show a model answer</summary><div class="ans">Po mojem mnenju je življenje na podeželju boljše. Po eni strani sta tam mir in čist zrak, kar je dobro za zdravje. Po drugi strani se ljudje med seboj poznajo in si pomagajo. Res je, da mesto ponuja več služb in zabave, vendar je tudi hrupno in drago. Sam imam raje naravo in mir, zato bi izbral življenje na vasi. Kljub temu razumem, da ima vsak svoje želje.<span class="en">In my opinion, life in the countryside is better. On the one hand, there is peace and clean air there, which is good for health. On the other hand, people know each other and help one another. It's true that the city offers more jobs and entertainment, but it's also noisy and expensive. I myself prefer nature and quiet, so I'd choose village life. Still, I understand that everyone has their own wishes.</span></div></details>
+        <div class="rubric">marked on: task completion 6 · vocabulary 6 · grammar 6 · structure & style 2 — max 20, pass 12 (Centre rubric)</div>
+      
+    
+  </section>
+  
+  <section class="sec" id="s5">
+    <div class="sechead"><span class="step">05</span><h2>Speaking</h2><span class="sl">· Govorjenje</span></div>
+    
+      
+      
+      
+      
+      
+        
+        <div class="task2"><div class="p">1. Give your opinion: does technology make life easier or more complicated? Give reasons.</div>
+          <details class="model"><summary>show a model answer</summary><div class="ans">Po mojem mnenju tehnologija življenje olajša, a ga hkrati zaplete. Po eni strani lahko hitro komuniciramo in najdemo informacije. Po drugi strani preveč časa preživimo pred zasloni in se težko sprostimo. Mislim, da je ključ v ravnovesju.<span class="en">In my opinion technology makes life easier but also complicates it. On the one hand we can communicate quickly and find information. On the other hand we spend too much time in front of screens and find it hard to relax. I think the key is balance.</span></div></details>
+        </div>
+        
+        <div class="task2"><div class="p">2. Compare studying alone with studying in a group — advantages and disadvantages.</div>
+          <details class="model"><summary>show a model answer</summary><div class="ans">Učenje v skupini ima prednosti: drug drugemu pomagamo in se motiviramo. Slabost je, da je včasih preveč hrupa in se težko zberem. Sam se raje učim sam, a pred izpitom je skupina koristna.<span class="en">Studying in a group has advantages: we help and motivate each other. The drawback is that sometimes there's too much noise and it's hard to concentrate. I prefer studying alone, but before an exam a group is useful.</span></div></details>
+        </div>
+        
+        <div class="task2"><div class="p">3. Role-play: a friend wants to move abroad for work. Advise them, weighing the pros and cons.</div>
+          <details class="model"><summary>show a model answer</summary><div class="ans">Razumem, da te mika delo v tujini. Po eni strani je to odlična priložnost in nove izkušnje. Po drugi strani boš pogrešal družino in jezik je lahko ovira. Predlagam, da najprej poskusiš za krajši čas.<span class="en">I understand that working abroad tempts you. On the one hand it's a great opportunity and new experience. On the other hand you'll miss your family and the language can be an obstacle. I suggest you first try it for a shorter time.</span></div></details>
+        </div>
+        
+        <div class="rubric">marked on: task 5 · vocabulary 5 · grammar 4 · interaction 3 · pronunciation 3 — max 20, pass 12 (Centre rubric)</div>
+      
+    
+  </section>
+  
+
+  
+  <div class="result" id="result"><div class="big" id="score">0 / 13</div><div class="lbl" id="rlbl">answer the 13 marked questions · pass at 60%</div></div>
+  
+  <div class="foot">slovenian-kb · mock exam, not the official paper · built by 11_build_exam.py</div>
+</main>
+<script>
+const TOTAL=13, PASS=Math.ceil(TOTAL*0.6), PCTPASS=60;
+let right=0, done=0;
+function pick(b){
+  const q=b.closest('.q'); if(q.dataset.done==='1')return; q.dataset.done='1'; done++;
+  const ok=b.dataset.c==='1'; b.classList.add(ok?'right':'wrong');
+  if(!ok) q.querySelector('.opt[data-c="1"]').classList.add('right');
+  q.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+  q.querySelector('.fb').classList.add('show');
+  if(ok) right++;
+  if(TOTAL){
+    document.getElementById('score').textContent=right+' / '+TOTAL;
+    const r=document.getElementById('result'), pct=Math.round(right/TOTAL*100);
+    if(done>=TOTAL){ const pass=right>=PASS; r.classList.toggle('pass',pass); r.classList.toggle('fail',!pass);
+      document.getElementById('rlbl').textContent=pct+'% · '+(pass?'PASS ✓ (≥'+PCTPASS+'%)':'below '+PCTPASS+'% — try again'); }
+    else document.getElementById('rlbl').textContent=done+'/'+TOTAL+' answered · '+pct+'% so far · pass at '+PCTPASS+'%';
+  }
+}
+function say(id){
+  if(!('speechSynthesis'in window))return;
+  const t=document.getElementById(id).innerText; speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t); u.lang='sl-SI'; u.rate=0.92;
+  const v=speechSynthesis.getVoices().find(x=>/sl|sloven/i.test(x.lang+x.name)); if(v)u.voice=v;
+  speechSynthesis.speak(u);
+}
+// dark-mode toggle (☀️/🌙), persisted; respects the OS preference until overridden
+(function(){ var d=document.documentElement, b=document.getElementById('themebtn');
+  function eff(){ return d.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'); }
+  function paint(){ if(b) b.textContent = eff()==='dark' ? '☀️' : '🌙'; }
+  if(b) b.addEventListener('click', function(){ var n=eff()==='dark'?'light':'dark';
+    d.setAttribute('data-theme',n); try{localStorage.setItem('slo_theme',n);}catch(e){} paint(); });
+  paint();
+})();
+</script>
+</body>
+</html>

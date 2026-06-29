@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>try{var t=localStorage.getItem('slo_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<title>slovenščina · review</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#E11D2C" media="(prefers-color-scheme:light)"><meta name="theme-color" content="#1b1714" media="(prefers-color-scheme:dark)">
+<link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Slovenščina"><meta name="mobile-web-app-capable" content="yes">
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))</script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF6EE;--card:#fff;--ink:#2B2724;--mut:#8A8178;--line:#ECE3D6;--accent:#E11D2C;--accent-soft:#fdecea;--ok:#4F9A6A;--f:#E5736A;--gold:#E0A53B;--warn:#E6951F;--mono:'Space Mono',monospace}
+:root[data-theme="dark"]{--bg:#1b1714;--card:#272018;--ink:#efe6d8;--mut:#a89e90;--line:#3a322a;--accent:#ff5b4b;--accent-soft:#3a1c19;--ok:#5fb07e;--f:#e0837a;--warn:#e0a23c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1714;--card:#272018;--ink:#efe6d8;--mut:#a89e90;--line:#3a322a;--accent:#ff5b4b;--accent-soft:#3a1c19;--ok:#5fb07e;--f:#e0837a;--warn:#e0a23c}}
+*{box-sizing:border-box}body{margin:0 auto;max-width:640px;background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;font-size:17px;padding:30px 18px 90px}
+.eyebrow{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent)}
+h1{text-transform:lowercase;letter-spacing:-.02em;font-size:38px;margin:2px 0}.sub{color:var(--mut);font-weight:700}
+a.back{color:var(--accent);font-weight:800;text-decoration:none;font-size:14px}
+.tabs{display:flex;gap:8px;margin:14px 0 4px}
+.tab{flex:1;text-align:center;text-decoration:none;font-weight:800;font-size:14px;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.tab.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;box-shadow:0 3px 0 rgba(0,0,0,.05);margin-top:14px}
+.qp{font-size:18px;font-weight:700}.qw{color:var(--mut);font-family:var(--mono);font-size:13px}
+.say{background:var(--bg);border:1px solid var(--line);border-radius:999px;width:26px;height:26px;font-size:12px;cursor:pointer;padding:0;margin-left:4px;vertical-align:middle}.say:hover{border-color:var(--accent)}
+.opts{display:flex;gap:9px;flex-wrap:wrap;margin-top:11px}
+.opt{font-family:var(--mono);font-size:15px;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:11px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.opt:hover:not(:disabled){border-color:var(--accent)}.opt:disabled{cursor:default;opacity:.85}
+.opt.right{background:var(--ok);border-color:var(--ok);color:#fff}.opt.wrong{background:var(--f);border-color:var(--f);color:#fff}
+.grade{display:none;gap:9px;margin-top:12px}.grade.show{display:flex}
+.gb{flex:1;font-weight:800;font-size:15px;border:1.5px solid var(--line);border-radius:11px;padding:11px;cursor:pointer;color:#fff;box-shadow:0 2px 0 rgba(0,0,0,.12)}
+.gb.again{background:var(--f);border-color:var(--f)}.gb.good{background:var(--ok);border-color:var(--ok)}.gb.easy{background:var(--gold);border-color:var(--gold)}
+.gb small{display:block;font-size:10px;opacity:.85;font-weight:700}
+.empty{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px;text-align:center;margin-top:24px;box-shadow:0 3px 0 rgba(0,0,0,.05)}
+.empty .big{font-size:40px}.empty a{color:var(--accent);font-weight:800}
+.result{position:sticky;bottom:0;margin-top:26px;background:var(--ink);color:var(--bg);border-radius:16px 16px 0 0;padding:15px;text-align:center}
+.result .big{font-family:var(--mono);font-size:24px;font-weight:800;color:var(--gold)}.result .lbl{font-size:13px;opacity:.8}
+</style>
+</head>
+<body>
+<a class="back" href="index.html">‹ all lessons</a>
+<div class="eyebrow">spaced repetition</div>
+<h1>review</h1>
+<div class="sub" id="sub">loading…</div>
+<div class="tabs" id="tabs"></div>
+<div id="quiz"></div>
+<div class="result" id="result" style="display:none"><div class="big" id="score">0 / 0</div><div class="lbl" id="rlbl">words reviewed</div></div>
+<script src="course.js"></script>
+<script>
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=(i*7+3)%(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
+const params=new URLSearchParams(location.search), mode=params.get('mode')==='mistakes'?'mistakes':'due';
+const dueN=window.Course?Course.dueItems(999).length:0, missN=window.Course?Course.mistakes(999).length:0;
+document.getElementById('tabs').innerHTML=
+  '<a class="tab'+(mode==='due'?' on':'')+'" href="review.html">🔁 due ('+dueN+')</a>'+
+  '<a class="tab'+(mode==='mistakes'?' on':'')+'" href="review.html?mode=mistakes">🎯 my mistakes ('+missN+')</a>';
+const items=(window.Course?(mode==='mistakes'?Course.mistakes(30):Course.dueItems(20)):[]).filter(it=>it.a&&it.o&&it.o.length>1);
+let answered=0, correct=0;
+const quiz=document.getElementById('quiz'), sub=document.getElementById('sub');
+if(!items.length){
+  sub.textContent='';
+  quiz.innerHTML = mode==='mistakes'
+    ? '<div class="empty"><div class="big">🎯</div><p>No mistakes to drill — nice.</p><p>Words you answer <b>wrong</b> land here so you can hammer them until they stick. Keep going in your <a href="index.html">lessons</a>.</p></div>'
+    : '<div class="empty"><div class="big">🌱</div><p>Nothing due to review yet.</p><p>Finish a few <a href="index.html">lessons</a> first — the words you answer get scheduled here and return at growing intervals (1, 3, 7, 15, 30 days).</p></div>';
+}else{
+  sub.textContent=items.length+' word'+(items.length>1?'s':'')+' · tap the answer, then grade how well you knew it';
+  document.getElementById('result').style.display='';
+  document.getElementById('score').textContent='0 / '+items.length;
+  items.forEach(function(it){
+    const opts=shuffle(it.o.slice()), card=document.createElement('div'); card.className='q';
+    card.innerHTML='<div class="qp">'+(it.p||it.word)+' <button class="say" aria-label="Listen" onclick="Course.say(\''+(it.a||'').replace(/\\'/g,"")+'\')">🔊</button></div>'+
+      '<div class="qw">'+it.word+'</div>'+
+      '<div class="opts">'+opts.map(o=>'<button class="opt">'+o+'</button>').join('')+'</div>'+
+      '<div class="grade"><button class="gb again">Again<small>&lt; 1 day</small></button><button class="gb good">Good<small>on schedule</small></button><button class="gb easy">Easy<small>+ longer</small></button></div>';
+    const grade=card.querySelector('.grade');
+    card.querySelectorAll('.opt').forEach(btn=>btn.addEventListener('click',function(){
+      if(card.dataset.tried)return; card.dataset.tried='1';
+      const ok=btn.textContent===it.a;
+      btn.classList.add(ok?'right':'wrong');
+      if(!ok)[...card.querySelectorAll('.opt')].find(o=>o.textContent===it.a).classList.add('right');
+      card.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+      Course.say(it.a);
+      if(ok)correct++;
+      grade.classList.add('show');                     // reveal self-grading
+    }));
+    grade.querySelectorAll('.gb').forEach(function(g){
+      const lvl=g.classList.contains('again')?'again':g.classList.contains('easy')?'easy':'good';
+      g.addEventListener('click',function(){
+        if(card.dataset.done)return; card.dataset.done='1';
+        Course.grade(it.word, lvl);                     // smart scheduling
+        grade.querySelectorAll('.gb').forEach(x=>x.disabled=true); g.style.outline='3px solid var(--ink)';
+        answered++;
+        document.getElementById('score').textContent=correct+' / '+items.length;
+        if(answered>=items.length)document.getElementById('rlbl').textContent='session complete · '+Math.round(correct/items.length*100)+'% right first try · come back 🔁';
+      });
+    });
+    quiz.appendChild(card);
+  });
+}
+</script>
+</body>
+</html>

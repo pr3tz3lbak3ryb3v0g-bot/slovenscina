@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Slovenščina course">
+  <rect width="512" height="512" fill="#E11D2C"/>
+  <text x="256" y="350" text-anchor="middle" font-family="'Nunito','Trebuchet MS',system-ui,sans-serif" font-weight="800" font-size="300" fill="#FBF6EE">Š</text>
+  <rect x="156" y="396" width="200" height="20" rx="10" fill="#FBF6EE" opacity="0.85"/>
+</svg>
