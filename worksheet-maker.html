@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>try{var t=localStorage.getItem('slo_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<title>slovenščina · worksheet maker</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#E11D2C" media="(prefers-color-scheme:light)"><meta name="theme-color" content="#1b1714" media="(prefers-color-scheme:dark)">
+<link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))</script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF6EE;--card:#fff;--ink:#2B2724;--mut:#8A8178;--line:#ECE3D6;--accent:#E11D2C;--accent-soft:#fdecea;--ok:#4F9A6A;--mono:'Space Mono',monospace}
+:root[data-theme="dark"]{--bg:#1b1714;--card:#272018;--ink:#efe6d8;--mut:#a89e90;--line:#3a322a;--accent:#ff5b4b;--accent-soft:#3a1c19;--ok:#5fb07e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1714;--card:#272018;--ink:#efe6d8;--mut:#a89e90;--line:#3a322a;--accent:#ff5b4b;--accent-soft:#3a1c19;--ok:#5fb07e}}
+*{box-sizing:border-box}body{margin:0 auto;max-width:720px;background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;padding:30px 18px 90px}
+a.back{color:var(--accent);font-weight:800;text-decoration:none;font-size:14px}
+.eyebrow{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent);margin-top:6px}
+h1{text-transform:lowercase;letter-spacing:-.02em;font-size:36px;margin:2px 0}
+.sub{color:var(--mut);font-weight:700;margin-bottom:8px}
+.note{background:var(--accent-soft);border:1px solid var(--accent);border-radius:12px;padding:11px 14px;font-size:13px;font-weight:700;margin:14px 0}
+.note a{color:var(--accent)}
+label{display:block;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin:16px 0 5px}
+input[type=text],textarea{width:100%;font-family:inherit;font-size:16px;font-weight:600;border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;background:var(--card);color:var(--ink)}
+textarea{min-height:160px;line-height:1.5;resize:vertical;font-family:var(--mono);font-size:15px}
+input:focus,textarea:focus{outline:3px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.btn{font-weight:800;font-size:14px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:11px;padding:10px 15px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.btn:hover{border-color:var(--accent)}.btn.go{background:var(--accent);border-color:var(--accent);color:#fff}
+.tag{font-size:12px;color:var(--mut);font-weight:700}
+h2{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:26px 0 8px}
+.words{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px;line-height:2.1}
+.wtok{cursor:pointer;border-radius:6px;padding:1px 3px;font-weight:700;user-select:none}
+.wtok:hover{background:var(--line)}
+.wtok.blanked{background:var(--accent);color:#fff}
+.sheet{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;line-height:2.2;font-size:17px}
+.sheet h3{margin:0 0 4px}.sheet .instr{color:var(--mut);font-weight:700;font-size:14px;margin-bottom:12px}
+.gap{display:inline-block;min-width:70px;border-bottom:2px solid var(--ink);text-align:center;color:var(--mut);font-family:var(--mono);font-size:12px}
+.key{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:14px 16px;margin-top:14px}
+.key ol{margin:6px 0;padding-left:22px}.key li{font-weight:700}
+@media print{
+  body{max-width:none;padding:0;color:#000;background:#fff}
+  .screen-only{display:none!important}
+  .sheet,.key{border:none;background:#fff;box-shadow:none}
+  .key{page-break-before:always;border-top:2px solid #000}
+  .gap{border-bottom-color:#000}
+}
+</style>
+</head>
+<body>
+<a class="back screen-only" href="index.html">‹ all lessons</a>
+<div class="eyebrow screen-only">slovenščina · teacher tool</div>
+<h1 class="screen-only">worksheet maker</h1>
+<div class="sub screen-only">Turn any text into a listen-and-fill-the-gaps worksheet. Paste the text, tap the words you want to remove, then print or copy.</div>
+
+<div class="note screen-only">📌 <b>Use text you're allowed to use.</b> Song lyrics and books are copyrighted — only paste <b>public-domain</b>, <b>your own</b>, or <b>licensed</b> text, especially if you'll publish or share it. Public-domain Slovene texts &amp; folk songs: <a href="https://sl.wikisource.org" target="_blank" rel="noopener">Wikivir (sl.wikisource.org)</a>. In class, play the real recording and have students fill the gaps.</div>
+
+<div class="screen-only">
+  <label for="ttl">Worksheet title</label>
+  <input id="ttl" type="text" placeholder="e.g. Naslov pesmi / besedila" value="Dopolni besedilo">
+  <label for="ins">Instruction line</label>
+  <input id="ins" type="text" value="Poslušaj in vstavi manjkajoče besede. (Listen and fill in the missing words.)">
+  <label for="txt">Your text (one line per line)</label>
+  <textarea id="txt" placeholder="Paste your public-domain / own text here, one line per line…"></textarea>
+  <div class="row">
+    <button class="btn go" onclick="build()">build worksheet</button>
+    <span class="tag">then:</span>
+    <button class="btn" onclick="autoBlank(3)">blank every 3rd</button>
+    <button class="btn" onclick="autoBlank(4)">every 4th</button>
+    <button class="btn" onclick="autoBlank(5)">every 5th</button>
+    <button class="btn" onclick="clearBlanks()">clear blanks</button>
+  </div>
+
+  <h2>tap words to remove (tap again to restore)</h2>
+  <div class="words" id="words"><span class="tag">build a worksheet to see the words here.</span></div>
+
+  <div class="row">
+    <button class="btn go" onclick="window.print()">🖨️ print</button>
+    <button class="btn" onclick="copyHTML(this)">📋 copy as HTML</button>
+    <span class="tag" id="count"></span>
+  </div>
+  <h2>preview</h2>
+</div>
+
+<div class="sheet" id="sheet"><span class="tag">your worksheet preview appears here.</span></div>
+<div class="key" id="key" style="display:none"></div>
+
+<script>
+var tokens=[];   // [{w, blank, isWord}] flattened with line breaks marked by {br:true}
+function parse(text){
+  tokens=[];
+  text.split(/\r?\n/).forEach(function(line,li){
+    if(li>0) tokens.push({br:true});
+    var parts=line.split(/(\s+)/);
+    parts.forEach(function(p){
+      if(p==='')return;
+      if(/^\s+$/.test(p)){ tokens.push({sp:p}); return; }
+      tokens.push({w:p, blank:false, isWord:/[A-Za-zČŠŽčšžĆĐćđ]/.test(p)});
+    });
+  });
+}
+function core(w){ return w.replace(/^[^A-Za-zČŠŽčšž0-9]+/,'').replace(/[^A-Za-zČŠŽčšž0-9]+$/,''); }
+function build(){
+  parse(document.getElementById('txt').value);
+  autoBlank(4);   // sensible default
+}
+function autoBlank(n){
+  var c=0;
+  tokens.forEach(function(t){ if(t.isWord){ t.blank=(++c % n===0); } });
+  renderWords(); renderSheet();
+}
+function clearBlanks(){ tokens.forEach(function(t){ if(t.w) t.blank=false; }); renderWords(); renderSheet(); }
+function renderWords(){
+  var html=tokens.map(function(t,i){
+    if(t.br)return '<br>';
+    if(t.sp)return ' ';
+    return '<span class="wtok'+(t.blank?' blanked':'')+'" data-i="'+i+'" onclick="toggle('+i+')">'+esc(t.w)+'</span>';
+  }).join('');
+  document.getElementById('words').innerHTML=html||'<span class="tag">no words — paste some text and build.</span>';
+}
+function toggle(i){ if(tokens[i]&&tokens[i].w){ tokens[i].blank=!tokens[i].blank; renderWords(); renderSheet(); } }
+function renderSheet(){
+  var ttl=esc(document.getElementById('ttl').value), ins=esc(document.getElementById('ins').value), key=[];
+  var body=tokens.map(function(t){
+    if(t.br)return '<br>';
+    if(t.sp)return ' ';
+    if(t.blank){ var c=core(t.w),
+        lead=(t.w.match(/^[^A-Za-zČŠŽčšž0-9]+/)||[''])[0],
+        trail=(t.w.match(/[^A-Za-zČŠŽčšž0-9]+$/)||[''])[0];
+      key.push(c); return esc(lead)+'<span class="gap">'+'&nbsp;'.repeat(Math.max(6,c.length))+'</span>'+esc(trail); }
+    return esc(t.w);
+  }).join('');
+  document.getElementById('sheet').innerHTML='<h3>'+ttl+'</h3><div class="instr">'+ins+'</div>'+(body||'<span class="tag">paste text and build.</span>');
+  var k=document.getElementById('key');
+  if(key.length){ k.style.display=''; k.innerHTML='<b>Rešitve · answer key</b><ol>'+key.map(function(w){return '<li>'+esc(w)+'</li>';}).join('')+'</ol>'; }
+  else k.style.display='none';
+  var cnt=document.getElementById('count'); if(cnt)cnt.textContent=key.length+' blank'+(key.length===1?'':'s');
+}
+function core0len(w){ var m=w.match(/^[A-Za-zČŠŽčšž0-9]+/); return m?m[0].length:w.length; }
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function copyHTML(btn){
+  var html='<h3>'+esc(document.getElementById('ttl').value)+'</h3>\n<p><i>'+esc(document.getElementById('ins').value)+'</i></p>\n<p>'+
+    tokens.map(function(t){ if(t.br)return '<br>\n'; if(t.sp)return ' ';
+      return t.blank ? '_______' : esc(t.w); }).join('')+'</p>';
+  var key=tokens.filter(function(t){return t.blank;}).map(function(t){return core(t.w);});
+  if(key.length) html+='\n<hr>\n<p><b>Answer key:</b> '+key.map(esc).join(' · ')+'</p>';
+  navigator.clipboard.writeText(html).then(function(){ btn.textContent='✓ copied!'; setTimeout(function(){btn.textContent='📋 copy as HTML';},1500); })
+    .catch(function(){ btn.textContent='copy failed'; });
+}
+['ttl','ins'].forEach(function(id){ document.getElementById(id).addEventListener('input',renderSheet); });
+</script>
+</body>
+</html>

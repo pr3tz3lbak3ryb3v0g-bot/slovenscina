@@ -154,6 +154,19 @@ a:focus-visible,button:focus-visible,.flip:focus-visible,input:focus-visible,tex
 .recall-in.no{border-color:var(--f);background:color-mix(in srgb,var(--f) 14%,transparent)}
 .recall-chk{font-family:var(--mono);font-size:14px;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:11px;padding:9px 16px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
 .recall-chk:hover:not(:disabled){border-color:var(--accent)}
+/* song cloze — listen & fill the lyrics */
+.songbox{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.songline{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding:6px 0;border-bottom:1px dashed var(--line)}
+.songline:last-child{border-bottom:none}
+.songline .sl{font-size:18px;font-weight:700;line-height:1.9}
+.songline .en{color:var(--mut);font-weight:700;font-size:13px;width:100%;margin-left:34px}
+.songblank{font-family:var(--mono);font-size:15px;font-weight:700;border:none;border-bottom:2px solid var(--accent);background:transparent;color:var(--ink);text-align:center;padding:0 2px;min-width:46px}
+.songblank:focus{outline:none;background:var(--accent-soft)}
+.songblank.ok{border-bottom-color:var(--ok);color:var(--ok)}
+.songblank.no{border-bottom-color:var(--f);color:var(--f)}
+.songctl{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.songbtn{font-family:var(--mono);font-size:14px;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:11px;padding:9px 14px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.songbtn:hover{border-color:var(--accent)}
 .candos{display:flex;flex-direction:column;gap:8px;margin-top:6px}
 .cando{display:flex;align-items:flex-start;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 15px;font-weight:700;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
 .cando input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--ok);cursor:pointer}
@@ -237,6 +250,8 @@ details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;fon
     <p>See the English, recall the Slovene — the phrases for the market and the till. Eight shopping essentials. About five minutes.</p>
     <div class="meta"><span class="chip">⏱️ ≈5 min</span><span class="chip">🎯 grammar → 📝 practice → ⚡ quick → 🃏 cards</span></div>
   </div>
+
+  
 
   
 
@@ -374,6 +389,57 @@ details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;fon
   
 
   
+  <!-- RECALL ROUND · auto-built from this lesson's vocab -->
+  <section class="sec" id="review">
+    <div class="sechead"><span class="step">🔁</span><h2>recall round</h2><span class="sl">· say this lesson's words in Slovene</span><span class="score" aria-live="polite" id="scR">0 ✓</span></div>
+    <div class="hint">one more pass — pick the Slovene for each meaning</div>
+    
+    <div class="q" data-done="0" data-sec="R" data-word="Kilogram jabolk">
+      <div class="qp"><span class="qe">🍎</span>🔁 ‘A kilo of apples’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('Kilogram jabolk')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 Kilogram jabolk</span></div>
+      <div class="qen">recall — pick the Slovene word</div>
+      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">Kilogram jabolk</button><button class="opt" onclick="pick(this)">Pol kile, prosim</button><button class="opt" onclick="pick(this)">Še kaj?</button></div>
+      <div class="fb">✓ <b>Kilogram jabolk</b></div>
+    </div>
+    
+    <div class="q" data-done="0" data-sec="R" data-word="Pol kile, prosim">
+      <div class="qp"><span class="qe">⚖️</span>🔁 ‘Half a kilo, please’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('Pol kile, prosim')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 Pol kile, prosim</span></div>
+      <div class="qen">recall — pick the Slovene word</div>
+      <div class="opts"><button class="opt" onclick="pick(this)">Kilogram jabolk</button><button class="opt" data-c="1" onclick="pick(this)">Pol kile, prosim</button><button class="opt" onclick="pick(this)">Še kaj?</button></div>
+      <div class="fb">✓ <b>Pol kile, prosim</b></div>
+    </div>
+    
+    <div class="q" data-done="0" data-sec="R" data-word="Še kaj?">
+      <div class="qp"><span class="qe">➕</span>🔁 ‘Anything else?’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('Še kaj?')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 Še kaj?</span></div>
+      <div class="qen">recall — pick the Slovene word</div>
+      <div class="opts"><button class="opt" onclick="pick(this)">Kilogram jabolk</button><button class="opt" onclick="pick(this)">Pol kile, prosim</button><button class="opt" data-c="1" onclick="pick(this)">Še kaj?</button></div>
+      <div class="fb">✓ <b>Še kaj?</b></div>
+    </div>
+    
+    <div class="q" data-done="0" data-sec="R" data-word="To je vse, hvala">
+      <div class="qp"><span class="qe">🛍️</span>🔁 ‘That's all, thanks’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('To je vse, hvala')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 To je vse, hvala</span></div>
+      <div class="qen">recall — pick the Slovene word</div>
+      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">To je vse, hvala</button><button class="opt" onclick="pick(this)">Kilogram jabolk</button><button class="opt" onclick="pick(this)">Pol kile, prosim</button></div>
+      <div class="fb">✓ <b>To je vse, hvala</b></div>
+    </div>
+    
+    <div class="q" data-done="0" data-sec="R" data-word="Predrago je">
+      <div class="qp"><span class="qe">💸</span>🔁 ‘It's too expensive’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('Predrago je')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 Predrago je</span></div>
+      <div class="qen">recall — pick the Slovene word</div>
+      <div class="opts"><button class="opt" onclick="pick(this)">Kilogram jabolk</button><button class="opt" data-c="1" onclick="pick(this)">Predrago je</button><button class="opt" onclick="pick(this)">Pol kile, prosim</button></div>
+      <div class="fb">✓ <b>Predrago je</b></div>
+    </div>
+    
+    <div class="q" data-done="0" data-sec="R" data-word="Imate vrečko?">
+      <div class="qp"><span class="qe">🛍️</span>🔁 ‘Do you have a bag?’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('Imate vrečko?')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 Imate vrečko?</span></div>
+      <div class="qen">recall — pick the Slovene word</div>
+      <div class="opts"><button class="opt" onclick="pick(this)">Kilogram jabolk</button><button class="opt" onclick="pick(this)">Pol kile, prosim</button><button class="opt" data-c="1" onclick="pick(this)">Imate vrečko?</button></div>
+      <div class="fb">✓ <b>Imate vrečko?</b></div>
+    </div>
+    
+  </section>
+  
+
+  
   <!-- 4 · CARDS -->
   <section class="sec" id="cards">
     <div class="sechead"><span class="step">04</span><h2>cards</h2><span class="sl">· drill the words</span></div>
@@ -488,8 +554,8 @@ details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;fon
 <script src="course.js"></script>
 <script>
 const LESSON_ID="lesson-89";
-const right={P:0,Q:0,W:0,WB:0};
-const TOTAL=document.querySelectorAll('.q,.wo,.wbq').length; let answered=0, correct=0, finished=false;
+const right={P:0,Q:0,W:0,WB:0,R:0,SONG:0};
+const TOTAL=document.querySelectorAll('.q,.wo,.wbq,.songblank').length; let answered=0, correct=0, finished=false;
 function tally(ok){ if(ok)correct++; answered++;
   if(window.Course&&Course.progress)Course.progress(LESSON_ID,answered,correct,TOTAL);
   if(answered>=TOTAL && !finished){ finished=true; finish(); } }
@@ -575,6 +641,31 @@ function applyRecall(){
     btn.addEventListener('click',function(){recallType(q,inp);});
     inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();recallType(q,inp);}});
   });
+}
+// song cloze: type the missing lyric; diacritic-tolerant; ✓ check fills in any left blank
+function songCheck(inp){
+  if(inp.dataset.done==='1')return; inp.dataset.done='1';
+  const ans=inp.dataset.a||'', ok=rfold(inp.value)===rfold(ans);
+  inp.disabled=true; inp.classList.add(ok?'ok':'no');
+  if(!ok) inp.value=ans;                                    // reveal the right word
+  if(ok){ right.SONG=(right.SONG||0)+1; const s=document.getElementById('scSONG'); if(s)s.innerHTML='<b>'+right.SONG+'</b> ✓'; }
+  if(window.Course)Course.answer(ans, ok, {p:'🎵 '+ans, a:ans, o:[ans]});
+  tally(ok);
+}
+function songNext(inp){
+  songCheck(inp);
+  const all=[...document.querySelectorAll('.songblank')], i=all.indexOf(inp);
+  for(let j=i+1;j<all.length;j++){ if(!all[j].disabled){ all[j].focus(); break; } }
+}
+function songCheckAll(){ document.querySelectorAll('.songblank').forEach(function(inp){ if(inp.dataset.done!=='1')songCheck(inp); }); }
+function songPlayAll(){
+  if(!window.Course)return;
+  const lines=[...document.querySelectorAll('.songbox .songline .sl')].map(function(sl){
+    return [...sl.childNodes].map(function(n){
+      return n.nodeType===1 && n.classList.contains('songblank') ? (n.dataset.a||'') : (n.textContent||'');
+    }).join('');
+  });
+  Course.say(lines.join('. '));
 }
 // word-order: tap a chip → it moves to the line; tap a placed word → it returns; when the
 // line is full, the order is checked against the target sentence.
