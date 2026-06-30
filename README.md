@@ -4,9 +4,9 @@ A free, open course for learning **Slovene**, from the alphabet (A1) all the way
 
 **▶ Open it: https://pr3tz3lbak3ryb3v0g-bot.github.io/slovenscina/**
 
-- **258 lessons + 10 practice exams**, A1 → C2
+- **261 lessons + 10 practice exams**, A1 → C2
 - Works entirely in your browser — **installable as an app**, runs **offline**, **no sign-up**
-- Lesson types include grammar drills, dialogues, readings, word-order, workbooks, themed coursebook units, and **🎵 listen-and-fill-the-lyrics songs**
+- Lesson types include grammar drills, dialogues, readings, word-order, workbooks, themed coursebook units, **🎵 listen-and-fill-the-lyrics songs**, and **🖼️ picture stories** (see a picture, type the word)
 - A searchable **word bank**, **spaced-repetition** review, a **progress dashboard**, a **type-the-answer** recall mode, and a **recall round** in every vocab lesson
 - A **worksheet maker** for teachers (paste your own / public-domain text → printable gap-fill)
 - Your progress is saved **only on your own device** — nothing is collected

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script>try{var t=localStorage.getItem('slo_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
-<title>slovenščina · word families</title>
+<title>slovenščina · My trip</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#E11D2C">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -247,35 +247,66 @@ details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;fon
   <button id="themebtn" class="themebtn" type="button" aria-label="Toggle dark mode">🌙</button>
 </div>
 
-<main class="wrap" id="main" tabindex="-1" data-lesson="lesson-234">
+<main class="wrap" id="main" tabindex="-1" data-lesson="lesson-313">
   <div class="hero">
-    <div class="eyebrow">lesson 234 · grammar + 6 cards</div>
-    <h1>word families <span style="color:var(--mut);-webkit-text-fill-color:var(--mut)">· besedne družine</span></h1>
-    <div class="sub">build meaning with affixes</div>
-    <p>Slovene grows whole families from one root with suffixes — agent, action, diminutive, augmentative. Knowing the affixes lets you read words you've never met. Pick the right derived form. About seven minutes.</p>
-    <div class="meta"><span class="chip">⏱️ ≈7 min</span><span class="chip">🎯 grammar → 📝 practice → ⚡ quick → 🃏 cards</span></div>
+    <div class="eyebrow">lesson 313 · grammar + 6 cards</div>
+    <h1>My trip <span style="color:var(--mut);-webkit-text-fill-color:var(--mut)">· Slikovna zgodba: moj izlet</span></h1>
+    <div class="sub">see the picture, type the word</div>
+    <p>A picture story — read along, and when you reach a picture, type the Slovene word for it. No options to pick from: the picture makes you recall the word yourself. About six minutes.</p>
+    <div class="meta"><span class="chip">⏱️ ≈6 min</span><span class="chip">🎯 grammar → 📝 practice → ⚡ quick → 🃏 cards</span></div>
   </div>
 
   
-  <!-- 1 · GRAMMAR -->
-  <section class="sec" id="grammar">
-    <div class="sechead"><span class="step">01</span><h2>grammar</h2><span class="sl">· learn the rule</span></div>
-    <div class="gram">
-      <div class="gh"><span class="e">🌳</span><h3>word families</h3><span class="sl">· besedne družine</span></div>
-      <div class="hook">one root, a whole family</div>
-      <div class="body">From <i>pisati</i> (to write) Slovene builds <i>pisatelj</i> (writer, agent <b>-telj</b>), <i>pisanje</i> (writing, action <b>-nje</b>), <i>pismo</i> (a letter). Diminutive <b>-ka/-ica</b> shrinks (<i>hiška</i>, little house); augmentative <b>-urina</b> enlarges and disparages (<i>hišurina</i>). Spotting the affix unlocks the meaning.</div>
-      
-      <div class="demo">
-        <div class="d ga"><span class="sl">pisati → <b>pisatelj</b></span><span class="en">write → writer</span><span class="note">-telj = agent</span></div><div class="d ga"><span class="sl">hiša → <b>hiška</b></span><span class="en">house → little house</span><span class="note">-ka = diminutive</span></div><div class="d ga"><span class="sl">hiša → <b>hišurina</b></span><span class="en">house → big ugly house</span><span class="note">-urina = augmentative</span></div>
+
+  
+
+  
+
+  
+  <!-- PICTURE STORY · see the picture, type the word -->
+  <section class="sec" id="picstory">
+    <div class="sechead"><span class="step">🖼️</span><h2>picture story</h2><span class="sl">· the picture is the prompt — name it in Slovene</span><span class="score" aria-live="polite" id="scSONG">0 ✓</span></div>
+    <div class="hint">read the story — when you reach a picture, type the Slovene word for it · ✓ check fills any you leave blank</div>
+    <div class="songbox">
+    
+      <div class="songline">
+        <span class="sl" lang="sl">Danes grem na izlet.</span>
+        <span class="en">Today I'm going on a trip.</span>
       </div>
+    
+      <div class="songline">
+        <span class="sl" lang="sl">Z mano gre moja <span class="picslot"><span class="picimg">👨‍👩‍👧‍👦</span><input class="songblank" data-a="družina" size="8" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="type the Slovene word for the picture" onkeydown="if(event.key==='Enter'){event.preventDefault();songNext(this);}" onblur="if(this.value.trim())songCheck(this)"></span>.</span>
+        <span class="en">My family is coming with me.</span>
+      </div>
+    
+      <div class="songline">
+        <span class="sl" lang="sl">Pridejo tudi moji <span class="picslot"><span class="picimg">🧑‍🤝‍🧑</span><input class="songblank" data-a="prijatelji" size="11" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="type the Slovene word for the picture" onkeydown="if(event.key==='Enter'){event.preventDefault();songNext(this);}" onblur="if(this.value.trim())songCheck(this)"></span>.</span>
+        <span class="en">My friends are coming too.</span>
+      </div>
+    
+      <div class="songline">
+        <span class="sl" lang="sl">Vzamem <span class="picslot"><span class="picimg">🎒</span><input class="songblank" data-a="nahrbtnik" size="10" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="type the Slovene word for the picture" onkeydown="if(event.key==='Enter'){event.preventDefault();songNext(this);}" onblur="if(this.value.trim())songCheck(this)"></span>.</span>
+        <span class="en">I take a backpack.</span>
+      </div>
+    
+      <div class="songline">
+        <span class="sl" lang="sl">Na nebu sije <span class="picslot"><span class="picimg">☀️</span><input class="songblank" data-a="sonce" size="6" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="type the Slovene word for the picture" onkeydown="if(event.key==='Enter'){event.preventDefault();songNext(this);}" onblur="if(this.value.trim())songCheck(this)"></span>.</span>
+        <span class="en">The sun shines in the sky.</span>
+      </div>
+    
+      <div class="songline">
+        <span class="sl" lang="sl">Pred nami so visoki <span class="picslot"><span class="picimg">⛰️</span><input class="songblank" data-a="hribi" size="6" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="type the Slovene word for the picture" onkeydown="if(event.key==='Enter'){event.preventDefault();songNext(this);}" onblur="if(this.value.trim())songCheck(this)"></span>.</span>
+        <span class="en">Tall hills are ahead of us.</span>
+      </div>
+    
+      <div class="songline">
+        <span class="sl" lang="sl">Na koncu jem <span class="picslot"><span class="picimg">🍦</span><input class="songblank" data-a="sladoled" size="9" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="type the Slovene word for the picture" onkeydown="if(event.key==='Enter'){event.preventDefault();songNext(this);}" onblur="if(this.value.trim())songCheck(this)"></span>.</span>
+        <span class="en">At the end I eat an ice cream.</span>
+      </div>
+    
     </div>
+    <div class="songctl"><button class="songbtn" type="button" onclick="songCheckAll()">✓ check the story</button></div>
   </section>
-  
-
-  
-
-  
-
   
 
   
@@ -283,96 +314,32 @@ details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;fon
   
   <!-- 2 · PRACTICE -->
   <section class="sec" id="practice">
-    <div class="sechead"><span class="step">02</span><h2>practice</h2><span class="sl">· derive the right form</span><span class="score" aria-live="polite" id="scP">0 ✓</span></div>
+    <div class="sechead"><span class="step">02</span><h2>practice</h2><span class="sl">· type the word for each picture</span><span class="score" aria-live="polite" id="scP">0 ✓</span></div>
     
-    <div class="q" data-done="0" data-sec="P" data-word="pisatelj">
-      <div class="qp"><span class="qe">✍️</span>From 'pisati' (write), a writer is a <b>___</b>. <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('pisatelj')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 pisatelj</span></div>
-      <div class="qen">writer (agent)</div>
-      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">pisatelj</button><button class="opt" onclick="pick(this)">pisava</button><button class="opt" onclick="pick(this)">pisalo</button></div>
-      <div class="fb">✓ <b>pisatelj</b> — -telj = agent noun</div>
+    <div class="q" data-done="0" data-sec="P" data-word="družina">
+      <div class="qp"><span class="qe">👨‍👩‍👧‍👦</span>Kdo gre z menoj na izlet? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('družina')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 družina</span></div>
+      <div class="qen">Who comes with me on the trip?</div>
+      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">družina</button><button class="opt" onclick="pick(this)">učitelj</button><button class="opt" onclick="pick(this)">sosed</button></div>
+      <div class="fb">✓ <b>družina</b> — “… gre moja družina.”</div>
     </div>
     
-    <div class="q" data-done="0" data-sec="P" data-word="pisanje">
-      <div class="qp"><span class="qe">📝</span>From 'pisati', the act of writing is <b>___</b>. <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('pisanje')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 pisanje</span></div>
-      <div class="qen">writing (action)</div>
-      <div class="opts"><button class="opt" onclick="pick(this)">pisatelj</button><button class="opt" data-c="1" onclick="pick(this)">pisanje</button><button class="opt" onclick="pick(this)">pismo</button></div>
-      <div class="fb">✓ <b>pisanje</b> — -nje = verbal noun</div>
+    <div class="q" data-done="0" data-sec="P" data-word="sonce">
+      <div class="qp"><span class="qe">☀️</span>Kaj sije na nebu? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('sonce')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 sonce</span></div>
+      <div class="qen">What shines in the sky?</div>
+      <div class="opts"><button class="opt" onclick="pick(this)">luna</button><button class="opt" data-c="1" onclick="pick(this)">sonce</button><button class="opt" onclick="pick(this)">dež</button></div>
+      <div class="fb">✓ <b>sonce</b> — “… sije sonce.”</div>
     </div>
     
-    <div class="q" data-done="0" data-sec="P" data-word="hiška">
-      <div class="qp"><span class="qe">🏠</span>Diminutive of 'hiša' (house): <b>___</b> (little house). <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('hiška')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 hiška</span></div>
-      <div class="qen">little house</div>
-      <div class="opts"><button class="opt" onclick="pick(this)">hišurina</button><button class="opt" onclick="pick(this)">hišnik</button><button class="opt" data-c="1" onclick="pick(this)">hiška</button></div>
-      <div class="fb">✓ <b>hiška</b> — -ka = diminutive</div>
-    </div>
-    
-    <div class="q" data-done="0" data-sec="P" data-word="hišurina">
-      <div class="qp"><span class="qe">🏚️</span>Augmentative of 'hiša': <b>___</b> (big ugly house). <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('hišurina')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 hišurina</span></div>
-      <div class="qen">big ugly house</div>
-      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">hišurina</button><button class="opt" onclick="pick(this)">hiška</button><button class="opt" onclick="pick(this)">hišica</button></div>
-      <div class="fb">✓ <b>hišurina</b> — -urina = augmentative (pejorative)</div>
-    </div>
-    
-    <div class="q" data-done="0" data-sec="P" data-word="učitelj">
-      <div class="qp"><span class="qe">👨‍🏫</span>From 'učiti' (teach), a teacher is an <b>___</b>. <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('učitelj')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 učitelj</span></div>
-      <div class="qen">teacher (agent)</div>
-      <div class="opts"><button class="opt" onclick="pick(this)">učenec</button><button class="opt" data-c="1" onclick="pick(this)">učitelj</button><button class="opt" onclick="pick(this)">učilnica</button></div>
-      <div class="fb">✓ <b>učitelj</b> — -telj teacher; -enec learner</div>
-    </div>
-    
-    <div class="q" data-done="0" data-sec="P" data-word="lesen">
-      <div class="qp"><span class="qe">🪵</span>From 'les' (wood), the adjective 'wooden' is <b>___</b>. <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('lesen')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 lesen</span></div>
-      <div class="qen">wooden</div>
-      <div class="opts"><button class="opt" onclick="pick(this)">lesnik</button><button class="opt" onclick="pick(this)">lesišče</button><button class="opt" data-c="1" onclick="pick(this)">lesen</button></div>
-      <div class="fb">✓ <b>lesen</b> — -en = made-of adjective</div>
+    <div class="q" data-done="0" data-sec="P" data-word="sladoled">
+      <div class="qp"><span class="qe">🍦</span>Kaj jem na koncu? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('sladoled')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 sladoled</span></div>
+      <div class="qen">What do I eat at the end?</div>
+      <div class="opts"><button class="opt" onclick="pick(this)">juho</button><button class="opt" onclick="pick(this)">kruh</button><button class="opt" data-c="1" onclick="pick(this)">sladoled</button></div>
+      <div class="fb">✓ <b>sladoled</b> — “… jem sladoled.”</div>
     </div>
     
   </section>
   
 
-  
-  <!-- 3 · QUICK PRACTICE -->
-  <section class="sec quick" id="quick">
-    <div class="sechead"><span class="step">03</span><h2>quick practice</h2><span class="sl">· fast recall</span><span class="score" aria-live="polite" id="scQ">0 ✓</span></div>
-    <div class="hint">fast recall — tap the match.</div>
-    
-    <div class="q" data-done="0" data-sec="Q" data-word="writer">
-      <div class="qp"><span class="qe">✍️</span>writer <span class="cue">→ ?</span> <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('pisatelj')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 pisatelj</span></div>
-      <div class="opts"><button class="opt" onclick="pick(this)">pisanje</button><button class="opt" data-c="1" onclick="pick(this)">pisatelj</button><button class="opt" onclick="pick(this)">hiška</button></div>
-      <div class="fb">✓ <b>pisatelj</b> — -telj = agent noun</div>
-    </div>
-    
-    <div class="q" data-done="0" data-sec="Q" data-word="writing">
-      <div class="qp"><span class="qe">📝</span>writing <span class="cue">→ ?</span> <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('pisanje')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 pisanje</span></div>
-      <div class="opts"><button class="opt" onclick="pick(this)">pisatelj</button><button class="opt" onclick="pick(this)">hiška</button><button class="opt" data-c="1" onclick="pick(this)">pisanje</button></div>
-      <div class="fb">✓ <b>pisanje</b> — -nje = verbal noun</div>
-    </div>
-    
-    <div class="q" data-done="0" data-sec="Q" data-word="little house">
-      <div class="qp"><span class="qe">🏠</span>little house <span class="cue">→ ?</span> <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('hiška')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 hiška</span></div>
-      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">hiška</button><button class="opt" onclick="pick(this)">pisatelj</button><button class="opt" onclick="pick(this)">pisanje</button></div>
-      <div class="fb">✓ <b>hiška</b> — -ka = diminutive</div>
-    </div>
-    
-    <div class="q" data-done="0" data-sec="Q" data-word="great big house">
-      <div class="qp"><span class="qe">🏚️</span>great big house <span class="cue">→ ?</span> <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('hišurina')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 hišurina</span></div>
-      <div class="opts"><button class="opt" onclick="pick(this)">pisatelj</button><button class="opt" data-c="1" onclick="pick(this)">hišurina</button><button class="opt" onclick="pick(this)">pisanje</button></div>
-      <div class="fb">✓ <b>hišurina</b> — -urina = augmentative (pejorative)</div>
-    </div>
-    
-    <div class="q" data-done="0" data-sec="Q" data-word="teacher">
-      <div class="qp"><span class="qe">👨‍🏫</span>teacher <span class="cue">→ ?</span> <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('učitelj')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 učitelj</span></div>
-      <div class="opts"><button class="opt" onclick="pick(this)">pisatelj</button><button class="opt" onclick="pick(this)">pisanje</button><button class="opt" data-c="1" onclick="pick(this)">učitelj</button></div>
-      <div class="fb">✓ <b>učitelj</b> — -telj teacher; -enec learner</div>
-    </div>
-    
-    <div class="q" data-done="0" data-sec="Q" data-word="wooden">
-      <div class="qp"><span class="qe">🪵</span>wooden <span class="cue">→ ?</span> <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('lesen')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 lesen</span></div>
-      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">lesen</button><button class="opt" onclick="pick(this)">pisatelj</button><button class="opt" onclick="pick(this)">pisanje</button></div>
-      <div class="fb">✓ <b>lesen</b> — -en = made-of adjective</div>
-    </div>
-    
-  </section>
   
 
   
@@ -389,46 +356,46 @@ details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;fon
     <div class="sechead"><span class="step">🔁</span><h2>recall round</h2><span class="sl">· say this lesson's words in Slovene</span><span class="score" aria-live="polite" id="scR">0 ✓</span></div>
     <div class="hint">one more pass — pick the Slovene for each meaning</div>
     
-    <div class="q" data-done="0" data-sec="R" data-word="pisatelj">
-      <div class="qp"><span class="qe">✍️</span>🔁 ‘writer’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('pisatelj')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 pisatelj</span></div>
+    <div class="q" data-done="0" data-sec="R" data-word="družina">
+      <div class="qp"><span class="qe">👨‍👩‍👧‍👦</span>🔁 ‘family’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('družina')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 družina</span></div>
       <div class="qen">recall — pick the Slovene word</div>
-      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">pisatelj</button><button class="opt" onclick="pick(this)">pisanje</button><button class="opt" onclick="pick(this)">hiška</button></div>
-      <div class="fb">✓ <b>pisatelj</b></div>
+      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">družina</button><button class="opt" onclick="pick(this)">prijatelji</button><button class="opt" onclick="pick(this)">nahrbtnik</button></div>
+      <div class="fb">✓ <b>družina</b></div>
     </div>
     
-    <div class="q" data-done="0" data-sec="R" data-word="pisanje">
-      <div class="qp"><span class="qe">📝</span>🔁 ‘writing’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('pisanje')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 pisanje</span></div>
+    <div class="q" data-done="0" data-sec="R" data-word="prijatelji">
+      <div class="qp"><span class="qe">🧑‍🤝‍🧑</span>🔁 ‘friends’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('prijatelji')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 prijatelji</span></div>
       <div class="qen">recall — pick the Slovene word</div>
-      <div class="opts"><button class="opt" onclick="pick(this)">pisatelj</button><button class="opt" data-c="1" onclick="pick(this)">pisanje</button><button class="opt" onclick="pick(this)">hiška</button></div>
-      <div class="fb">✓ <b>pisanje</b></div>
+      <div class="opts"><button class="opt" onclick="pick(this)">družina</button><button class="opt" data-c="1" onclick="pick(this)">prijatelji</button><button class="opt" onclick="pick(this)">nahrbtnik</button></div>
+      <div class="fb">✓ <b>prijatelji</b></div>
     </div>
     
-    <div class="q" data-done="0" data-sec="R" data-word="hiška">
-      <div class="qp"><span class="qe">🏠</span>🔁 ‘little house’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('hiška')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 hiška</span></div>
+    <div class="q" data-done="0" data-sec="R" data-word="nahrbtnik">
+      <div class="qp"><span class="qe">🎒</span>🔁 ‘backpack’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('nahrbtnik')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 nahrbtnik</span></div>
       <div class="qen">recall — pick the Slovene word</div>
-      <div class="opts"><button class="opt" onclick="pick(this)">pisatelj</button><button class="opt" onclick="pick(this)">pisanje</button><button class="opt" data-c="1" onclick="pick(this)">hiška</button></div>
-      <div class="fb">✓ <b>hiška</b></div>
+      <div class="opts"><button class="opt" onclick="pick(this)">družina</button><button class="opt" onclick="pick(this)">prijatelji</button><button class="opt" data-c="1" onclick="pick(this)">nahrbtnik</button></div>
+      <div class="fb">✓ <b>nahrbtnik</b></div>
     </div>
     
-    <div class="q" data-done="0" data-sec="R" data-word="hišurina">
-      <div class="qp"><span class="qe">🏚️</span>🔁 ‘great big house’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('hišurina')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 hišurina</span></div>
+    <div class="q" data-done="0" data-sec="R" data-word="sonce">
+      <div class="qp"><span class="qe">☀️</span>🔁 ‘sun’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('sonce')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 sonce</span></div>
       <div class="qen">recall — pick the Slovene word</div>
-      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">hišurina</button><button class="opt" onclick="pick(this)">pisatelj</button><button class="opt" onclick="pick(this)">pisanje</button></div>
-      <div class="fb">✓ <b>hišurina</b></div>
+      <div class="opts"><button class="opt" data-c="1" onclick="pick(this)">sonce</button><button class="opt" onclick="pick(this)">družina</button><button class="opt" onclick="pick(this)">prijatelji</button></div>
+      <div class="fb">✓ <b>sonce</b></div>
     </div>
     
-    <div class="q" data-done="0" data-sec="R" data-word="učitelj">
-      <div class="qp"><span class="qe">👨‍🏫</span>🔁 ‘teacher’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('učitelj')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 učitelj</span></div>
+    <div class="q" data-done="0" data-sec="R" data-word="hribi">
+      <div class="qp"><span class="qe">⛰️</span>🔁 ‘hills’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('hribi')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 hribi</span></div>
       <div class="qen">recall — pick the Slovene word</div>
-      <div class="opts"><button class="opt" onclick="pick(this)">pisatelj</button><button class="opt" data-c="1" onclick="pick(this)">učitelj</button><button class="opt" onclick="pick(this)">pisanje</button></div>
-      <div class="fb">✓ <b>učitelj</b></div>
+      <div class="opts"><button class="opt" onclick="pick(this)">družina</button><button class="opt" data-c="1" onclick="pick(this)">hribi</button><button class="opt" onclick="pick(this)">prijatelji</button></div>
+      <div class="fb">✓ <b>hribi</b></div>
     </div>
     
-    <div class="q" data-done="0" data-sec="R" data-word="lesen">
-      <div class="qp"><span class="qe">🪵</span>🔁 ‘wooden’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('lesen')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 lesen</span></div>
+    <div class="q" data-done="0" data-sec="R" data-word="sladoled">
+      <div class="qp"><span class="qe">🍦</span>🔁 ‘ice cream’ — po slovensko? <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say('sladoled')">🔊</button><button class="hintbtn" type="button" onclick="showHint(this)">+ hint</button><span class="hintans">💡 sladoled</span></div>
       <div class="qen">recall — pick the Slovene word</div>
-      <div class="opts"><button class="opt" onclick="pick(this)">pisatelj</button><button class="opt" onclick="pick(this)">pisanje</button><button class="opt" data-c="1" onclick="pick(this)">lesen</button></div>
-      <div class="fb">✓ <b>lesen</b></div>
+      <div class="opts"><button class="opt" onclick="pick(this)">družina</button><button class="opt" onclick="pick(this)">prijatelji</button><button class="opt" data-c="1" onclick="pick(this)">sladoled</button></div>
+      <div class="fb">✓ <b>sladoled</b></div>
     </div>
     
   </section>
@@ -441,66 +408,66 @@ details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;fon
     <div class="hint">tap a card to flip · 6 cards</div>
     <div class="deck">
       
-      <div class="flip ga" role="button" tabindex="0" aria-label="Flip card: pisatelj" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+      <div class="flip gf" role="button" tabindex="0" aria-label="Flip card: družina" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
         <div class="inner">
-          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('pisatelj')">🔊</button><div class="em">✍️</div><div class="w" lang="sl">pisatelj</div><div class="pr">pee-SAH-tely</div></div>
+          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('družina')">🔊</button><div class="em">👨‍👩‍👧‍👦</div><div class="w" lang="sl">družina</div><div class="pr">droo-ZHEE-nah</div></div>
           <div class="face back">
-            <div class="mean">writer</div>
+            <div class="mean">family</div>
             
             
           </div>
         </div>
       </div>
       
-      <div class="flip ga" role="button" tabindex="0" aria-label="Flip card: pisanje" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+      <div class="flip gm" role="button" tabindex="0" aria-label="Flip card: prijatelji" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
         <div class="inner">
-          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('pisanje')">🔊</button><div class="em">📝</div><div class="w" lang="sl">pisanje</div><div class="pr">pee-SAH-nyeh</div></div>
+          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('prijatelji')">🔊</button><div class="em">🧑‍🤝‍🧑</div><div class="w" lang="sl">prijatelji</div><div class="pr">pree-YAH-tel-yee</div></div>
           <div class="face back">
-            <div class="mean">writing</div>
+            <div class="mean">friends</div>
             
             
           </div>
         </div>
       </div>
       
-      <div class="flip ga" role="button" tabindex="0" aria-label="Flip card: hiška" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+      <div class="flip gm" role="button" tabindex="0" aria-label="Flip card: nahrbtnik" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
         <div class="inner">
-          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('hiška')">🔊</button><div class="em">🏠</div><div class="w" lang="sl">hiška</div><div class="pr">HEESH-kah</div></div>
+          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('nahrbtnik')">🔊</button><div class="em">🎒</div><div class="w" lang="sl">nahrbtnik</div><div class="pr">nah-HUHRBT-neek</div></div>
           <div class="face back">
-            <div class="mean">little house</div>
+            <div class="mean">backpack</div>
             
             
           </div>
         </div>
       </div>
       
-      <div class="flip ga" role="button" tabindex="0" aria-label="Flip card: hišurina" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+      <div class="flip gn" role="button" tabindex="0" aria-label="Flip card: sonce" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
         <div class="inner">
-          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('hišurina')">🔊</button><div class="em">🏚️</div><div class="w" lang="sl">hišurina</div><div class="pr">hee-SHOO-ree-nah</div></div>
+          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('sonce')">🔊</button><div class="em">☀️</div><div class="w" lang="sl">sonce</div><div class="pr">SON-tseh</div></div>
           <div class="face back">
-            <div class="mean">great big house</div>
+            <div class="mean">sun</div>
             
             
           </div>
         </div>
       </div>
       
-      <div class="flip ga" role="button" tabindex="0" aria-label="Flip card: učitelj" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+      <div class="flip gm" role="button" tabindex="0" aria-label="Flip card: hribi" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
         <div class="inner">
-          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('učitelj')">🔊</button><div class="em">👨‍🏫</div><div class="w" lang="sl">učitelj</div><div class="pr">oo-CHEE-tely</div></div>
+          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('hribi')">🔊</button><div class="em">⛰️</div><div class="w" lang="sl">hribi</div><div class="pr">HREE-bee</div></div>
           <div class="face back">
-            <div class="mean">teacher</div>
+            <div class="mean">hills</div>
             
             
           </div>
         </div>
       </div>
       
-      <div class="flip ga" role="button" tabindex="0" aria-label="Flip card: lesen" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+      <div class="flip gm" role="button" tabindex="0" aria-label="Flip card: sladoled" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
         <div class="inner">
-          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('lesen')">🔊</button><div class="em">🪵</div><div class="w" lang="sl">lesen</div><div class="pr">LEH-sen</div></div>
+          <div class="face front"><button class="say" title="listen" aria-label="Listen" onclick="event.stopPropagation();window.Course&&Course.say('sladoled')">🔊</button><div class="em">🍦</div><div class="w" lang="sl">sladoled</div><div class="pr">slah-doh-LED</div></div>
           <div class="face back">
-            <div class="mean">wooden</div>
+            <div class="mean">ice cream</div>
             
             
           </div>
@@ -516,9 +483,9 @@ details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;fon
   <div class="done-card" id="done" role="status" aria-live="polite"><div class="dh">lesson complete! 🎉</div><div class="dx">0 / 0</div><div class="dl">correct</div><div class="ds"></div></div>
   
   <nav class="lnav" aria-label="Lesson navigation">
-    <a class="prev" href="lesson-233.html" rel="prev" aria-label="Previous lesson: connotation">← connotation</a>
+    <a class="prev" href="lesson-312.html" rel="prev" aria-label="Previous lesson: Seasons song">← Seasons song</a>
     <a class="up" href="index.html">all lessons</a>
-    <a class="next" href="lesson-235.html" rel="next" aria-label="Next lesson: metaphor & simile">metaphor & simile →</a>
+    <a class="next" href="lesson-314.html" rel="next" aria-label="Next lesson: On the farm">On the farm →</a>
   </nav>
   
   <div class="foot">slovenian-kb · lesson generated by 10_build_lesson.py</div>
@@ -526,7 +493,7 @@ details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;fon
 
 <script src="course.js"></script>
 <script>
-const LESSON_ID="lesson-234";
+const LESSON_ID="lesson-313";
 const right={P:0,Q:0,W:0,WB:0,R:0,SONG:0};
 const TOTAL=document.querySelectorAll('.q,.wo,.wbq,.songblank').length; let answered=0, correct=0, finished=false;
 function tally(ok){ if(ok)correct++; answered++;

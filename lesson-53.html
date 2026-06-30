@@ -164,6 +164,11 @@ a:focus-visible,button:focus-visible,.flip:focus-visible,input:focus-visible,tex
 .songblank:focus{outline:none;background:var(--accent-soft)}
 .songblank.ok{border-bottom-color:var(--ok);color:var(--ok)}
 .songblank.no{border-bottom-color:var(--f);color:var(--f)}
+/* picture story — emoji/image prompt above the type-in slot */
+.picslot{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;gap:2px;margin:0 3px}
+.picimg{font-size:30px;line-height:1.1}
+.picimg img{height:40px;width:auto;border-radius:7px;display:block;border:1px solid var(--line)}
+.songline .picslot .songblank{min-width:56px}
 .songctl{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
 .songbtn{font-family:var(--mono);font-size:14px;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:11px;padding:9px 14px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
 .songbtn:hover{border-color:var(--accent)}
@@ -263,6 +268,8 @@ details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;fon
       <button class="say sm" title="listen" aria-label="Listen" onclick="window.Course&&Course.say(this.parentNode.querySelector('.sl').textContent)">🔊</button></div>
     <details class="tr"><summary>show English</summary><div class="trbody">Hello! I'm Maja. I'm thirty years old and I live in Maribor. By profession I'm a teacher. I like cooking and reading. I have a husband and two children. At the weekend we like going into nature.</div></details>
   </section>
+  
+
   
 
   
