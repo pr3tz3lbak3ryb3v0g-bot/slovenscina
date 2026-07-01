@@ -165,10 +165,14 @@ a:focus-visible,button:focus-visible,.flip:focus-visible,input:focus-visible,tex
 .songblank.ok{border-bottom-color:var(--ok);color:var(--ok)}
 .songblank.no{border-bottom-color:var(--f);color:var(--f)}
 /* picture story — emoji/image prompt above the type-in slot */
-.picslot{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;gap:2px;margin:0 3px}
-.picimg{font-size:30px;line-height:1.1}
-.picimg img{height:40px;width:auto;border-radius:7px;display:block;border:1px solid var(--line)}
-.songline .picslot .songblank{min-width:56px}
+.picpara{font-size:19px;font-weight:700;line-height:2.5;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.picslot{display:inline-flex;align-items:center;gap:2px;vertical-align:middle;margin:0 2px}
+.picimg{font-size:28px;line-height:1}
+.picimg img{height:34px;width:auto;border-radius:6px;border:1px solid var(--line);display:block}
+.pichint{width:19px;height:19px;flex:none;border-radius:50%;border:1.5px solid var(--accent);background:var(--card);color:var(--accent);font-weight:800;font-size:11px;line-height:1;cursor:pointer;padding:0;display:inline-flex;align-items:center;justify-content:center}
+.pichint:hover{background:var(--accent);color:#fff}
+.pichans{display:none;font-weight:800;color:var(--accent);margin-left:2px}
+.pichans.show{display:inline}
 .songctl{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
 .songbtn{font-family:var(--mono);font-size:14px;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:11px;padding:9px 14px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.05)}
 .songbtn:hover{border-color:var(--accent)}
@@ -263,49 +267,13 @@ details.tr{margin-top:10px}details.tr summary{cursor:pointer;font-weight:700;fon
   
 
   
-  <!-- PICTURE STORY · see the picture, type the word -->
+  <!-- PICTURE STORY · read the whole paragraph aloud; tap ? for the word (no typing) -->
   <section class="sec" id="picstory">
-    <div class="sechead"><span class="step">🖼️</span><h2>picture story</h2><span class="sl">· name the food in Slovene</span><span class="score" aria-live="polite" id="scSONG">0 ✓</span></div>
-    <div class="hint">read the story — when you reach a picture, type the Slovene word for it · ✓ check fills any you leave blank</div>
-    <div class="songbox">
-    
-      <div class="songline">
-        <span class="sl" lang="sl">Zjutraj sedimo za mizo.</span>
-        <span class="en">In the morning we sit at the table.</span>
-      </div>
-    
-      <div class="songline">
-        <span class="sl" lang="sl">Na mizi je svež <span class="picslot"><span class="picimg">🍞</span><input class="songblank" data-a="kruh" size="5" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="type the Slovene word for the picture" onkeydown="if(event.key==='Enter'){event.preventDefault();songNext(this);}" onblur="if(this.value.trim())songCheck(this)"></span>.</span>
-        <span class="en">On the table is fresh bread.</span>
-      </div>
-    
-      <div class="songline">
-        <span class="sl" lang="sl">Zraven je <span class="picslot"><span class="picimg">🧀</span><input class="songblank" data-a="sir" size="4" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="type the Slovene word for the picture" onkeydown="if(event.key==='Enter'){event.preventDefault();songNext(this);}" onblur="if(this.value.trim())songCheck(this)"></span>.</span>
-        <span class="en">Next to it is cheese.</span>
-      </div>
-    
-      <div class="songline">
-        <span class="sl" lang="sl">V kozarcu je <span class="picslot"><span class="picimg">🥛</span><input class="songblank" data-a="mleko" size="6" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="type the Slovene word for the picture" onkeydown="if(event.key==='Enter'){event.preventDefault();songNext(this);}" onblur="if(this.value.trim())songCheck(this)"></span>.</span>
-        <span class="en">In the glass is milk.</span>
-      </div>
-    
-      <div class="songline">
-        <span class="sl" lang="sl">Za sladico imamo <span class="picslot"><span class="picimg">🍎</span><input class="songblank" data-a="jabolko" size="8" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="type the Slovene word for the picture" onkeydown="if(event.key==='Enter'){event.preventDefault();songNext(this);}" onblur="if(this.value.trim())songCheck(this)"></span>.</span>
-        <span class="en">For dessert we have an apple.</span>
-      </div>
-    
-      <div class="songline">
-        <span class="sl" lang="sl">Na pultu je topla <span class="picslot"><span class="picimg">☕</span><input class="songblank" data-a="kava" size="5" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="type the Slovene word for the picture" onkeydown="if(event.key==='Enter'){event.preventDefault();songNext(this);}" onblur="if(this.value.trim())songCheck(this)"></span>.</span>
-        <span class="en">On the counter is warm coffee.</span>
-      </div>
-    
-      <div class="songline">
-        <span class="sl" lang="sl">Vse skupaj je naš <span class="picslot"><span class="picimg">🍳</span><input class="songblank" data-a="zajtrk" size="7" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="type the Slovene word for the picture" onkeydown="if(event.key==='Enter'){event.preventDefault();songNext(this);}" onblur="if(this.value.trim())songCheck(this)"></span>.</span>
-        <span class="en">All together it's our breakfast.</span>
-      </div>
-    
-    </div>
-    <div class="songctl"><button class="songbtn" type="button" onclick="songCheckAll()">✓ check the story</button></div>
+    <div class="sechead"><span class="step">🖼️</span><h2>picture story</h2><span class="sl">· name the food in Slovene</span></div>
+    <div class="hint">read the whole story aloud — when you reach a picture, <b>say</b> the Slovene word. Stuck? tap the little <b>?</b> to reveal it. No typing.</div>
+    <div class="picpara" lang="sl">Zjutraj sedimo za mizo. Na mizi je svež <span class="picslot"><span class="picimg">🍞</span><button class="pichint" type="button" title="show the word" aria-label="show the word" onclick="revealPic(this)">?</button><span class="pichans">kruh</span></span>. Zraven je <span class="picslot"><span class="picimg">🧀</span><button class="pichint" type="button" title="show the word" aria-label="show the word" onclick="revealPic(this)">?</button><span class="pichans">sir</span></span>. V kozarcu je <span class="picslot"><span class="picimg">🥛</span><button class="pichint" type="button" title="show the word" aria-label="show the word" onclick="revealPic(this)">?</button><span class="pichans">mleko</span></span>. Za sladico imamo <span class="picslot"><span class="picimg">🍎</span><button class="pichint" type="button" title="show the word" aria-label="show the word" onclick="revealPic(this)">?</button><span class="pichans">jabolko</span></span>. Na pultu je topla <span class="picslot"><span class="picimg">☕</span><button class="pichint" type="button" title="show the word" aria-label="show the word" onclick="revealPic(this)">?</button><span class="pichans">kava</span></span>. Vse skupaj je naš <span class="picslot"><span class="picimg">🍳</span><button class="pichint" type="button" title="show the word" aria-label="show the word" onclick="revealPic(this)">?</button><span class="pichans">zajtrk</span></span>. </div>
+    <div class="songctl"><button class="songbtn" type="button" onclick="revealAllPics()">👁️ show all words</button><button class="songbtn" type="button" onclick="hearStory()">🔊 hear the story</button></div>
+    <details class="tr"><summary>show English</summary><div class="trbody">In the morning we sit at the table. On the table is fresh bread. Next to it is cheese. In the glass is milk. For dessert we have an apple. On the counter is warm coffee. All together it's our breakfast. </div></details>
   </section>
   
 
@@ -606,6 +574,18 @@ function songPlayAll(){
     }).join('');
   });
   Course.say(lines.join('. '));
+}
+// picture story: no typing — tap ? to reveal (and hear) the word; or reveal/hear the whole story
+function revealPic(b){ const a=b.parentNode.querySelector('.pichans'); if(a){a.classList.add('show'); if(window.Course)Course.say(a.textContent);} b.style.display='none'; }
+function revealAllPics(){ document.querySelectorAll('.picslot').forEach(function(s){ const a=s.querySelector('.pichans'), h=s.querySelector('.pichint'); if(a)a.classList.add('show'); if(h)h.style.display='none'; }); }
+function hearStory(){
+  const p=document.querySelector('.picpara'); if(!p||!window.Course)return;
+  const txt=[...p.childNodes].map(function(n){
+    if(n.nodeType===3)return n.textContent;
+    if(n.nodeType===1&&n.classList.contains('picslot')){ const a=n.querySelector('.pichans'); return a?a.textContent:''; }
+    return '';
+  }).join('');
+  Course.say(txt.replace(/\s+/g,' ').trim());
 }
 // word-order: tap a chip → it moves to the line; tap a placed word → it returns; when the
 // line is full, the order is checked against the target sentence.
